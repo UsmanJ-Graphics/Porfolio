@@ -10,7 +10,7 @@
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="assets/ui-overrides.css">
 <style>
@@ -61,7 +61,7 @@ body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  font-family:'Space Grotesk',system-ui,sans-serif;
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
   transition:background var(--dur) var(--ease), color var(--dur) var(--ease);
@@ -421,12 +421,10 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 
 <!-- LOADER -->
 <div id="loader">
-  <div class="loader-title">INITIALIZING RENDERER</div>
+  <div class="loader-title">INITIALIZING GRAPHICS LAB</div>
   <div class="loader-list">
     <div class="loader-row" data-step="0"><span>LOADING SHADERS</span><span class="ck">✓</span></div>
-    <div class="loader-row" data-step="1"><span>ALLOCATING BUFFERS</span><span class="ck">✓</span></div>
-    <div class="loader-row" data-step="2"><span>BUILDING SCENE</span><span class="ck">✓</span></div>
-    <div class="loader-row" data-step="3"><span>STARTING ENGINE</span><span class="ck">✓</span></div>
+    <div class="loader-row" data-step="1"><span>BUILDING SCENE</span><span class="ck">✓</span></div>
   </div>
   <div class="loader-bar"><i id="loader-fill"></i></div>
   <div class="loader-brand mono">USMAN / GRAPHICS LAB</div>
@@ -468,8 +466,9 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <h1 class="hero-title">I BUILD GRAPHICS<br>FROM FIRST PRINCIPLES.</h1>
     <p class="hero-desc">Computer Science student focused on graphics programming, rendering systems, C++, OpenGL, shaders, and low-level computer graphics.</p>
     <div class="hero-ctas">
-      <a href="#work" class="btn btn-primary" data-cursor="OPEN">EXPLORE MY WORK</a>
-      <a href="https://github.com/UsmanJ-Graphics" target="_blank" rel="noopener" class="btn btn-ghost" data-cursor="OPEN">GITHUB</a>
+      <a href="#work" class="btn btn-primary" data-cursor="OPEN">VIEW MY WORK →</a>
+      <a href="https://github.com/UsmanJ-Graphics" target="_blank" rel="noopener" class="btn btn-ghost" data-cursor="OPEN">GITHUB ↗</a>
+      <a href="assets/Usman-Javed-CV.pdf" download class="btn-cv mono" data-cursor="DOWNLOAD">DOWNLOAD CV ↓</a>
     </div>
     <div class="hero-strip">
       <div class="edu"><b>BS COMPUTER SCIENCE</b>LAHORE GARRISON UNIVERSITY</div>
@@ -502,6 +501,20 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
         </div>
       </div>
     </div>
+    <div class="principles-row">
+      <div class="principle-card">
+        <div class="principle-label mono">LOW LEVEL</div>
+        <div class="principle-path mono">Assembly → VGA → Framebuffer</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-label mono">REAL TIME</div>
+        <div class="principle-path mono">C++ → OpenGL → GLSL</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-label mono">NEXT</div>
+        <div class="principle-path mono">GPU → Ray Tracing → Engine Architecture</div>
+      </div>
+    </div>
   </section>
 
   <!-- SKILLS -->
@@ -532,13 +545,13 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
       </div>
       <div class="lab-card">
         <h4>Ray Tracing</h4>
-        <div class="lab-status mono">IN PROGRESS · LEARNING DIRECTION</div>
+        <div class="lab-status mono">RAY TRACING · LEARNING</div>
         <div class="raytrace-chain" id="raytrace"></div>
       </div>
     </div>
     <div class="lab-card" style="margin-top:24px;">
       <h4>Shader Playground</h4>
-      <div class="lab-status mono">INTERACTIVE MOCK · REAL GLSL PLAYGROUND PLANNED</div>
+      <div class="lab-status mono">MATERIAL RESPONSE · ROUGHNESS / METALLIC PREVIEW</div>
       <div class="shader-play">
         <canvas id="shader-canvas" width="500" height="500"></canvas>
         <div>
@@ -553,10 +566,22 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 
   <!-- ROADMAP -->
   <section class="section reveal" id="roadmap">
-    <div class="eyebrow mono">05 / THE ROAD AHEAD</div>
+    <div class="eyebrow mono">05 / ROADMAP</div>
     <h2 class="section-heading">Building toward graphics engineering.</h2>
-    <div class="roadmap-note">Currently learning graphics programming through an edX graphics programming course and following a structured roadmap toward professional graphics / rendering programming.</div>
-    <div class="roadmap-track" id="roadmap-track"></div>
+    <div class="roadmap-layout">
+      <div class="roadmap-track" id="roadmap-track"></div>
+      <div class="learning-card">
+        <div class="learning-label mono">CURRENTLY LEARNING</div>
+        <div class="learning-title">Graphics Programming</div>
+        <p class="learning-sub">edX Graphics Programming course, alongside a personal graphics programming roadmap.</p>
+        <div class="learning-next mono">NEXT</div>
+        <ul class="learning-list">
+          <li>GPU Programming</li>
+          <li>Ray Tracing</li>
+          <li>Engine Architecture</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
   <!-- EDUCATION + ACHIEVEMENTS -->
@@ -580,7 +605,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
         </div>
       </div>
       <div class="card">
-        <div class="mono" style="font-size:11px; color:var(--text-dim); margin-bottom:6px;">07 / ACHIEVEMENTS</div>
+        <div class="mono" style="font-size:11px; color:var(--text-dim); margin-bottom:6px;">ACHIEVEMENTS</div>
         <div class="ach-item">
           <div class="ach-dot"></div>
           <div>
@@ -588,14 +613,13 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
             <p class="ach-sub">Participated in a competitive programming event.</p>
           </div>
         </div>
-        <div class="ach-empty">HACKATHONS · AWARDS · CERTIFICATES — TO BE ADDED</div>
       </div>
     </div>
   </section>
 
   <!-- AVAILABILITY -->
   <section class="section reveal" id="availability">
-    <div class="eyebrow mono">07 / AVAILABLE FOR OPPORTUNITY</div>
+    <div class="eyebrow mono">07 / AVAILABILITY</div>
     <h2 class="section-heading">Looking for the next system to build.</h2>
     <p class="section-sub">I'm currently looking for a full-time remote internship where I can learn from experienced engineers and contribute to real-world graphics, rendering, performance, or tools development.</p>
     <div class="avail-card">
@@ -607,7 +631,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
       </div>
       <div id="gh-stats" class="avail-tags">
         <div><span>GITHUB</span><b>UsmanJ-Graphics</b></div>
-        <div><span>PUBLIC REPOS</span><b id="gh-repos">—</b></div>
+        <div id="gh-repos-row" style="display:none;"><span>PUBLIC REPOS</span><b id="gh-repos"></b></div>
         <div><span>PRIMARY LANGUAGE</span><b id="gh-lang">C++</b></div>
       </div>
     </div>
@@ -622,7 +646,8 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
       <a href="mailto:usmanjgraphics@gmail.com" class="contact-email" data-cursor="EMAIL">usmanjgraphics@gmail.com</a>
       <div class="contact-row">
         <a href="mailto:usmanjgraphics@gmail.com" class="btn btn-primary" data-cursor="OPEN">SEND AN EMAIL →</a>
-        <a href="https://github.com/UsmanJ-Graphics" target="_blank" rel="noopener" class="btn btn-ghost" data-cursor="OPEN">GITHUB</a>
+        <a href="https://github.com/UsmanJ-Graphics" target="_blank" rel="noopener" class="btn btn-ghost" data-cursor="OPEN">GITHUB ↗</a>
+        <a href="assets/Usman-Javed-CV.pdf" download class="btn-cv mono" data-cursor="DOWNLOAD">DOWNLOAD CV ↓</a>
       </div>
     </div>
   </section>
@@ -667,6 +692,14 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
       <p id="modal-built"></p>
     </div>
     <div class="modal-block">
+      <h5 class="mono">TECHNOLOGY</h5>
+      <div class="modal-chips" id="modal-technology"></div>
+    </div>
+    <div class="modal-block" id="modal-technical-wrap">
+      <h5 class="mono">TECHNICAL DETAILS</h5>
+      <div class="modal-chips dashed" id="modal-technical"></div>
+    </div>
+    <div class="modal-block">
       <h5 class="mono">WHAT I LEARNED</h5>
       <p id="modal-learned"></p>
     </div>
@@ -689,7 +722,8 @@ const PROJECTS = [
     github:'https://github.com/UsmanJ-Graphics/TwinCity3D',
     built:'A real-time 3D city environment rendered from scratch — buildings, road networks, a navigable camera, and atmospheric lighting laid out on a spatial grid to explore digital-twin style visualization.',
     learned:'Camera systems and view/projection math, organizing large scenes efficiently, and how lighting and atmosphere change the readability of a 3D space.',
-    status:'IN PROGRESS', visual:'city', image:'assets/project-screens/twincity-dashboard.png'
+    status:'IN PROGRESS', visual:'city', image:'assets/project-screens/twincity-dashboard.png',
+    meta:['3D','CAMERA','LIGHTING','GEOMETRY','RENDERING']
   },
   {
     id:'automata', tag:'PROJECT 02', name:'Theory of Automata Solver + NLU', size:'reg',
@@ -698,7 +732,8 @@ const PROJECTS = [
     github:'https://github.com/UsmanJ-Graphics/theory-of-automata',
     built:'A tool that parses natural-language automata problems and converts them into executable state-machine logic, rendered live as an animated node/transition graph.',
     learned:'Bridging language parsing with formal computation, and building interactive graph visualizations that update in real time as state changes.',
-    status:'COMPLETED', visual:'graph', image:'assets/project-screens/automata-dfa.png'
+    status:'COMPLETED', visual:'graph', image:'assets/project-screens/automata-dfa.png',
+    meta:['NODES','EDGES','STATE TRANSITIONS','PARSING']
   },
   {
     id:'flappybird', tag:'PROJECT 03 · LOW LEVEL', name:'Flappy Bird — 8086 Assembly', size:'reg',
@@ -707,7 +742,8 @@ const PROJECTS = [
     github:'https://github.com/UsmanJ-Graphics/Flappy-bird-game',
     built:'A playable game written directly in 8086 Assembly — writing pixels straight to the 0xA0000 VGA framebuffer, driving a game loop, reading input through BIOS interrupts, and detecting collisions with AABB checks. No engine, no modern graphics API — just software rendering.',
     learned:'How graphics worked before GPUs existed: direct video memory access, real-mode DOS constraints, and the discipline of building a game loop with nothing but assembly instructions.',
-    status:'COMPLETED', visual:'vga'
+    status:'COMPLETED', visual:'vga',
+    meta:['8086','VGA MODE 13H','0xA0000 FRAMEBUFFER','BIOS INPUT','AABB']
   },
   {
     id:'stattool', tag:'PROJECT 04', name:'Statistical Tool', size:'reg',
@@ -716,7 +752,8 @@ const PROJECTS = [
     github:'https://github.com/UsmanJ-Graphics/Statistical-tool',
     built:'A modular C++ tool that reads datasets from files, computes statistical measures, and renders the results as charts drawn from scratch.',
     learned:'Designing modular architecture for data pipelines, and how much is involved in turning raw numbers into a readable chart without a plotting library to lean on.',
-    status:'COMPLETED', visual:'chart', image:'assets/project-screens/statix-dashboard.png'
+    status:'COMPLETED', visual:'chart', image:'assets/project-screens/statix-dashboard.png',
+    meta:['FILE I/O','DATA STRUCTURES','ALGORITHMS']
   },
   {
     id:'birthday', tag:'CREATIVE EXPERIMENT', name:'Finger Tracer — Happy Birthday', size:'small',
@@ -725,7 +762,8 @@ const PROJECTS = [
     github:'https://github.com/UsmanJ-Graphics/happybirthday',
     built:'An interactive Finger Tracer built with hand tracking, drawing, particles, and a birthday-card experience — a playful break from systems and rendering work.',
     learned:'How input, computer vision, drawing, and small interaction details can turn a technical prototype into a personal creative experience.',
-    status:'COMPLETED', visual:'birthday'
+    status:'COMPLETED', visual:'birthday',
+    meta:['HAND TRACKING','OPENCV','PARTICLES']
   }
 ];
 
@@ -746,7 +784,7 @@ const SKILLS = {
     {n:'Textures', d:'Sampling, filtering, and mapping onto geometry.'},
     {n:'GPU Concepts', d:'State, pipelines, and how work is scheduled on-GPU.'}
   ],
-  'MATH / CS': [
+  'FOUNDATIONS': [
     {n:'Data Structures & Algorithms', d:'Core coursework and applied practice.'},
     {n:'Linear Algebra', d:'Vectors, matrices, transforms — the math under 3D graphics.'},
     {n:'Multivariable Calculus', d:'Foundations relevant to lighting and shading math.'},
@@ -792,12 +830,12 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
       rows[i].classList.add('on');
       fill.style.width = ((i+1)/rows.length*100)+'%';
       i++;
-      setTimeout(step, reduceMotion ? 40 : 260);
+      setTimeout(step, reduceMotion ? 30 : 160);
     } else {
-      setTimeout(()=> loader.classList.add('hidden'), reduceMotion ? 100 : 350);
+      setTimeout(()=> loader.classList.add('hidden'), reduceMotion ? 60 : 180);
     }
   };
-  setTimeout(step, reduceMotion ? 50 : 300);
+  setTimeout(step, reduceMotion ? 30 : 140);
 })();
 
 /* ===================================================================
@@ -1039,13 +1077,15 @@ function projectVisual(kind, image, name){
         <h3 class="proj-name">${p.name}</h3>
         <p class="proj-desc">${p.desc}</p>
         <div class="proj-stack">${p.stack.map(s=>`<span>${s}</span>`).join('')}</div>
+        ${p.meta ? `<div class="proj-meta">${p.meta.map(s=>`<span>${s}</span>`).join('')}</div>` : ''}
         <div class="proj-links">
-          <a href="${p.github}" target="_blank" rel="noopener" data-cursor="OPEN">GITHUB ↗</a>
-          <span style="color:var(--text-dim); font-family:'IBM Plex Mono',monospace; font-size:11.5px;">CLICK CARD FOR DETAILS</span>
+          <a href="#" class="proj-view" data-cursor="OPEN">VIEW PROJECT →</a>
+          <a href="${p.github}" target="_blank" rel="noopener" data-cursor="OPEN">VIEW SOURCE →</a>
         </div>
       </div>`;
     card.querySelector('.proj-visual').addEventListener('click', ()=> openModal(p, i));
     card.querySelector('.proj-name').addEventListener('click', ()=> openModal(p, i));
+    card.querySelector('.proj-view').addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); openModal(p, i); });
     wrap.appendChild(card);
   });
 })();
@@ -1056,6 +1096,14 @@ function openModal(p, i){
   document.getElementById('modal-status').textContent = p.status;
   document.getElementById('modal-stack').textContent = p.stack.join(' · ');
   document.getElementById('modal-built').textContent = p.built;
+  document.getElementById('modal-technology').innerHTML = p.stack.map(s=>`<span>${s}</span>`).join('');
+  const techWrap = document.getElementById('modal-technical-wrap');
+  if(p.meta && p.meta.length){
+    techWrap.style.display = '';
+    document.getElementById('modal-technical').innerHTML = p.meta.map(s=>`<span>${s}</span>`).join('');
+  } else {
+    techWrap.style.display = 'none';
+  }
   document.getElementById('modal-learned').textContent = p.learned;
   document.getElementById('modal-source').href = p.github;
   document.getElementById('project-modal').classList.add('open');
@@ -1108,9 +1156,10 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') document.getEle
     .then(d=>{
       if(typeof d.public_repos === 'number'){
         document.getElementById('gh-repos').textContent = d.public_repos;
+        document.getElementById('gh-repos-row').style.display = '';
       }
     })
-    .catch(()=>{ document.getElementById('gh-repos').textContent = '—'; });
+    .catch(()=>{ /* keep the row hidden rather than show an empty stat */ });
 })();
 
 /* ===================================================================
@@ -1319,6 +1368,17 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') document.getEle
   wire.position.copy(sphere.position);
   scene.add(wire);
 
+  // small glass companion form — a physically-based transmissive shell so the
+  // studio lighting refracts through it rather than just reflecting off it.
+  const glassGeo = new THREE.IcosahedronGeometry(0.62, 2);
+  const glassMat = new THREE.MeshPhysicalMaterial({
+    color:0xffffff, transmission:1, roughness:0.06, metalness:0,
+    thickness:0.7, ior:1.4, transparent:true, opacity:1, clearcoat:1
+  });
+  const glass = new THREE.Mesh(glassGeo, glassMat);
+  glass.position.set(-1.35, -0.55, 1.1);
+  scene.add(glass);
+
   // floating primitives
   const primGroup = new THREE.Group();
   const primCount = isMobile ? 8 : 18;
@@ -1426,6 +1486,9 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') document.getEle
     sphere.rotation.y = t*0.15;
     sphere.rotation.x = t*0.05;
     wire.rotation.copy(sphere.rotation);
+    glass.rotation.y = t*0.22;
+    glass.rotation.x = t*0.1;
+    glass.position.y = -0.55 + Math.sin(t*0.4)*0.12;
 
     primGroup.children.forEach(m=>{
       m.rotateOnAxis(m.userData.axis, m.userData.speed*0.01);
