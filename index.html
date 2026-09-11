@@ -865,6 +865,7 @@ themeToggle.addEventListener('click', ()=>{
   const isDark = next === 'dark';
   themeToggle.setAttribute('aria-pressed', String(isDark));
   themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  window.dispatchEvent(new Event('theme-changed'));
 });
 
 /* ===================================================================
@@ -1483,6 +1484,19 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') document.getEle
   let hover = false;
   wrap.addEventListener('mouseenter', ()=>{ hover = true; });
   wrap.addEventListener('mouseleave', ()=>{ hover = false; });
+
+  // Keep the sphere's own material in sync with the site theme — otherwise
+  // a near-black sphere disappears once the card behind it goes dark.
+  function applyAboutTheme(){
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    solidMat.color.setHex(dark ? 0xc7ccd6 : 0x11151b);
+    solidMat.roughness = dark ? 0.55 : 0.4;
+    wireMat.color.setHex(dark ? 0x7de3d6 : 0x7de3d6);
+    l1.color.setHex(dark ? 0x9ff5ea : 0x9ff5ea);
+    l2.color.setHex(dark ? 0x3a4450 : 0x222a30);
+  }
+  applyAboutTheme();
+  window.addEventListener('theme-changed', applyAboutTheme);
 
   function resize(){
     const s = wrap.clientWidth;
