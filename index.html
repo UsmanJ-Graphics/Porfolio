@@ -441,7 +441,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <a href="#about" class="nav-link" data-nav="about">ABOUT</a>
     <a href="#roadmap" class="nav-link" data-nav="roadmap">ROADMAP</a>
     <a href="#contact" class="nav-link" data-nav="contact">CONTACT</a>
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><i></i></button>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-sun" aria-hidden="true">☼</span><span class="theme-moon" aria-hidden="true">☾</span><i></i></button>
   </div>
   <button class="nav-mobile-btn burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
 </nav>
@@ -719,12 +719,12 @@ const PROJECTS = [
     status:'COMPLETED', visual:'chart', image:'assets/project-screens/statix-dashboard.png'
   },
   {
-    id:'birthday', tag:'CREATIVE EXPERIMENT', name:'Happy Birthday', size:'small',
-    desc:'A small creative coding experiment, built for fun outside the graphics-focused project line.',
-    stack:['Creative Coding'],
+    id:'birthday', tag:'CREATIVE EXPERIMENT', name:'Finger Tracer — Happy Birthday', size:'small',
+    desc:'An interactive computer-vision finger-tracing experience that turns movement into a playful birthday card.',
+    stack:['C++','OpenCV','Hand Tracking','Creative Coding'],
     github:'https://github.com/UsmanJ-Graphics/happybirthday',
-    built:'A small, playful creative-coding piece — a break from systems and rendering work.',
-    learned:'That not every project needs to be serious to be worth building.',
+    built:'An interactive Finger Tracer built with hand tracking, drawing, particles, and a birthday-card experience — a playful break from systems and rendering work.',
+    learned:'How input, computer vision, drawing, and small interaction details can turn a technical prototype into a personal creative experience.',
     status:'COMPLETED', visual:'small'
   }
 ];
@@ -862,6 +862,9 @@ themeToggle.addEventListener('click', ()=>{
   const html = document.documentElement;
   const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
+  const isDark = next === 'dark';
+  themeToggle.setAttribute('aria-pressed', String(isDark));
+  themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
 });
 
 /* ===================================================================
