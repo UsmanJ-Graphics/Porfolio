@@ -1212,6 +1212,26 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') document.getEle
   const particles = new THREE.Points(pGeo, pMat);
   scene.add(particles);
 
+  // Keep the material study in sync with the site theme so dark mode never
+  // inherits the bright studio lighting.
+  function applyHeroTheme(){
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    sphereMat.color.setHex(dark ? 0x252c4f : 0x8295df);
+    sphereMat.roughness = dark ? 0.32 : 0.23;
+    wireMat.color.setHex(dark ? 0x7de3d6 : 0x6376d6);
+    pMat.color.setHex(dark ? 0x7de3d6 : 0x7485d9);
+    key.color.setHex(dark ? 0x9ff5ea : 0xa7b8ff);
+    key.intensity = dark ? 2.2 : 3.1;
+    rim.color.setHex(dark ? 0x5a7ba8 : 0xb9e8f2);
+    rim.intensity = dark ? 1.15 : 2.1;
+    ambient.color.setHex(dark ? 0x223038 : 0xffffff);
+    ambient.intensity = dark ? 0.85 : 1.85;
+    const gridMaterials = Array.isArray(grid.material) ? grid.material : [grid.material];
+    gridMaterials.forEach(m => m.color.setHex(dark ? 0x28333c : 0xd5dcef));
+  }
+  applyHeroTheme();
+  document.getElementById('theme-toggle').addEventListener('click', ()=> requestAnimationFrame(applyHeroTheme));
+
   let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
   window.addEventListener('mousemove', e=>{
     mouseX = (e.clientX / window.innerWidth - 0.5);
