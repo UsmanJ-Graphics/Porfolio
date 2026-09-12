@@ -463,51 +463,77 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#hero" class="nav-brand">USMAN</a>
+  <a href="#hero" class="brand-wrap">
+    <span class="logo-uj">UJ</span>
+    <span class="brand-name">Muhammad Usman Javed</span>
+  </a>
   <div class="nav-links" id="nav-links">
-    <a href="#work" class="nav-link" data-nav="work">WORK</a>
-    <a href="#toolchain" class="nav-link" data-nav="toolchain">SKILLS</a>
-    <a href="#about" class="nav-link" data-nav="about">ABOUT</a>
-    <a href="#lab" class="nav-link" data-nav="lab">LAB</a>
-    <a href="#education" class="nav-link" data-nav="education">EDUCATION</a>
-    <a href="#contact" class="nav-link" data-nav="contact">CONTACT</a>
-    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-sun" aria-hidden="true">☼</span><span class="theme-moon" aria-hidden="true">☾</span><i></i></button>
+    <a href="#hero" class="nav-link" data-nav="hero">Home</a>
+    <a href="#work" class="nav-link" data-nav="work">Projects</a>
+    <a href="#toolchain" class="nav-link" data-nav="toolchain">Skills</a>
+    <a href="#about" class="nav-link" data-nav="about">About</a>
+    <a href="#contact" class="nav-link" data-nav="contact">Contact</a>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme mode" aria-pressed="true"><span class="theme-sun" aria-hidden="true">☼</span><span class="theme-moon" aria-hidden="true">☾</span><i></i></button>
   </div>
   <button class="nav-mobile-btn burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
 </nav>
 
 <div id="mobile-menu">
   <button class="mobile-close" id="mobile-close" aria-label="Close menu">✕</button>
-  <a href="#work">WORK</a>
-  <a href="#toolchain">SKILLS</a>
-  <a href="#about">ABOUT</a>
-  <a href="#lab">LAB</a>
-  <a href="#education">EDUCATION</a>
-  <a href="#contact">CONTACT</a>
+  <a href="#hero">Home</a>
+  <a href="#work">Projects</a>
+  <a href="#toolchain">Skills</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- LEFT MARGIN STEP COUNTER -->
+<div class="left-hud-counter" aria-hidden="true">
+  <div class="hud-line"></div>
+  <div class="hud-num">01 / 04</div>
+</div>
+
+<!-- 3D ORBITAL SCROLL WHEEL HUD -->
+<div class="orbital-hud" id="orbital-hud" aria-label="Section navigation scroll wheel">
+  <svg class="orbital-arc-svg" viewBox="0 0 200 600" preserveAspectRatio="none" aria-hidden="true">
+    <path id="orbital-arc-path" d="M 180 20 C 60 200, 60 400, 180 580" fill="none" stroke="var(--accent-dim)" stroke-width="1.5" stroke-dasharray="4 4"/>
+  </svg>
+  <div class="orbital-nodes">
+    <button class="orbital-node active" data-target="hero" aria-label="Go to Home section"><span class="num">01</span><span class="label">Home</span><span class="dot"></span></button>
+    <button class="orbital-node" data-target="work" aria-label="Go to Projects section"><span class="num">02</span><span class="label">Projects</span><span class="dot"></span></button>
+    <button class="orbital-node" data-target="toolchain" aria-label="Go to Skills section"><span class="num">03</span><span class="label">Skills</span><span class="dot"></span></button>
+    <button class="orbital-node" data-target="about" aria-label="Go to About section"><span class="num">04</span><span class="label">About</span><span class="dot"></span></button>
+  </div>
+  <div class="orbital-scroll-prompt" aria-hidden="true">
+    <span class="mouse-icon"><i></i></span>
+    <span class="prompt-text mono">SCROLL TO EXPLORE</span>
+  </div>
 </div>
 
 <!-- HERO -->
 <section id="hero">
-  <div id="hero-canvas" role="img" aria-label="Animated real-time 3D scene of a metallic sphere and glass geometry, decorative"></div>
+  <div id="hero-canvas" role="img" aria-label="Animated real-time 3D scene of floating tech world with orbiting C++, OpenGL, and GLSL badges"></div>
   <div class="hero-vignette"></div>
   <div class="hero-hud" aria-label="Graphics technologies">
     <span>REAL-TIME</span><span>OPENGL / WEBGL</span><span>GLSL</span><span>RENDERING</span>
     <span class="runtime-only" id="hud-api"></span><span class="runtime-only" id="hud-fps"></span><span class="runtime-only" id="hud-frame"></span><span class="runtime-only" id="hud-objects"></span><span class="runtime-only" id="hud-lights"></span>
   </div>
   <div class="hero-content shell">
-    <div class="hero-kicker"><span class="dot"></span>GRAPHICS PROGRAMMER · COMPUTER SCIENCE STUDENT</div>
-    <h1 class="hero-title">I BUILD GRAPHICS<br>FROM FIRST PRINCIPLES.</h1>
-    <p class="hero-desc">Computer Science student focused on graphics programming, rendering systems, C++, OpenGL, shaders, and low-level computer graphics.</p>
+    <div class="hero-kicker mono">— GRAPHICS PROGRAMMER —</div>
+    <h1 class="hero-title">
+      Muhammad<br>
+      <span class="text-glow-cyan">Usman Javed</span>
+    </h1>
+    <div class="hero-subtags mono">C++ &nbsp;/&nbsp; OpenGL &nbsp;/&nbsp; GLSL &nbsp;/&nbsp; Real-Time Rendering</div>
+    <p class="hero-desc">Computer Science student building real-time rendering systems from first principles.</p>
     <div class="hero-ctas">
-      <a href="#work" class="btn btn-primary" data-cursor="OPEN">VIEW MY WORK →</a>
-      <a href="https://github.com/UsmanJ-Graphics" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" data-cursor="OPEN">GITHUB ↗</a>
-      <a href="assets/Usman-Javed-CV.pdf" download class="btn-cv mono" data-cursor="DOWNLOAD">DOWNLOAD CV ↓</a>
+      <a href="#work" class="btn btn-pill-cyan" data-cursor="OPEN">Explore My Work &nbsp;→</a>
     </div>
-    <div class="hero-strip">
-      <div class="edu"><b>BS COMPUTER SCIENCE</b>LAHORE GARRISON UNIVERSITY</div>
-      <div class="stack"><span>C++</span><span>OPENGL</span><span>GLSL</span><span>SHADERS</span></div>
-      <div class="badge-avail"><span class="p"></span>OPEN TO REMOTE INTERNSHIPS</div>
-    </div>
+  </div>
+  <!-- BOTTOM LEFT TECH FOOTPRINT BAR -->
+  <div class="bottom-left-tech mono" aria-hidden="true">
+    <span>C++</span><span>OpenGL</span><span>GLSL</span>
+    <div class="tech-bar-line"><div class="tech-bar-fill"></div></div>
   </div>
 </section>
 
@@ -744,8 +770,11 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
   </div>
 </div>
 
-<script defer src="assets/experience.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script defer src="assets/experience.js"></script>
 <script>
 /* ===================================================================
    DATA
@@ -1299,7 +1328,7 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
 })();
 
 /* ===================================================================
-   HERO WEBGL SCENE (Three.js)
+   HERO WEBGL SCENE & MOTION ORCHESTRATOR (Three.js + GSAP)
 =================================================================== */
 (function heroScene(){
   const container = document.getElementById('hero-canvas');
@@ -1325,8 +1354,8 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
 
   const isMobile = window.innerWidth < 720;
 
-  // lights
-  const key = new THREE.PointLight(0xa7b8ff, 3.1, 30);
+  // Lights
+  const key = new THREE.PointLight(0x7de3d6, 3.1, 30);
   key.position.set(4, 4, 4);
   scene.add(key);
   const rim = new THREE.PointLight(0xb9e8f2, 2.1, 30);
@@ -1336,139 +1365,102 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
   scene.add(ambient);
   const lightCount = 3;
 
-  // ---- Real-time sun + cloud deck: "flying above the clouds" ----
-  // Soft round alpha texture reused for the sun glow and every cloud puff.
-  function makeSoftTexture(){
-    const size = 128;
-    const c = document.createElement('canvas'); c.width = c.height = size;
-    const g = c.getContext('2d');
-    const grad = g.createRadialGradient(size/2,size/2,0,size/2,size/2,size/2);
-    grad.addColorStop(0, 'rgba(255,255,255,1)');
-    grad.addColorStop(0.4, 'rgba(255,255,255,0.7)');
-    grad.addColorStop(1, 'rgba(255,255,255,0)');
-    g.fillStyle = grad; g.fillRect(0,0,size,size);
-    const tex = new THREE.CanvasTexture(c);
-    tex.needsUpdate = true;
-    return tex;
+  // Central 3D Core Planet
+  const sphereGeo = new THREE.IcosahedronGeometry(1.6, isMobile ? 3 : 5);
+  const pos = sphereGeo.attributes.position;
+  for (let i = 0; i < pos.count; i++) {
+    const v = new THREE.Vector3(pos.getX(i), pos.getY(i), pos.getZ(i));
+    const noise = Math.sin(v.x * 3.5) * Math.cos(v.y * 3.5) * Math.sin(v.z * 3.5) * 0.08;
+    v.addScaledVector(v.clone().normalize(), noise);
+    pos.setXYZ(i, v.x, v.y, v.z);
   }
-  const softTex = makeSoftTexture();
+  sphereGeo.computeVertexNormals();
 
-  const sunGroup = new THREE.Group();
-  scene.add(sunGroup);
-  const sunCoreMat = new THREE.SpriteMaterial({ map:softTex, color:0xfff3c4, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending });
-  const sunCore = new THREE.Sprite(sunCoreMat);
-  sunCore.scale.set(1.1,1.1,1);
-  sunGroup.add(sunCore);
-  const sunHaloMat = new THREE.SpriteMaterial({ map:softTex, color:0xffdf9c, transparent:true, opacity:0.5, depthWrite:false, blending:THREE.AdditiveBlending });
-  const sunHalo = new THREE.Sprite(sunHaloMat);
-  sunHalo.scale.set(4.2,4.2,1);
-  sunGroup.add(sunHalo);
-  const sunLight = key; // the existing key light doubles as the directional sun
-
-  // A layer of soft billboards scattered below the camera, so the whole
-  // scene reads as sitting above a cloud deck rather than floating in space.
-  const cloudGroup = new THREE.Group();
-  const cloudCount = isMobile ? 22 : 46;
-  const clouds = [];
-  for(let i=0;i<cloudCount;i++){
-    const mat = new THREE.SpriteMaterial({ map:softTex, transparent:true, depthWrite:false, opacity:0.14 + Math.random()*0.2 });
-    const spr = new THREE.Sprite(mat);
-    const radius = 4 + Math.random()*15;
-    const angle = Math.random()*Math.PI*2;
-    const depth = 0.35 + Math.random()*0.65;
-    spr.position.set(Math.cos(angle)*radius, -2.2 - Math.random()*1.7, Math.sin(angle)*radius - 3);
-    const scale = (2.6 + Math.random()*4.4) * depth;
-    spr.scale.set(scale, scale*0.5, 1);
-    spr.userData.baseOpacity = mat.opacity;
-    cloudGroup.add(spr);
-    clouds.push(spr);
-  }
-  scene.add(cloudGroup);
-
-  // A bright glint sitting on the cloud deck directly under the sun, so the
-  // cloud tops visibly catch and reflect the light.
-  const glintMat = new THREE.SpriteMaterial({ map:softTex, color:0xffe9b8, transparent:true, depthWrite:false, opacity:0.55, blending:THREE.AdditiveBlending });
-  const glint = new THREE.Sprite(glintMat);
-  glint.scale.set(5.5,2.2,1);
-  scene.add(glint);
-
-  // Sun position and color are derived from the actual wall-clock time and
-  // recomputed every frame, so direction genuinely follows real time of day
-  // rather than looping on the animation clock.
-  const nightCol = new THREE.Color(0x1a2a55);
-  const duskCol = new THREE.Color(0xff9d5c);
-  const dayCol = new THREE.Color(0xfff4d6);
-  const mixedCol = new THREE.Color();
-  function updateSun(){
-    const now = new Date();
-    const hour = now.getHours() + now.getMinutes()/60 + now.getSeconds()/3600;
-    const dayFrac = hour/24;
-    const elevation = -Math.cos(dayFrac*Math.PI*2);   // -1 midnight .. +1 noon
-    const azimuth = dayFrac*Math.PI*2;
-    const R = 9;
-    const sx = Math.cos(azimuth)*R;
-    const sz = Math.sin(azimuth)*R - 3;
-    const sy = elevation*5.5 + 1;
-    sunGroup.position.set(sx, Math.max(sy, -4), sz);
-    sunLight.position.set(sx, Math.max(sy, 1), sz);
-
-    const duskT = THREE.MathUtils.clamp((elevation+0.25)/0.25, 0, 1);
-    const noonT = THREE.MathUtils.clamp(elevation, 0, 1);
-    mixedCol.copy(nightCol).lerp(duskCol, duskT).lerp(dayCol, noonT);
-    sunLight.color.copy(mixedCol);
-    sunLight.intensity = THREE.MathUtils.lerp(0.5, 3.2, THREE.MathUtils.clamp((elevation+0.3)/0.6, 0, 1));
-    sunCoreMat.color.copy(mixedCol);
-    sunHaloMat.color.copy(mixedCol);
-    const visible = THREE.MathUtils.clamp((elevation+0.35)/0.5, 0.08, 1);
-    sunCoreMat.opacity = visible;
-    sunHaloMat.opacity = visible*0.55;
-
-    const dayT = THREE.MathUtils.clamp((elevation+0.15)/0.35, 0, 1);
-    clouds.forEach(spr=>{
-      spr.material.color.copy(mixedCol);
-      spr.material.opacity = spr.userData.baseOpacity * THREE.MathUtils.lerp(0.5, 1.15, dayT);
-    });
-
-    glint.position.set(sx*0.75, -2.05, sz*0.75);
-    glintMat.color.copy(mixedCol);
-    glintMat.opacity = visible*0.7;
-  }
-  updateSun();
-
-  // central rotating sphere with wire overlay
-  const sphereGeo = new THREE.IcosahedronGeometry(1.6, isMobile ? 2 : 4);
-  const sphereMat = new THREE.MeshStandardMaterial({ color:0x8295df, roughness:0.23, metalness:0.72, flatShading:false });
+  const sphereMat = new THREE.MeshStandardMaterial({
+    color: 0x1a2636,
+    roughness: 0.35,
+    metalness: 0.65,
+    flatShading: true
+  });
   const sphere = new THREE.Mesh(sphereGeo, sphereMat);
-  sphere.position.set(1.6, 0.2, 0);
+  sphere.position.set(1.4, 0.2, 0);
   scene.add(sphere);
-  const wireGeo = new THREE.IcosahedronGeometry(1.63, 1);
-  const wireMat = new THREE.MeshBasicMaterial({ color:0x6376d6, wireframe:true, transparent:true, opacity:0.16 });
+
+  const wireGeo = new THREE.IcosahedronGeometry(1.64, 1);
+  const wireMat = new THREE.MeshBasicMaterial({ color: 0x7de3d6, wireframe: true, transparent: true, opacity: 0.18 });
   const wire = new THREE.Mesh(wireGeo, wireMat);
   wire.position.copy(sphere.position);
   scene.add(wire);
 
-  // small glass companion form — a physically-based transmissive shell so the
-  // studio lighting refracts through it rather than just reflecting off it.
-  const glassGeo = new THREE.IcosahedronGeometry(0.62, 2);
-  const glassMat = new THREE.MeshPhysicalMaterial({
-    color:0xffffff, transmission:1, roughness:0.06, metalness:0,
-    thickness:0.7, ior:1.4, transparent:true, opacity:1, clearcoat:1
-  });
-  const glass = new THREE.Mesh(glassGeo, glassMat);
-  glass.position.set(-1.35, -0.55, 1.1);
-  scene.add(glass);
+  // Inclined 3D Orbital Rings with Tech Slabs (C++, OpenGL, GLSL)
+  const ringGroup = new THREE.Group();
+  ringGroup.position.copy(sphere.position);
+  ringGroup.rotation.x = Math.PI * 0.2;
+  ringGroup.rotation.z = -Math.PI * 0.15;
+  scene.add(ringGroup);
 
-  // floating primitives
+  const ringGeo = new THREE.TorusGeometry(2.6, 0.016, 16, 100);
+  const ringMat = new THREE.MeshBasicMaterial({ color: 0x7de3d6, transparent: true, opacity: 0.45 });
+  const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+  ringMesh.rotation.x = Math.PI / 2;
+  ringGroup.add(ringMesh);
+
+  function createTechSlab(label) {
+    const c = document.createElement('canvas'); c.width = 256; c.height = 128;
+    const g = c.getContext('2d');
+    g.fillStyle = '#0a101d'; g.beginPath(); g.roundRect(4, 4, 248, 120, 16); g.fill();
+    g.strokeStyle = '#7de3d6'; g.lineWidth = 4; g.stroke();
+    g.fillStyle = '#ffffff'; g.font = 'bold 42px "IBM Plex Mono", monospace';
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText(label, 128, 64);
+    const tex = new THREE.CanvasTexture(c); tex.needsUpdate = true;
+    const slabGeo = new THREE.BoxGeometry(0.85, 0.42, 0.04);
+    const mats = [
+      new THREE.MeshStandardMaterial({ color: 0x0a101d }),
+      new THREE.MeshStandardMaterial({ color: 0x0a101d }),
+      new THREE.MeshStandardMaterial({ color: 0x0a101d }),
+      new THREE.MeshStandardMaterial({ color: 0x0a101d }),
+      new THREE.MeshStandardMaterial({ map: tex, roughness: 0.2, metalness: 0.8 }),
+      new THREE.MeshStandardMaterial({ map: tex, roughness: 0.2, metalness: 0.8 })
+    ];
+    return new THREE.Mesh(slabGeo, mats);
+  }
+
+  const slabCPP = createTechSlab('C++'); slabCPP.position.set(2.6, 0, 0); ringGroup.add(slabCPP);
+  const slabGL = createTechSlab('OpenGL'); slabGL.position.set(-1.8, 0, 1.9); ringGroup.add(slabGL);
+  const slabGLSL = createTechSlab('GLSL'); slabGLSL.position.set(-0.8, 0, -2.4); ringGroup.add(slabGLSL);
+  const techSlabs = [slabCPP, slabGL, slabGLSL];
+
+  // Metallic Pedestal Base under the Planet
+  const pedestalGroup = new THREE.Group();
+  pedestalGroup.position.set(1.4, -1.65, 0);
+  scene.add(pedestalGroup);
+
+  const baseCylGeo = new THREE.CylinderGeometry(2.4, 2.7, 0.12, 64);
+  const baseCylMat = new THREE.MeshStandardMaterial({ color: 0x0c1424, roughness: 0.3, metalness: 0.8 });
+  const baseCyl = new THREE.Mesh(baseCylGeo, baseCylMat);
+  pedestalGroup.add(baseCyl);
+
+  const baseRingGeo = new THREE.TorusGeometry(2.42, 0.02, 16, 100);
+  const baseRingMat = new THREE.MeshBasicMaterial({ color: 0x7de3d6, transparent: true, opacity: 0.75 });
+  const baseRing = new THREE.Mesh(baseRingGeo, baseRingMat);
+  baseRing.rotation.x = Math.PI / 2;
+  pedestalGroup.add(baseRing);
+
+  // Floating Moon in Bottom Right Space
+  const moonGeo = new THREE.IcosahedronGeometry(0.55, 3);
+  const moonMat = new THREE.MeshStandardMaterial({ color: 0x233754, roughness: 0.5, metalness: 0.4, flatShading: true });
+  const moonMesh = new THREE.Mesh(moonGeo, moonMat);
+  moonMesh.position.set(5.2, -1.8, 1.5);
+  scene.add(moonMesh);
+
+  // Floating Primitives
   const primGroup = new THREE.Group();
   const primCount = isMobile ? 8 : 18;
-  const geoms = [
-    new THREE.OctahedronGeometry(0.28),
-    new THREE.TetrahedronGeometry(0.3),
-    new THREE.BoxGeometry(0.32,0.32,0.32)
-  ];
-  for(let i=0;i<primCount;i++){
+  const geoms = [new THREE.OctahedronGeometry(0.28), new THREE.TetrahedronGeometry(0.3), new THREE.BoxGeometry(0.32,0.32,0.32)];
+  for(let i=0; i<primCount; i++){
     const g = geoms[i % geoms.length];
-    const m = new THREE.MeshBasicMaterial({ color:0x7889dd, wireframe:true, transparent:true, opacity:0.22 });
+    const m = new THREE.MeshBasicMaterial({ color: 0x7de3d6, wireframe: true, transparent: true, opacity: 0.2 });
     const mesh = new THREE.Mesh(g, m);
     const radius = 3.2 + Math.random()*3.4;
     const angle = Math.random()*Math.PI*2;
@@ -1479,135 +1471,182 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
   }
   scene.add(primGroup);
 
-  // ground grid
-  const grid = new THREE.GridHelper(30, 30, 0xd5dcef, 0xe9edf7);
+  // Ground Grid
+  const grid = new THREE.GridHelper(30, 30, 0x28333c, 0x141a22);
   grid.position.y = -2.6;
   scene.add(grid);
 
-  // particles
+  // Particle Field
   const particleCount = isMobile ? 120 : 320;
   const pGeo = new THREE.BufferGeometry();
   const positions = new Float32Array(particleCount*3);
-  for(let i=0;i<particleCount;i++){
+  for(let i=0; i<particleCount; i++){
     positions[i*3] = (Math.random()-0.5)*20;
     positions[i*3+1] = (Math.random()-0.5)*10;
     positions[i*3+2] = (Math.random()-0.5)*14;
   }
-  pGeo.setAttribute('position', new THREE.BufferAttribute(positions,3));
-  const pMat = new THREE.PointsMaterial({ color:0x7485d9, size:0.02, transparent:true, opacity:0.32 });
+  pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const pMat = new THREE.PointsMaterial({ color: 0x7de3d6, size: 0.02, transparent: true, opacity: 0.35 });
   const particles = new THREE.Points(pGeo, pMat);
   scene.add(particles);
 
-  // Keep the material study in sync with the site theme so dark mode never
-  // inherits the bright studio lighting.
+  // Theme Synchronization
   function applyHeroTheme(){
     const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    sphereMat.color.setHex(dark ? 0x252c4f : 0x3a4866);
-    sphereMat.roughness = dark ? 0.32 : 0.35;
+    sphereMat.color.setHex(dark ? 0x1a2636 : 0x3a4866);
     wireMat.color.setHex(dark ? 0x7de3d6 : 0x0e8f83);
+    ringMat.color.setHex(dark ? 0x7de3d6 : 0x0e8f83);
     pMat.color.setHex(dark ? 0x7de3d6 : 0x0e8f83);
     key.color.setHex(dark ? 0x9ff5ea : 0x0e8f83);
-    key.intensity = dark ? 2.2 : 2.8;
     rim.color.setHex(dark ? 0x5a7ba8 : 0x8a9abb);
-    rim.intensity = dark ? 1.15 : 1.8;
     ambient.color.setHex(dark ? 0x223038 : 0xd5d8e0);
-    ambient.intensity = dark ? 0.85 : 1.4;
-    const gridMaterials = Array.isArray(grid.material) ? grid.material : [grid.material];
-    gridMaterials.forEach(m => m.color.setHex(dark ? 0x28333c : 0xb8bcc8));
   }
   applyHeroTheme();
   window.addEventListener('theme-changed', applyHeroTheme);
 
+  // Mouse & Pointer Interactions
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
   let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
-  window.addEventListener('mousemove', e=>{
+
+  window.addEventListener('mousemove', e => {
     mouseX = (e.clientX / window.innerWidth - 0.5);
     mouseY = (e.clientY / window.innerHeight - 0.5);
-  }, {passive:true});
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  }, { passive: true });
 
-  let scrollY = 0;
-  window.addEventListener('scroll', ()=> scrollY = window.scrollY, {passive:true});
-
-  window.addEventListener('resize', ()=>{
-    camera.aspect = container.clientWidth/container.clientHeight;
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(container.clientWidth, container.clientHeight);
   });
 
-  // HUD elements
+  // Motion Orchestrator & GSAP ScrollTrigger
+  let scrollProgress = 0;
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+    if (typeof ScrollToPlugin !== 'undefined') gsap.registerPlugin(ScrollToPlugin);
+
+    ScrollTrigger.create({
+      trigger: document.body,
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: self => scrollProgress = self.progress
+    });
+
+    const sections = ['hero', 'work', 'toolchain', 'about', 'education', 'roadmap', 'availability', 'contact'];
+    sections.forEach((id, idx) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 50%',
+        end: 'bottom 50%',
+        onEnter: () => updateOrbitalHUD(id),
+        onEnterBack: () => updateOrbitalHUD(id)
+      });
+    });
+  }
+
+  function updateOrbitalHUD(id) {
+    document.querySelectorAll('.orbital-node').forEach(node => {
+      const isTarget = node.getAttribute('data-target') === id;
+      node.classList.toggle('active', isTarget);
+    });
+  }
+
+  document.querySelectorAll('.orbital-node').forEach(node => {
+    node.addEventListener('click', () => {
+      const targetId = node.getAttribute('data-target');
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        if (typeof gsap !== 'undefined' && gsap.plugins.scrollTo) {
+          gsap.to(window, { duration: 1, scrollTo: targetEl, ease: 'power2.inOut' });
+        } else {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  });
+
+  // HUD Stats
   const hudFps = document.getElementById('hud-fps');
   const hudFrame = document.getElementById('hud-frame');
   const hudObjects = document.getElementById('hud-objects');
   const hudLights = document.getElementById('hud-lights');
   let objCount = 0;
-  scene.traverse(o=>{ if(o.isMesh || o.isPoints) objCount++; });
-  hudObjects.textContent = String(objCount).padStart(3,'0');
-  hudLights.textContent = String(lightCount).padStart(2,'0');
+  scene.traverse(o => { if (o.isMesh || o.isPoints) objCount++; });
+  if (hudObjects) hudObjects.textContent = String(objCount).padStart(3, '0');
+  if (hudLights) hudLights.textContent = String(lightCount).padStart(2, '0');
 
   let lastTime = performance.now();
   let frames = 0, fpsAccum = 0;
   const clock = new THREE.Clock();
 
-  function animate(){
+  function animate() {
     requestAnimationFrame(animate);
-    if(document.hidden) return;
+    if (document.hidden) return;
     const now = performance.now();
     const delta = now - lastTime;
     lastTime = now;
     frames++; fpsAccum += delta;
-    if(fpsAccum > 500){
-      const fps = Math.round((frames*1000)/fpsAccum);
-      hudFps.textContent = fps;
-      hudFrame.textContent = (fpsAccum/frames).toFixed(1)+'ms';
+    if (fpsAccum > 500) {
+      const fps = Math.round((frames * 1000) / fpsAccum);
+      if (hudFps) hudFps.textContent = fps;
+      if (hudFrame) hudFrame.textContent = (fpsAccum / frames).toFixed(1) + 'ms';
       frames = 0; fpsAccum = 0;
     }
 
     const t = clock.getElapsedTime();
-    sphere.rotation.y = t*0.15;
-    sphere.rotation.x = t*0.05;
+    sphere.rotation.y = t * 0.15 + scrollProgress * Math.PI;
+    sphere.rotation.x = t * 0.05;
     wire.rotation.copy(sphere.rotation);
-    glass.rotation.y = t*0.22;
-    glass.rotation.x = t*0.1;
-    glass.position.y = -0.55 + Math.sin(t*0.4)*0.12;
+    ringGroup.rotation.y = t * 0.2 + scrollProgress * Math.PI * 0.5;
 
-    primGroup.children.forEach(m=>{
-      m.rotateOnAxis(m.userData.axis, m.userData.speed*0.01);
+    // Tech slab hover raycasting
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(techSlabs);
+    techSlabs.forEach(slab => {
+      slab.scale.set(1, 1, 1);
+      slab.rotation.y = 0;
     });
-    primGroup.rotation.y = t*0.02;
+    if (intersects.length > 0) {
+      const hit = intersects[0].object;
+      hit.scale.set(1.15, 1.15, 1.15);
+      hit.rotation.y = Math.sin(t * 4) * 0.15;
+    }
 
-    particles.rotation.y = t*0.01;
+    primGroup.children.forEach(m => {
+      m.rotateOnAxis(m.userData.axis, m.userData.speed * 0.01);
+    });
+    primGroup.rotation.y = t * 0.02;
+    particles.rotation.y = t * 0.01;
 
-    targetX += (mouseX - targetX)*0.03;
-    targetY += (mouseY - targetY)*0.03;
-    camera.position.x = targetX*1.4;
-    camera.position.y = 0.6 - targetY*0.9 - Math.min(scrollY*0.0015, 1.2);
-    camera.lookAt(0.6,0,0);
-
-    updateSun();
-    cloudGroup.rotation.y = t*0.006;
+    targetX += (mouseX - targetX) * 0.03;
+    targetY += (mouseY - targetY) * 0.03;
+    camera.position.x = targetX * 1.4;
+    camera.position.y = 0.6 - targetY * 0.9 - Math.min(scrollProgress * 3.5, 3.0);
+    camera.position.z = 9 - scrollProgress * 2.0;
+    camera.lookAt(1.4, 0, 0);
 
     renderer.render(scene, camera);
   }
-  if(reduceMotion){
+
+  if (reduceMotion) {
     renderer.render(scene, camera);
-    hudFps.textContent = '—';
-    hudFrame.textContent = '—';
+    if (hudFps) hudFps.textContent = '—';
+    if (hudFrame) hudFrame.textContent = '—';
   } else {
     animate();
-    // pause the render loop while the hero is scrolled out of view —
-    // no point spending GPU/CPU animating something nobody can see.
     let running = true;
-    const heroVisibility = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting && !running){ running = true; animate(); }
-        else if(!entry.isIntersecting){ running = false; }
+    const heroVisibility = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !running) { running = true; animate(); }
+        else if (!entry.isIntersecting) { running = false; }
       });
-    }, {threshold:0});
+    }, { threshold: 0 });
     heroVisibility.observe(container);
-    const _animate = animate;
-    animate = function(){
-      if(!running) return;
-      _animate();
-    };
   }
 })();
 
