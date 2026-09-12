@@ -3,15 +3,27 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Usman — Graphics Programmer | C++ · OpenGL · GLSL</title>
-<meta name="description" content="Usman is a Computer Science student focused on graphics programming, C++, OpenGL, GLSL, rendering systems, shaders, and real-time graphics." />
-<meta property="og:title" content="Usman — Graphics Programmer" />
-<meta property="og:description" content="Computer Science student building rendering systems from first principles. C++, OpenGL, GLSL, real-time graphics." />
+<title>Usman | Graphics Programmer — C++, OpenGL, GLSL &amp; Rendering</title>
+<meta name="description" content="Portfolio of Muhammad Usman Javed, a Computer Science student focused on graphics programming — C++, OpenGL, GLSL, and real-time rendering systems." />
+<link rel="canonical" href="https://portfolio-ashy-six-1be88igzjw.vercel.app/" />
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+<meta property="og:title" content="Usman | Graphics Programmer — C++, OpenGL, GLSL & Rendering" />
+<meta property="og:description" content="Computer Science student building real-time rendering systems from first principles. C++, OpenGL, GLSL." />
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://portfolio-ashy-six-1be88igzjw.vercel.app/" />
+<meta property="og:image" content="https://portfolio-ashy-six-1be88igzjw.vercel.app/assets/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Usman | Graphics Programmer — C++, OpenGL, GLSL & Rendering" />
+<meta name="twitter:description" content="Computer Science student building real-time rendering systems from first principles. C++, OpenGL, GLSL." />
+<meta name="twitter:image" content="https://portfolio-ashy-six-1be88igzjw.vercel.app/assets/og-image.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="assets/ui-overrides.css">
 <style>
 /* ============ TOKENS ============ */
@@ -66,6 +78,22 @@ body{
   overflow-x:hidden;
   transition:background var(--dur) var(--ease), color var(--dur) var(--ease);
 }
+
+/* ============ ACCESSIBILITY: SKIP LINK + FOCUS ============ */
+.skip-link{
+  position:absolute; top:-100px; left:16px; z-index:9999;
+  background:var(--accent); color:#fff; padding:12px 20px;
+  border-radius:8px; font-size:13px; font-weight:600; text-decoration:none;
+  transition:top .2s var(--ease);
+}
+.skip-link:focus{ top:16px; }
+a:focus-visible, button:focus-visible, .btn:focus-visible, .nav-link:focus-visible,
+.proj-card:focus-visible, [tabindex]:focus-visible{
+  outline:2.5px solid var(--accent);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
 .mono{ font-family:'IBM Plex Mono',ui-monospace,monospace; letter-spacing:0.02em; }
 ::selection{ background:var(--accent-dim); color:var(--text); }
 a{color:inherit; text-decoration:none;}
@@ -100,6 +128,7 @@ h2.section-heading{
   letter-spacing:-0.01em; max-width:780px; margin:0 0 20px;
 }
 .section-sub{ color:var(--text-muted); font-size:16px; max-width:560px; line-height:1.6; }
+.contact-status{ font-size:11px; letter-spacing:.08em; color:var(--accent); margin:14px 0 2px; }
 
 /* ============ CURSOR ============ */
 #cursor-dot, #cursor-ring{
@@ -180,7 +209,7 @@ html[data-theme="light"] .theme-toggle i{ transform:translateX(16px); }
 #mobile-menu.open{ transform:translateY(0); }
 #mobile-menu a{ font-size:26px; padding:14px 0; border-bottom:1px solid var(--border); font-weight:500; }
 .mobile-close{ position:absolute; top:22px; right:28px; font-size:22px; background:none; border:none; color:var(--text); }
-.burger{ background:none; border:none; color:var(--text); display:flex; flex-direction:column; gap:5px; padding:6px; }
+.burger{ background:none; border:none; color:var(--text); display:flex; flex-direction:column; gap:5px; padding:6px; min-width:44px; min-height:44px; align-items:center; justify-content:center; }
 .burger span{ width:20px; height:1.5px; background:var(--text); display:block; }
 
 /* ============ HERO ============ */
@@ -256,7 +285,7 @@ html[data-theme="light"] .theme-toggle i{ transform:translateX(16px); }
 @media (max-width:900px){ .skills-cols{ grid-template-columns:1fr 1fr; } }
 @media (max-width:560px){ .skills-cols{ grid-template-columns:1fr; } }
 .skill-col{ background:var(--bg); padding:26px 22px; min-height:260px; }
-.skill-col h4{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); letter-spacing:0.08em; margin:0 0 18px; }
+.skill-col h3{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); letter-spacing:0.08em; margin:0 0 18px; }
 .skill-item{
   padding:9px 0; border-bottom:1px dashed var(--border); font-size:14.5px; color:var(--text-muted);
   cursor:pointer; transition:color .2s; position:relative;
@@ -291,8 +320,8 @@ html[data-theme="light"] .theme-toggle i{ transform:translateX(16px); }
 .proj-stack{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
 .proj-stack span{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text-dim); border:1px solid var(--border); padding:4px 9px; border-radius:12px; }
 .proj-links{ display:flex; gap:18px; align-items:center; }
-.proj-links a{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-muted); transition:color .2s; display:flex; align-items:center; gap:6px; }
-.proj-links a:hover{ color:var(--accent-strong); }
+.proj-links a, .proj-links button{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-muted); transition:color .2s; display:flex; align-items:center; gap:6px; background:none; border:none; padding:11px 2px; margin:-11px -2px; cursor:pointer; }
+.proj-links a:hover, .proj-links button:hover{ color:var(--accent-strong); }
 
 /* project modal */
 #project-modal{
@@ -323,7 +352,7 @@ html[data-theme="light"] #project-modal{ background:rgba(20,24,26,0.4); }
 .lab-grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:24px; margin-top:56px; }
 @media (max-width:900px){ .lab-grid{ grid-template-columns:1fr; } }
 .lab-card{ border:1px solid var(--border); border-radius:var(--radius-md); padding:30px; background:var(--panel); }
-.lab-card h4{ font-size:16px; font-weight:500; margin:0 0 6px; }
+.lab-card h3{ font-size:16px; font-weight:500; margin:0 0 6px; }
 .lab-card .lab-status{ font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--text-dim); margin-bottom:24px; }
 .pipeline{ display:flex; flex-direction:column; gap:0; }
 .pipe-stage{
@@ -413,6 +442,8 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 </head>
 <body>
 
+<a href="#main" class="skip-link">Skip to content</a>
+
 <div class="bg-grid"></div>
 
 <!-- CUSTOM CURSOR -->
@@ -435,9 +466,10 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
   <a href="#hero" class="nav-brand">USMAN</a>
   <div class="nav-links" id="nav-links">
     <a href="#work" class="nav-link" data-nav="work">WORK</a>
-    <a href="#lab" class="nav-link" data-nav="lab">LAB</a>
+    <a href="#toolchain" class="nav-link" data-nav="toolchain">SKILLS</a>
     <a href="#about" class="nav-link" data-nav="about">ABOUT</a>
-    <a href="#roadmap" class="nav-link" data-nav="roadmap">ROADMAP</a>
+    <a href="#lab" class="nav-link" data-nav="lab">LAB</a>
+    <a href="#education" class="nav-link" data-nav="education">EDUCATION</a>
     <a href="#contact" class="nav-link" data-nav="contact">CONTACT</a>
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-sun" aria-hidden="true">☼</span><span class="theme-moon" aria-hidden="true">☾</span><i></i></button>
   </div>
@@ -447,15 +479,16 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 <div id="mobile-menu">
   <button class="mobile-close" id="mobile-close" aria-label="Close menu">✕</button>
   <a href="#work">WORK</a>
-  <a href="#lab">LAB</a>
+  <a href="#toolchain">SKILLS</a>
   <a href="#about">ABOUT</a>
-  <a href="#roadmap">ROADMAP</a>
+  <a href="#lab">LAB</a>
+  <a href="#education">EDUCATION</a>
   <a href="#contact">CONTACT</a>
 </div>
 
 <!-- HERO -->
 <section id="hero">
-  <div id="hero-canvas"></div>
+  <div id="hero-canvas" role="img" aria-label="Animated real-time 3D scene of a metallic sphere and glass geometry, decorative"></div>
   <div class="hero-vignette"></div>
   <div class="hero-hud" aria-label="Graphics technologies">
     <span>REAL-TIME</span><span>OPENGL / WEBGL</span><span>GLSL</span><span>RENDERING</span>
@@ -467,7 +500,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <p class="hero-desc">Computer Science student focused on graphics programming, rendering systems, C++, OpenGL, shaders, and low-level computer graphics.</p>
     <div class="hero-ctas">
       <a href="#work" class="btn btn-primary" data-cursor="OPEN">VIEW MY WORK →</a>
-      <a href="https://github.com/UsmanJ-Graphics" target="_blank" rel="noopener" class="btn btn-ghost" data-cursor="OPEN">GITHUB ↗</a>
+      <a href="https://github.com/UsmanJ-Graphics" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" data-cursor="OPEN">GITHUB ↗</a>
       <a href="assets/Usman-Javed-CV.pdf" download class="btn-cv mono" data-cursor="DOWNLOAD">DOWNLOAD CV ↓</a>
     </div>
     <div class="hero-strip">
@@ -478,11 +511,27 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
   </div>
 </section>
 
-<main class="shell">
+<main class="shell" id="main">
+
+  <!-- PROJECTS -->
+  <section class="section reveal" id="work">
+    <div class="eyebrow mono">01 / SELECTED WORK</div>
+    <h2 class="section-heading">Things I've built.</h2>
+    <p class="section-sub">A working set of projects across real-time graphics, low-level systems, and applied C++.</p>
+    <div class="projects-wrap" id="projects-wrap"></div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section reveal" id="toolchain">
+    <div class="eyebrow mono">02 / TOOLCHAIN</div>
+    <h2 class="section-heading">The tools I build with.</h2>
+    <p class="section-sub">Currently working with these tools and technologies while expanding into GPU programming and rendering systems.</p>
+    <div class="skills-cols" id="skills-cols"></div>
+  </section>
 
   <!-- ABOUT -->
   <section class="section reveal" id="about">
-    <div class="eyebrow mono">01 / ABOUT</div>
+    <div class="eyebrow mono">03 / ABOUT</div>
     <h2 class="section-heading">Curious about what happens underneath.</h2>
     <div class="about-grid" style="margin-top:50px;">
       <div class="about-body">
@@ -490,7 +539,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
         <p>My current goal is to grow into a professional graphics / rendering programmer and eventually work on rendering systems, performance, tools, and graphics technology used in real-world applications.</p>
       </div>
       <div class="about-visual" id="about-visual">
-        <canvas id="about-canvas"></canvas>
+        <canvas id="about-canvas" aria-hidden="true"></canvas>
         <div class="about-labels">
           <span style="top:8%; left:6%;">VERTEX</span>
           <span style="top:20%; right:8%;">FRAGMENT</span>
@@ -517,43 +566,27 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     </div>
   </section>
 
-  <!-- SKILLS -->
-  <section class="section reveal" id="toolchain">
-    <div class="eyebrow mono">02 / TOOLCHAIN</div>
-    <h2 class="section-heading">The tools I build with.</h2>
-    <p class="section-sub">Still learning most of these deeply — shown here as the toolchain I'm actively working through, not a claim of mastery.</p>
-    <div class="skills-cols" id="skills-cols"></div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section class="section reveal" id="work">
-    <div class="eyebrow mono">03 / SELECTED WORK</div>
-    <h2 class="section-heading">Things I've built.</h2>
-    <p class="section-sub">A working set of projects across real-time graphics, low-level systems, and applied C++.</p>
-    <div class="projects-wrap" id="projects-wrap"></div>
-  </section>
-
   <!-- LAB -->
   <section class="section reveal" id="lab">
     <div class="eyebrow mono">04 / GRAPHICS LAB</div>
     <h2 class="section-heading">Where I experiment.</h2>
     <div class="lab-grid">
       <div class="lab-card">
-        <h4>Rendering Pipeline</h4>
+        <h3>Rendering Pipeline</h3>
         <div class="lab-status mono">HOVER A STAGE</div>
         <div class="pipeline" id="pipeline"></div>
       </div>
       <div class="lab-card">
-        <h4>Ray Tracing</h4>
+        <h3>Ray Tracing</h3>
         <div class="lab-status mono">RAY TRACING · LEARNING</div>
         <div class="raytrace-chain" id="raytrace"></div>
       </div>
     </div>
     <div class="lab-card" style="margin-top:24px;">
-      <h4>Shader Playground</h4>
+      <h3>Shader Playground</h3>
       <div class="lab-status mono">MATERIAL RESPONSE · ROUGHNESS / METALLIC PREVIEW</div>
       <div class="shader-play">
-        <canvas id="shader-canvas" width="500" height="500"></canvas>
+        <canvas id="shader-canvas" width="500" height="500" aria-hidden="true"></canvas>
         <div>
           <div class="sp-control"><label>ROUGHNESS <b id="v-rough">0.35</b></label><input type="range" id="c-rough" min="0" max="1" step="0.01" value="0.35"></div>
           <div class="sp-control"><label>METALLIC <b id="v-metal">0.20</b></label><input type="range" id="c-metal" min="0" max="1" step="0.01" value="0.20"></div>
@@ -564,29 +597,9 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     </div>
   </section>
 
-  <!-- ROADMAP -->
-  <section class="section reveal" id="roadmap">
-    <div class="eyebrow mono">05 / ROADMAP</div>
-    <h2 class="section-heading">Building toward graphics engineering.</h2>
-    <div class="roadmap-layout">
-      <div class="roadmap-track" id="roadmap-track"></div>
-      <div class="learning-card">
-        <div class="learning-label mono">CURRENTLY LEARNING</div>
-        <div class="learning-title">Graphics Programming</div>
-        <p class="learning-sub">edX Graphics Programming course, alongside a personal graphics programming roadmap.</p>
-        <div class="learning-next mono">NEXT</div>
-        <ul class="learning-list">
-          <li>GPU Programming</li>
-          <li>Ray Tracing</li>
-          <li>Engine Architecture</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
   <!-- EDUCATION + ACHIEVEMENTS -->
   <section class="section reveal" id="education">
-    <div class="eyebrow mono">06 / EDUCATION</div>
+    <div class="eyebrow mono">05 / EDUCATION</div>
     <h2 class="section-heading">Academic background.</h2>
     <div class="two-col">
       <div class="card edu-card">
@@ -617,6 +630,26 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     </div>
   </section>
 
+  <!-- ROADMAP -->
+  <section class="section reveal" id="roadmap">
+    <div class="eyebrow mono">06 / ROADMAP</div>
+    <h2 class="section-heading">Building toward graphics engineering.</h2>
+    <div class="roadmap-layout">
+      <div class="roadmap-track" id="roadmap-track"></div>
+      <div class="learning-card">
+        <div class="learning-label mono">CURRENTLY LEARNING</div>
+        <div class="learning-title">Graphics Programming</div>
+        <p class="learning-sub">edX Graphics Programming course, alongside a personal graphics programming roadmap.</p>
+        <div class="learning-next mono">NEXT</div>
+        <ul class="learning-list">
+          <li>GPU Programming</li>
+          <li>Ray Tracing</li>
+          <li>Engine Architecture</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <!-- AVAILABILITY -->
   <section class="section reveal" id="availability">
     <div class="eyebrow mono">07 / AVAILABILITY</div>
@@ -624,8 +657,8 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <p class="section-sub">I'm currently looking for a full-time remote internship where I can learn from experienced engineers and contribute to real-world graphics, rendering, performance, or tools development.</p>
     <div class="avail-card">
       <div class="avail-tags">
-        <div><span>LOCATION</span><b>REMOTE</b></div>
-        <div><span>COMMITMENT</span><b>40+ HRS / WEEK</b></div>
+        <div><span>LOCATION</span><b>Lahore, Pakistan</b></div>
+        <div><span>REMOTE</span><b>OPEN TO REMOTE WORK</b></div>
         <div><span>SCHEDULE</span><b>FLEXIBLE HOURS</b></div>
         <div><span>STATUS</span><b>AVAILABLE FOR INTERNSHIPS</b></div>
       </div>
@@ -641,12 +674,14 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
   <section class="section reveal" id="contact">
     <div class="eyebrow mono">08 / CONTACT</div>
     <h2 class="section-heading">Let's build something.</h2>
+    <p class="contact-status mono">AVAILABLE FOR GRAPHICS / RENDERING OPPORTUNITIES</p>
     <p class="section-sub">Interested in graphics programming, rendering, C++, visualization, or just building something difficult?</p>
     <div class="contact-wrap">
       <a href="mailto:usmanjgraphics@gmail.com" class="contact-email" data-cursor="EMAIL">usmanjgraphics@gmail.com</a>
       <div class="contact-row">
-        <a href="mailto:usmanjgraphics@gmail.com" class="btn btn-primary" data-cursor="OPEN">SEND AN EMAIL →</a>
-        <a href="https://github.com/UsmanJ-Graphics" target="_blank" rel="noopener" class="btn btn-ghost" data-cursor="OPEN">GITHUB ↗</a>
+        <a href="mailto:usmanjgraphics@gmail.com" class="btn btn-primary" data-cursor="OPEN">EMAIL ME →</a>
+        <a href="https://github.com/UsmanJ-Graphics" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" data-cursor="OPEN">GITHUB ↗</a>
+        <a href="https://www.linkedin.com/in/usman-osman-500480405" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" data-cursor="OPEN">LINKEDIN ↗</a>
         <a href="assets/Usman-Javed-CV.pdf" download class="btn-cv mono" data-cursor="DOWNLOAD">DOWNLOAD CV ↓</a>
       </div>
     </div>
@@ -662,7 +697,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
         <div class="foot-role mono">GRAPHICS PROGRAMMER<br>C++ · OPENGL · GLSL · RENDERING</div>
       </div>
       <div class="foot-links">
-        <a href="https://github.com/UsmanJ-Graphics" target="_blank" rel="noopener">GITHUB</a>
+        <a href="https://github.com/UsmanJ-Graphics" target="_blank" rel="noopener noreferrer">GITHUB</a>
         <a href="mailto:usmanjgraphics@gmail.com">EMAIL</a>
       </div>
     </div>
@@ -704,12 +739,13 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
       <p id="modal-learned"></p>
     </div>
     <div class="modal-actions">
-      <a id="modal-source" href="#" target="_blank" rel="noopener" class="btn btn-primary">VIEW SOURCE →</a>
+      <a id="modal-source" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">VIEW SOURCE →</a>
     </div>
   </div>
 </div>
 
 <script defer src="assets/experience.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 /* ===================================================================
    DATA
@@ -882,7 +918,7 @@ mobileMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> mo
 
 // active section indicator
 const navLinks = document.querySelectorAll('.nav-link');
-const sections = ['work','lab','about','roadmap','contact'].map(id=>document.getElementById(id));
+const sections = ['work','toolchain','about','lab','education','contact'].map(id=>document.getElementById(id));
 const spy = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -922,7 +958,7 @@ document.querySelectorAll('.reveal').forEach(el=> revealObs.observe(el));
   Object.entries(SKILLS).forEach(([cat, items])=>{
     const col = document.createElement('div');
     col.className = 'skill-col';
-    col.innerHTML = `<h4>${cat}</h4>`;
+    col.innerHTML = `<h3>${cat}</h3>`;
     items.forEach(item=>{
       const row = document.createElement('div');
       row.className = 'skill-item';
@@ -1079,13 +1115,13 @@ function projectVisual(kind, image, name){
         <div class="proj-stack">${p.stack.map(s=>`<span>${s}</span>`).join('')}</div>
         ${p.meta ? `<div class="proj-meta">${p.meta.map(s=>`<span>${s}</span>`).join('')}</div>` : ''}
         <div class="proj-links">
-          <a href="#" class="proj-view" data-cursor="OPEN">VIEW PROJECT →</a>
-          <a href="${p.github}" target="_blank" rel="noopener" data-cursor="OPEN">VIEW SOURCE →</a>
+          <button type="button" class="proj-view" data-cursor="OPEN">VIEW PROJECT →</button>
+          <a href="${p.github}" target="_blank" rel="noopener noreferrer" data-cursor="OPEN">VIEW SOURCE →</a>
         </div>
       </div>`;
     card.querySelector('.proj-visual').addEventListener('click', ()=> openModal(p, i));
     card.querySelector('.proj-name').addEventListener('click', ()=> openModal(p, i));
-    card.querySelector('.proj-view').addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); openModal(p, i); });
+    card.querySelector('.proj-view').addEventListener('click', (e)=>{ e.stopPropagation(); openModal(p, i); });
     wrap.appendChild(card);
   });
 })();
@@ -1514,6 +1550,21 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') document.getEle
     hudFrame.textContent = '—';
   } else {
     animate();
+    // pause the render loop while the hero is scrolled out of view —
+    // no point spending GPU/CPU animating something nobody can see.
+    let running = true;
+    const heroVisibility = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting && !running){ running = true; animate(); }
+        else if(!entry.isIntersecting){ running = false; }
+      });
+    }, {threshold:0});
+    heroVisibility.observe(container);
+    const _animate = animate;
+    animate = function(){
+      if(!running) return;
+      _animate();
+    };
   }
 })();
 
