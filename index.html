@@ -439,6 +439,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 }
 </style>
 <link rel="stylesheet" href="assets/ui-overrides.css">
+<link rel="stylesheet" href="assets/responsive-fixes.css">
 </head>
 <body>
 
@@ -475,7 +476,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <a href="#contact" class="nav-link" data-nav="contact">Contact</a>
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme mode" aria-pressed="true"><span class="theme-sun" aria-hidden="true">☼</span><span class="theme-moon" aria-hidden="true">☾</span><i></i></button>
   </div>
-  <button class="nav-mobile-btn burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  <button class="nav-mobile-btn burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <div id="mobile-menu">
@@ -942,14 +943,17 @@ const mobileMenu = document.getElementById('mobile-menu');
 burger.addEventListener('click', ()=>{
   const isOpen = mobileMenu.classList.toggle('open');
   burger.setAttribute('aria-expanded', String(isOpen));
+  document.body.style.overflow = isOpen ? 'hidden' : '';
 });
 document.getElementById('mobile-close').addEventListener('click', ()=>{
   mobileMenu.classList.remove('open');
   burger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
 });
 mobileMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=>{
   mobileMenu.classList.remove('open');
   burger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
 }));
 
 // active section indicator
