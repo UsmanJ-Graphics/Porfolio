@@ -24,7 +24,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/ui-overrides.css">
 <style>
 /* ============ TOKENS ============ */
 :root{
@@ -439,6 +438,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
   .reveal{ opacity:1; transform:none; transition:none; }
 }
 </style>
+<link rel="stylesheet" href="assets/ui-overrides.css">
 </head>
 <body>
 
@@ -518,7 +518,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <span>REAL-TIME</span><span>OPENGL / WEBGL</span><span>GLSL</span><span>RENDERING</span>
     <span class="runtime-only" id="hud-api"></span><span class="runtime-only" id="hud-fps"></span><span class="runtime-only" id="hud-frame"></span><span class="runtime-only" id="hud-objects"></span><span class="runtime-only" id="hud-lights"></span>
   </div>
-  <div class="hero-content shell">
+  <div class="hero-content">
     <div class="hero-kicker mono">— GRAPHICS PROGRAMMER —</div>
     <h1 class="hero-title">
       Muhammad<br>
@@ -1408,21 +1408,25 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
   function createTechSlab(label) {
     const c = document.createElement('canvas'); c.width = 256; c.height = 128;
     const g = c.getContext('2d');
-    g.fillStyle = '#0a101d'; g.beginPath(); g.roundRect(4, 4, 248, 120, 16); g.fill();
+    g.fillStyle = 'rgba(10, 16, 29, 0.75)'; g.beginPath(); g.roundRect(4, 4, 248, 120, 16); g.fill();
     g.strokeStyle = '#7de3d6'; g.lineWidth = 4; g.stroke();
-    g.fillStyle = '#ffffff'; g.font = 'bold 42px "IBM Plex Mono", monospace';
+    g.fillStyle = '#7de3d6'; g.font = 'bold 42px "IBM Plex Mono", monospace';
     g.textAlign = 'center'; g.textBaseline = 'middle';
     g.fillText(label, 128, 64);
     const tex = new THREE.CanvasTexture(c); tex.needsUpdate = true;
-    const slabGeo = new THREE.BoxGeometry(0.85, 0.42, 0.04);
-    const mats = [
-      new THREE.MeshStandardMaterial({ color: 0x0a101d }),
-      new THREE.MeshStandardMaterial({ color: 0x0a101d }),
-      new THREE.MeshStandardMaterial({ color: 0x0a101d }),
-      new THREE.MeshStandardMaterial({ color: 0x0a101d }),
-      new THREE.MeshStandardMaterial({ map: tex, roughness: 0.2, metalness: 0.8 }),
-      new THREE.MeshStandardMaterial({ map: tex, roughness: 0.2, metalness: 0.8 })
-    ];
+    const slabGeo = new THREE.BoxGeometry(0.85, 0.42, 0.05);
+    const glassMat = new THREE.MeshPhysicalMaterial({
+      color: 0x0a101d,
+      roughness: 0.15,
+      metalness: 0.1,
+      transmission: 0.6,
+      transparent: true,
+      opacity: 0.9,
+      ior: 1.5,
+      thickness: 0.2
+    });
+    const faceMat = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.2, metalness: 0.8, transparent: true });
+    const mats = [glassMat, glassMat, glassMat, glassMat, faceMat, faceMat];
     return new THREE.Mesh(slabGeo, mats);
   }
 
@@ -1454,6 +1458,43 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
   moonMesh.position.set(5.2, -1.8, 1.5);
   scene.add(moonMesh);
 
+  // 3D Wireframe Mountain Terrain (Bottom-Right Parallax Background)
+  const terrainGeo = new THREE.PlaneGeometry(16, 12, 48, 48);
+  const tPos = terrainGeo.attributes.position;
+  for (let i = 0; i < tPos.count; i++) {
+    const x = tPos.getX(i);
+    const y = tPos.getY(i);
+    const z = Math.sin(x * 0.65) * Math.cos(y * 0.65) * 1.25 
+            + Math.sin(x * 1.5 + y * 1.2) * 0.5 
+            + Math.cos(x * 2.8) * 0.25;
+    tPos.setZ(i, Math.max(0, z));
+  }
+  terrainGeo.computeVertexNormals();
+
+  const terrainMat = new THREE.MeshBasicMaterial({
+    color: 0x7de3d6,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.35
+  });
+  const terrainMesh = new THREE.Mesh(terrainGeo, terrainMat);
+  terrainMesh.rotation.x = -Math.PI * 0.42;
+  terrainMesh.rotation.z = Math.PI * 0.08;
+  terrainMesh.position.set(5.2, -2.2, 0.5);
+  scene.add(terrainMesh);
+
+  // Reflective Ground Plane
+  const groundGeo = new THREE.PlaneGeometry(40, 40);
+  const groundMat = new THREE.MeshStandardMaterial({
+    color: 0x080f1a,
+    roughness: 0.18,
+    metalness: 0.85
+  });
+  const groundMesh = new THREE.Mesh(groundGeo, groundMat);
+  groundMesh.rotation.x = -Math.PI / 2;
+  groundMesh.position.y = -2.6;
+  scene.add(groundMesh);
+
   // Floating Primitives
   const primGroup = new THREE.Group();
   const primCount = isMobile ? 8 : 18;
@@ -1473,7 +1514,7 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
 
   // Ground Grid
   const grid = new THREE.GridHelper(30, 30, 0x28333c, 0x141a22);
-  grid.position.y = -2.6;
+  grid.position.y = -2.59;
   scene.add(grid);
 
   // Particle Field
@@ -1496,6 +1537,8 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
     sphereMat.color.setHex(dark ? 0x1a2636 : 0x3a4866);
     wireMat.color.setHex(dark ? 0x7de3d6 : 0x0e8f83);
     ringMat.color.setHex(dark ? 0x7de3d6 : 0x0e8f83);
+    terrainMat.color.setHex(dark ? 0x7de3d6 : 0x0e8f83);
+    groundMat.color.setHex(dark ? 0x080f1a : 0xd8dce8);
     pMat.color.setHex(dark ? 0x7de3d6 : 0x0e8f83);
     key.color.setHex(dark ? 0x9ff5ea : 0x0e8f83);
     rim.color.setHex(dark ? 0x5a7ba8 : 0x8a9abb);
@@ -1522,8 +1565,19 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
     renderer.setSize(container.clientWidth, container.clientHeight);
   });
 
+  // Orbital Wheel Visibility: Reveal only when scrolling starts
+  const orbitalHud = document.getElementById('orbital-hud');
+  const checkWheelVisibility = () => {
+    const isScrolled = window.scrollY > 40;
+    if (orbitalHud) orbitalHud.classList.toggle('visible', isScrolled);
+  };
+  window.addEventListener('scroll', checkWheelVisibility, { passive: true });
+  checkWheelVisibility();
+
   // Motion Orchestrator & GSAP ScrollTrigger
   let scrollProgress = 0;
+  let currentActiveSection = 'hero';
+
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
     if (typeof ScrollToPlugin !== 'undefined') gsap.registerPlugin(ScrollToPlugin);
@@ -1532,11 +1586,14 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
       trigger: document.body,
       start: 'top top',
       end: 'bottom bottom',
-      onUpdate: self => scrollProgress = self.progress
+      onUpdate: self => {
+        scrollProgress = self.progress;
+        checkWheelVisibility();
+      }
     });
 
     const sections = ['hero', 'work', 'toolchain', 'about', 'education', 'roadmap', 'availability', 'contact'];
-    sections.forEach((id, idx) => {
+    sections.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
       ScrollTrigger.create({
@@ -1550,10 +1607,21 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
   }
 
   function updateOrbitalHUD(id) {
+    if (currentActiveSection === id) return;
+    currentActiveSection = id;
+
     document.querySelectorAll('.orbital-node').forEach(node => {
       const isTarget = node.getAttribute('data-target') === id;
       node.classList.toggle('active', isTarget);
     });
+
+    // Smooth visual feedback transition when changing sections
+    if (orbitalHud && orbitalHud.classList.contains('visible')) {
+      orbitalHud.style.transform = 'translateY(-50%) scale(1.05)';
+      setTimeout(() => {
+        if (orbitalHud) orbitalHud.style.transform = '';
+      }, 350);
+    }
   }
 
   document.querySelectorAll('.orbital-node').forEach(node => {
@@ -1562,7 +1630,7 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
       const targetEl = document.getElementById(targetId);
       if (targetEl) {
         if (typeof gsap !== 'undefined' && gsap.plugins.scrollTo) {
-          gsap.to(window, { duration: 1, scrollTo: targetEl, ease: 'power2.inOut' });
+          gsap.to(window, { duration: 1.2, scrollTo: targetEl, ease: 'power3.inOut' });
         } else {
           targetEl.scrollIntoView({ behavior: 'smooth' });
         }
