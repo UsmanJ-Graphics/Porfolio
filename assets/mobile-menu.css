@@ -1,0 +1,116 @@
+/* ============================================================
+   MOBILE MENU — on-brand glass overlay with numbered links
+   Replaces the plain list of <a> tags with a styled nav that
+   matches the rest of the site (mono labels, accent numbers,
+   dashed hairlines, staggered entrance, footer CTA).
+   Save as: assets/mobile-menu.css
+   Load AFTER ui-overrides.css / responsive-fixes.css / hero-featured.css.
+   ============================================================ */
+
+#mobile-menu {
+  background: linear-gradient(180deg, rgba(4, 7, 13, 0.98), rgba(4, 7, 13, 0.995)) !important;
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  padding: 104px 26px 34px !important;
+  display: flex;
+  flex-direction: column;
+}
+html[data-theme="light"] #mobile-menu {
+  background: linear-gradient(180deg, rgba(244, 244, 240, 0.98), rgba(255, 255, 255, 0.99)) !important;
+}
+
+.mm-head {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+
+.mm-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.mm-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 17px 0;
+  border-bottom: 1px dashed var(--border);
+  opacity: 0;
+  transform: translateX(-18px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+#mobile-menu.open .mm-link {
+  opacity: 1;
+  transform: none;
+}
+#mobile-menu.open .mm-link:nth-child(1) { transition-delay: 0.08s; }
+#mobile-menu.open .mm-link:nth-child(2) { transition-delay: 0.14s; }
+#mobile-menu.open .mm-link:nth-child(3) { transition-delay: 0.2s; }
+#mobile-menu.open .mm-link:nth-child(4) { transition-delay: 0.26s; }
+#mobile-menu.open .mm-link:nth-child(5) { transition-delay: 0.32s; }
+
+.mm-num {
+  font-size: 11px;
+  color: var(--accent);
+  opacity: 0.85;
+  min-width: 20px;
+}
+.mm-label {
+  flex: 1;
+  font-size: clamp(24px, 7vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  transition: color 0.25s, transform 0.25s var(--ease);
+}
+.mm-arrow {
+  font-size: 16px;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.25s, transform 0.25s var(--ease);
+}
+.mm-link:hover .mm-label,
+.mm-link:active .mm-label {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+.mm-link:hover .mm-arrow {
+  opacity: 1;
+  transform: none;
+}
+
+.mm-foot {
+  margin-top: auto;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s var(--ease) 0.36s, transform 0.45s var(--ease) 0.36s;
+}
+#mobile-menu.open .mm-foot {
+  opacity: 1;
+  transform: none;
+}
+.mm-cta {
+  align-self: flex-start;
+}
+.mm-social {
+  display: flex;
+  gap: 22px;
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+.mm-social a:hover {
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-link, .mm-foot { transition: none !important; opacity: 1 !important; transform: none !important; }
+}

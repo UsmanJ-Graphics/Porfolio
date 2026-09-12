@@ -440,6 +440,9 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 </style>
 <link rel="stylesheet" href="assets/ui-overrides.css">
 <link rel="stylesheet" href="assets/responsive-fixes.css">
+<link rel="stylesheet" href="assets/hero-featured.css">
+<link rel="stylesheet" href="assets/mobile-menu.css">
+<link rel="stylesheet" href="assets/scroll-transitions.css">
 </head>
 <body>
 
@@ -481,11 +484,21 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 
 <div id="mobile-menu">
   <button class="mobile-close" id="mobile-close" aria-label="Close menu">✕</button>
-  <a href="#hero">Home</a>
-  <a href="#work">Projects</a>
-  <a href="#toolchain">Skills</a>
-  <a href="#about">About</a>
-  <a href="#contact">Contact</a>
+  <div class="mm-head mono">MENU</div>
+  <nav class="mm-links">
+    <a href="#hero" class="mm-link"><span class="mm-num mono">01</span><span class="mm-label">Home</span><span class="mm-arrow">→</span></a>
+    <a href="#work" class="mm-link"><span class="mm-num mono">02</span><span class="mm-label">Projects</span><span class="mm-arrow">→</span></a>
+    <a href="#toolchain" class="mm-link"><span class="mm-num mono">03</span><span class="mm-label">Skills</span><span class="mm-arrow">→</span></a>
+    <a href="#about" class="mm-link"><span class="mm-num mono">04</span><span class="mm-label">About</span><span class="mm-arrow">→</span></a>
+    <a href="#contact" class="mm-link"><span class="mm-num mono">05</span><span class="mm-label">Contact</span><span class="mm-arrow">→</span></a>
+  </nav>
+  <div class="mm-foot">
+    <a href="mailto:usmanjgraphics@gmail.com" class="btn btn-pill-cyan mm-cta">EMAIL ME &nbsp;→</a>
+    <div class="mm-social mono">
+      <a href="https://github.com/UsmanJ-Graphics" target="_blank" rel="noopener noreferrer">GITHUB</a>
+      <a href="https://www.linkedin.com/in/usman-osman-500480405" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+    </div>
+  </div>
 </div>
 
 <!-- LEFT MARGIN STEP COUNTER -->
@@ -531,6 +544,39 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
       <a href="#work" class="btn btn-pill-cyan" data-cursor="OPEN">Explore My Work &nbsp;→</a>
     </div>
   </div>
+
+  <!-- FEATURED PROJECTS PREVIEW -->
+  <div class="hero-featured">
+    <div class="hero-featured-eyebrow mono">FEATURED PROJECTS</div>
+    <h2 class="hero-featured-title">Real-Time Rendering<br><span class="text-glow-cyan">Systems</span></h2>
+    <p class="hero-featured-desc">Interactive systems built with C++, OpenGL and GLSL — from a real-time digital-twin city renderer to state-machine visual tooling and from-scratch data charts.</p>
+    <a href="#work" class="hero-featured-link mono" data-cursor="OPEN">View Projects &nbsp;→</a>
+
+    <div class="hero-featured-row">
+      <a class="hero-feat-card" href="#work" data-cursor="OPEN">
+        <div class="hero-feat-img"><img src="assets/project-screens/twincity-dashboard.png" alt="TwinCity3D real-time digital twin dashboard" loading="lazy"></div>
+        <div class="hero-feat-body">
+          <div class="hero-feat-name">TwinCity3D</div>
+          <div class="hero-feat-tags mono"><span>C++</span><span>OpenGL</span><span>GLSL</span></div>
+        </div>
+      </a>
+      <a class="hero-feat-card" href="#work" data-cursor="OPEN">
+        <div class="hero-feat-img"><img src="assets/project-screens/automata-dfa.png" alt="Theory of Automata Solver DFA builder" loading="lazy"></div>
+        <div class="hero-feat-body">
+          <div class="hero-feat-name">Automata Solver + NLU</div>
+          <div class="hero-feat-tags mono"><span>C++</span><span>ImGui</span><span>NLU</span></div>
+        </div>
+      </a>
+      <a class="hero-feat-card" href="#work" data-cursor="OPEN">
+        <div class="hero-feat-img"><img src="assets/project-screens/statix-dashboard.png" alt="Statistical Data Tool chart dashboard" loading="lazy"></div>
+        <div class="hero-feat-body">
+          <div class="hero-feat-name">Statistical Data Tool</div>
+          <div class="hero-feat-tags mono"><span>C++</span><span>Data Viz</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+
   <!-- BOTTOM LEFT TECH FOOTPRINT BAR -->
   <div class="bottom-left-tech mono" aria-hidden="true">
     <span>C++</span><span>OpenGL</span><span>GLSL</span>
@@ -541,7 +587,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 <main class="shell" id="main">
 
   <!-- PROJECTS -->
-  <section class="section reveal" id="work">
+  <section class="section reveal" id="work" data-transition="stack">
     <div class="eyebrow mono">01 / SELECTED WORK</div>
     <h2 class="section-heading">Things I've built.</h2>
     <p class="section-sub">A working set of projects across real-time graphics, low-level systems, and applied C++.</p>
@@ -549,7 +595,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
   </section>
 
   <!-- SKILLS -->
-  <section class="section reveal" id="toolchain">
+  <section class="section reveal" id="toolchain" data-transition="columns">
     <div class="eyebrow mono">02 / TOOLCHAIN</div>
     <h2 class="section-heading">The tools I build with.</h2>
     <p class="section-sub">Currently working with these tools and technologies while expanding into GPU programming and rendering systems.</p>
@@ -557,7 +603,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
   </section>
 
   <!-- ABOUT -->
-  <section class="section reveal" id="about">
+  <section class="section reveal" id="about" data-transition="split">
     <div class="eyebrow mono">03 / ABOUT</div>
     <h2 class="section-heading">Curious about what happens underneath.</h2>
     <div class="about-grid" style="margin-top:50px;">
@@ -594,7 +640,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
   </section>
 
   <!-- LAB -->
-  <section class="section reveal" id="lab">
+  <section class="section reveal" id="lab" data-transition="pipeline">
     <div class="eyebrow mono">04 / GRAPHICS LAB</div>
     <h2 class="section-heading">Where I experiment.</h2>
     <div class="lab-grid">
@@ -625,7 +671,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
   </section>
 
   <!-- EDUCATION + ACHIEVEMENTS -->
-  <section class="section reveal" id="education">
+  <section class="section reveal" id="education" data-transition="timeline">
     <div class="eyebrow mono">05 / EDUCATION</div>
     <h2 class="section-heading">Academic background.</h2>
     <div class="two-col">
@@ -658,7 +704,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
   </section>
 
   <!-- ROADMAP -->
-  <section class="section reveal" id="roadmap">
+  <section class="section reveal" id="roadmap" data-transition="path">
     <div class="eyebrow mono">06 / ROADMAP</div>
     <h2 class="section-heading">Building toward graphics engineering.</h2>
     <div class="roadmap-layout">
@@ -678,7 +724,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
   </section>
 
   <!-- AVAILABILITY -->
-  <section class="section reveal" id="availability">
+  <section class="section reveal" id="availability" data-transition="pulse">
     <div class="eyebrow mono">07 / AVAILABILITY</div>
     <h2 class="section-heading">Looking for the next system to build.</h2>
     <p class="section-sub">I'm currently looking for a full-time remote internship where I can learn from experienced engineers and contribute to real-world graphics, rendering, performance, or tools development.</p>
@@ -698,7 +744,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
   </section>
 
   <!-- CONTACT -->
-  <section class="section reveal" id="contact">
+  <section class="section reveal" id="contact" data-transition="rise">
     <div class="eyebrow mono">08 / CONTACT</div>
     <h2 class="section-heading">Let's build something.</h2>
     <p class="contact-status mono">AVAILABLE FOR GRAPHICS / RENDERING OPPORTUNITIES</p>
@@ -987,7 +1033,7 @@ themeToggle.addEventListener('click', ()=>{
 =================================================================== */
 const revealObs = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); revealObs.unobserve(e.target); } });
-}, {threshold:0.12});
+}, {threshold:0.12, rootMargin:'0px 0px -12% 0px'});
 document.querySelectorAll('.reveal').forEach(el=> revealObs.observe(el));
 
 /* ===================================================================

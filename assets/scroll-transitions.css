@@ -1,0 +1,148 @@
+/* ============================================================
+   SCROLL TRANSITIONS — per-section, content-aware
+   Each <section class="section reveal" data-transition="…"> already
+   gets a base fade/rise from the inline .reveal / .reveal.in rules
+   in index.html. This file layers a second, section-specific
+   animation on the children of each section so the *way* a section
+   arrives reflects what it's showing (a stack of project builds,
+   toolchain modules loading, a pipeline lighting up left-to-right,
+   a growth path drawing itself in, etc).
+   The trigger class is still just ".in", added once by the existing
+   revealObs IntersectionObserver in index.html — no JS changes needed.
+   Save as: assets/scroll-transitions.css
+   Load AFTER ui-overrides.css, responsive-fixes.css, hero-featured.css.
+   ============================================================ */
+
+/* ---------- 01 · WORK — cards rise into place like a build assembling ---------- */
+.section[data-transition="stack"] .proj-card {
+  opacity: 0;
+  transform: translateY(46px) scale(0.97);
+  transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+}
+.section[data-transition="stack"].in .proj-card { opacity: 1; transform: none; }
+.section[data-transition="stack"] .proj-card:nth-child(1) { transition-delay: 0.04s; }
+.section[data-transition="stack"] .proj-card:nth-child(2) { transition-delay: 0.14s; }
+.section[data-transition="stack"] .proj-card:nth-child(3) { transition-delay: 0.24s; }
+.section[data-transition="stack"] .proj-card:nth-child(4) { transition-delay: 0.34s; }
+.section[data-transition="stack"] .proj-card:nth-child(5) { transition-delay: 0.44s; }
+
+/* ---------- 02 · TOOLCHAIN — columns load in like modules in a build chain ---------- */
+.section[data-transition="columns"] .skill-col {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+}
+.section[data-transition="columns"].in .skill-col { opacity: 1; transform: none; }
+.section[data-transition="columns"] .skill-col:nth-child(1) { transition-delay: 0.04s; }
+.section[data-transition="columns"] .skill-col:nth-child(2) { transition-delay: 0.13s; }
+.section[data-transition="columns"] .skill-col:nth-child(3) { transition-delay: 0.22s; }
+.section[data-transition="columns"] .skill-col:nth-child(4) { transition-delay: 0.31s; }
+
+/* ---------- 03 · ABOUT — text from the left, visual spins in from the right,
+   principles cascade — mirrors "first principles → real-time → next" ---------- */
+.section[data-transition="split"] .about-body {
+  opacity: 0;
+  transform: translateX(-38px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.section[data-transition="split"] .about-visual {
+  opacity: 0;
+  transform: translateX(38px) rotate(-5deg) scale(0.92);
+  transition: opacity 0.75s var(--ease) 0.1s, transform 0.75s var(--ease) 0.1s;
+}
+.section[data-transition="split"].in .about-body,
+.section[data-transition="split"].in .about-visual { opacity: 1; transform: none; }
+
+.section[data-transition="split"] .principle-card {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+}
+.section[data-transition="split"].in .principle-card { opacity: 1; transform: none; }
+.section[data-transition="split"] .principle-card:nth-child(1) { transition-delay: 0.28s; }
+.section[data-transition="split"] .principle-card:nth-child(2) { transition-delay: 0.38s; }
+.section[data-transition="split"] .principle-card:nth-child(3) { transition-delay: 0.48s; }
+
+/* ---------- 04 · LAB — stages light up left-to-right like data flowing
+   through a render pipeline ---------- */
+.section[data-transition="pipeline"] .lab-card {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.section[data-transition="pipeline"].in .lab-card { opacity: 1; transform: none; }
+.section[data-transition="pipeline"] .lab-grid .lab-card:nth-child(1) { transition-delay: 0.04s; }
+.section[data-transition="pipeline"] .lab-grid .lab-card:nth-child(2) { transition-delay: 0.2s; }
+.section[data-transition="pipeline"] > .lab-card { transition-delay: 0.36s; }
+
+/* ---------- 05 · EDUCATION — cards rise while a left accent line draws
+   down, like a transcript unfurling ---------- */
+.section[data-transition="timeline"] .card {
+  position: relative;
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.section[data-transition="timeline"] .card::before {
+  content: '';
+  position: absolute;
+  left: 2px; top: 2px; bottom: 2px;
+  width: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.7s var(--ease) 0.2s;
+}
+.section[data-transition="timeline"].in .card { opacity: 1; transform: none; }
+.section[data-transition="timeline"].in .card::before { transform: scaleY(1); }
+.section[data-transition="timeline"] .card:nth-child(2) { transition-delay: 0.14s; }
+
+/* ---------- 06 · ROADMAP — the track draws downward like a growth path,
+   the "currently learning" card slides in from the right ---------- */
+.section[data-transition="path"] .roadmap-track::before {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.9s var(--ease);
+}
+.section[data-transition="path"].in .roadmap-track::before { transform: scaleY(1); }
+.section[data-transition="path"] .roadmap-track > * {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.section[data-transition="path"].in .roadmap-track > * { opacity: 1; transform: none; }
+.section[data-transition="path"] .learning-card {
+  opacity: 0;
+  transform: translateX(32px);
+  transition: opacity 0.65s var(--ease) 0.15s, transform 0.65s var(--ease) 0.15s;
+}
+.section[data-transition="path"].in .learning-card { opacity: 1; transform: none; }
+
+/* ---------- 07 · AVAILABILITY — card pulses online like a status ping ---------- */
+.section[data-transition="pulse"] .avail-card {
+  opacity: 0;
+  transform: scale(0.93);
+  transition: opacity 0.5s var(--ease), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.section[data-transition="pulse"].in .avail-card { opacity: 1; transform: scale(1); }
+
+/* ---------- 08 · CONTACT — a confident, simple rise ---------- */
+.section[data-transition="rise"] .contact-email,
+.section[data-transition="rise"] .contact-row {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+}
+.section[data-transition="rise"].in .contact-email { transition-delay: 0.05s; }
+.section[data-transition="rise"].in .contact-row { transition-delay: 0.15s; }
+.section[data-transition="rise"].in .contact-email,
+.section[data-transition="rise"].in .contact-row { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-transition] * {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
