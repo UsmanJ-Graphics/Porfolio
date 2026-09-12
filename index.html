@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Usman | Graphics Programmer — C++, OpenGL, GLSL &amp; Rendering</title>
+<title>Muhammad Usman Javed — Graphics Programmer / C++ / Real-Time Rendering</title>
 <meta name="description" content="Portfolio of Muhammad Usman Javed, a Computer Science student focused on graphics programming — C++, OpenGL, GLSL, and real-time rendering systems." />
 <link rel="canonical" href="https://portfolio-ashy-six-1be88igzjw.vercel.app/" />
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
-<meta property="og:title" content="Usman | Graphics Programmer — C++, OpenGL, GLSL & Rendering" />
+<meta property="og:title" content="Muhammad Usman Javed — Graphics Programmer / C++ / Real-Time Rendering" />
 <meta property="og:description" content="Computer Science student building real-time rendering systems from first principles. C++, OpenGL, GLSL." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://portfolio-ashy-six-1be88igzjw.vercel.app/" />
@@ -18,7 +18,7 @@
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Usman | Graphics Programmer — C++, OpenGL, GLSL & Rendering" />
+<meta name="twitter:title" content="Muhammad Usman Javed — Graphics Programmer / C++ / Real-Time Rendering" />
 <meta name="twitter:description" content="Computer Science student building real-time rendering systems from first principles. C++, OpenGL, GLSL." />
 <meta name="twitter:image" content="https://portfolio-ashy-six-1be88igzjw.vercel.app/assets/og-image.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,42 +29,42 @@
 /* ============ TOKENS ============ */
 :root{
   --bg:#08090b;
-  --bg-soft:#0c0e11;
+  --bg-soft:#101318;
   --panel:#101318;
   --panel-2:#14171d;
-  --border:rgba(237,238,240,0.09);
-  --border-strong:rgba(237,238,240,0.16);
+  --border:rgba(237,238,240,0.12);
+  --border-strong:rgba(237,238,240,0.25);
   --text:#eceef1;
-  --text-muted:#888e98;
-  --text-dim:#5b6069;
+  --text-muted:#b0b5c0;
+  --text-dim:#788090;
   --accent:#7de3d6;
   --accent-strong:#a6f0e6;
   --accent-dim:rgba(125,227,214,0.35);
   --accent-glow:rgba(125,227,214,0.13);
   --danger:#e8967a;
   --grid-line: rgba(237,238,240,0.045);
-  --radius-sm:3px;
-  --radius-md:5px;
+  --radius-sm:4px;
+  --radius-md:8px;
   --shadow-panel: 0 20px 60px -20px rgba(0,0,0,0.6);
-  --dur:0.5s;
+  --dur:0.3s;
   --ease: cubic-bezier(.16,.84,.32,1);
 }
 html[data-theme="light"]{
-  --bg:#eceeee;
-  --bg-soft:#e4e7e7;
-  --panel:#ffffff;
-  --panel-2:#f4f5f5;
-  --border:rgba(15,20,22,0.09);
-  --border-strong:rgba(15,20,22,0.18);
-  --text:#12161a;
-  --text-muted:#565d64;
-  --text-dim:#8b9096;
+  --bg:#F1F1ED;
+  --bg-soft:#FAFAF7;
+  --panel:#FAFAF7;
+  --panel-2:#FFFFFF;
+  --border:#C8C8C3;
+  --border-strong:#171717;
+  --text:#111111;
+  --text-muted:#292929;
+  --text-dim:#555555;
   --accent:#0e8f83;
   --accent-strong:#0a6d64;
-  --accent-dim:rgba(14,143,131,0.28);
-  --accent-glow:rgba(14,143,131,0.10);
-  --grid-line: rgba(15,20,22,0.05);
-  --shadow-panel: 0 20px 50px -24px rgba(20,25,28,0.25);
+  --accent-dim:rgba(14,143,131,0.32);
+  --accent-glow:rgba(14,143,131,0.12);
+  --grid-line: rgba(17,17,17,0.05);
+  --shadow-panel: 0 16px 40px -16px rgba(17,17,17,0.12);
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -586,12 +586,12 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
       <h3>Shader Playground</h3>
       <div class="lab-status mono">MATERIAL RESPONSE · ROUGHNESS / METALLIC PREVIEW</div>
       <div class="shader-play">
-        <canvas id="shader-canvas" width="500" height="500" aria-hidden="true"></canvas>
+        <canvas id="shader-canvas" width="500" height="500" aria-label="Interactive 2D preview of material roughness and metallic surface response"></canvas>
         <div>
-          <div class="sp-control"><label>ROUGHNESS <b id="v-rough">0.35</b></label><input type="range" id="c-rough" min="0" max="1" step="0.01" value="0.35"></div>
-          <div class="sp-control"><label>METALLIC <b id="v-metal">0.20</b></label><input type="range" id="c-metal" min="0" max="1" step="0.01" value="0.20"></div>
-          <div class="sp-control"><label>LIGHT INTENSITY <b id="v-light">1.00</b></label><input type="range" id="c-light" min="0.1" max="2" step="0.01" value="1"></div>
-          <div class="sp-control"><label>EXPOSURE <b id="v-cam">0.00</b></label><input type="range" id="c-cam" min="-1" max="1" step="0.01" value="0"></div>
+          <div class="sp-control"><label for="c-rough">ROUGHNESS <b id="v-rough">0.35</b></label><input type="range" id="c-rough" min="0" max="1" step="0.01" value="0.35"></div>
+          <div class="sp-control"><label for="c-metal">METALLIC <b id="v-metal">0.20</b></label><input type="range" id="c-metal" min="0" max="1" step="0.01" value="0.20"></div>
+          <div class="sp-control"><label for="c-light">LIGHT INTENSITY <b id="v-light">1.00</b></label><input type="range" id="c-light" min="0.1" max="2" step="0.01" value="1"></div>
+          <div class="sp-control"><label for="c-cam">EXPOSURE <b id="v-cam">0.00</b></label><input type="range" id="c-cam" min="-1" max="1" step="0.01" value="0"></div>
         </div>
       </div>
     </div>
@@ -709,13 +709,13 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 </footer>
 
 <!-- PROJECT MODAL -->
-<div id="project-modal">
+<div id="project-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-title">
   <div class="modal-panel">
     <div class="modal-top">
       <div>
         <div class="modal-title" id="modal-title"></div>
       </div>
-      <button class="modal-close" id="modal-close">✕</button>
+      <button class="modal-close" id="modal-close" aria-label="Close project details">✕</button>
     </div>
     <div class="modal-meta mono">
       <span>PROJECT / <b id="modal-index"></b></span>
@@ -753,84 +753,82 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 const PROJECTS = [
   {
     id:'twincity3d', tag:'PROJECT 01 · FLAGSHIP', name:'TwinCity3D', size:'large',
-    desc:'A 3D city / digital-twin project exploring real-time visualization and graphics programming.',
-    stack:['C++','OpenGL','Real-Time Rendering'],
+    desc:'Real-time 3D digital-twin environment built from scratch in C++ and OpenGL with custom camera projection math, spatial grid layouts, and atmospheric lighting shaders.',
+    stack:['C++','OpenGL 3.3','GLSL','Real-Time Rendering'],
     github:'https://github.com/UsmanJ-Graphics/TwinCity3D',
-    built:'A real-time 3D city environment rendered from scratch — buildings, road networks, a navigable camera, and atmospheric lighting laid out on a spatial grid to explore digital-twin style visualization.',
-    learned:'Camera systems and view/projection math, organizing large scenes efficiently, and how lighting and atmosphere change the readability of a 3D space.',
+    built:'A real-time 3D city environment rendered from scratch in C++ and OpenGL — procedural building geometry, road network layouts, camera view/projection matrix control, and dynamic lighting models on a spatial grid for digital-twin visualization.',
+    learned:'Camera view & projection transformations, spatial scene partitioning, VAO/VBO buffer layout, vertex/fragment shader pipelines, and ambient/directional light calculation.',
     status:'IN PROGRESS', visual:'city', image:'assets/project-screens/twincity-dashboard.png',
-    meta:['3D','CAMERA','LIGHTING','GEOMETRY','RENDERING']
+    meta:['CAMERA MATRIX MATH','SPATIAL GRID MANAGEMENT','OPENGL LIGHTING MODELS','3D GEOMETRY PIPELINE']
   },
   {
     id:'automata', tag:'PROJECT 02', name:'Theory of Automata Solver + NLU', size:'reg',
-    desc:'An experimental C++ application exploring natural-language parsing of automata problems and converting them into executable logic, with real-time graph/state visualization.',
-    stack:['C++','OpenGL','ImGui','NLU','Graph Visualization'],
+    desc:'A C++ application parsing natural-language automata descriptions into formal state machine logic, rendered live as an interactive node graph with OpenGL and ImGui.',
+    stack:['C++','OpenGL','ImGui','NLU','Graph Algorithms'],
     github:'https://github.com/UsmanJ-Graphics/theory-of-automata',
-    built:'A tool that parses natural-language automata problems and converts them into executable state-machine logic, rendered live as an animated node/transition graph.',
-    learned:'Bridging language parsing with formal computation, and building interactive graph visualizations that update in real time as state changes.',
+    built:'A technical tool that parses English problem specifications into formal state machines, builds state transition matrices, and renders interactive node-edge diagrams with live state traversal using ImGui.',
+    learned:'Parsing formal grammars into executable state machines, and building real-time interactive debug tools and visual graph interfaces in C++ and ImGui.',
     status:'COMPLETED', visual:'graph', image:'assets/project-screens/automata-dfa.png',
-    meta:['NODES','EDGES','STATE TRANSITIONS','PARSING']
+    meta:['STATE MACHINE PARSING','TRANSITION MATRIX','LIVE GRAPH ANIMATION','IMGUI TOOLING']
   },
   {
     id:'flappybird', tag:'PROJECT 03 · LOW LEVEL', name:'Flappy Bird — 8086 Assembly', size:'reg',
-    desc:'A fully playable Flappy Bird-style game written in 8086 Assembly using x86 real-mode DOS and VGA Mode 13h.',
-    stack:['x86 Assembly','VGA Mode 13h','BIOS Interrupts','Software Rendering'],
+    desc:'A real-mode DOS game written directly in 8086 Assembly, driving VGA Mode 13h video memory at address 0xA0000 with BIOS interrupts and manual AABB collision.',
+    stack:['x86 Assembly','VGA Mode 13h','0xA0000 Framebuffer','BIOS Interrupts'],
     github:'https://github.com/UsmanJ-Graphics/Flappy-bird-game',
-    built:'A playable game written directly in 8086 Assembly — writing pixels straight to the 0xA0000 VGA framebuffer, driving a game loop, reading input through BIOS interrupts, and detecting collisions with AABB checks. No engine, no modern graphics API — just software rendering.',
-    learned:'How graphics worked before GPUs existed: direct video memory access, real-mode DOS constraints, and the discipline of building a game loop with nothing but assembly instructions.',
+    built:'A complete game written in pure 8086 Assembly. Manipulates 320x200 8-bit pixels directly at memory location 0xA0000, reads keyboard input via BIOS Interrupt 16h, and executes an assembly game loop with manual bounding box collision checks.',
+    learned:'Hardware graphics fundamentals: raw memory-mapped I/O, x86 register management, BIOS interrupt handling, software rasterization without high-level APIs or GPU drivers.',
     status:'COMPLETED', visual:'vga',
-    meta:['8086','VGA MODE 13H','0xA0000 FRAMEBUFFER','BIOS INPUT','AABB']
+    meta:['8086 REAL MODE','DIRECT FRAMEBUFFER (0xA0000)','BIOS INT 16H/10H','AABB COLLISION']
   },
   {
-    id:'stattool', tag:'PROJECT 04', name:'Statistical Tool', size:'reg',
-    desc:'A C++ data-processing tool that parses datasets, computes statistical findings, and generates charts without relying on external plotting libraries.',
-    stack:['C++','File I/O','Data Structures','Algorithms'],
+    id:'stattool', tag:'PROJECT 04', name:'Statistical Data Tool', size:'reg',
+    desc:'A high-performance C++ data processing utility that parses datasets, computes statistical distributions, and generates custom data charts without external plotting libraries.',
+    stack:['C++','File I/O','Data Structures','Data Visualization'],
     github:'https://github.com/UsmanJ-Graphics/Statistical-tool',
-    built:'A modular C++ tool that reads datasets from files, computes statistical measures, and renders the results as charts drawn from scratch.',
-    learned:'Designing modular architecture for data pipelines, and how much is involved in turning raw numbers into a readable chart without a plotting library to lean on.',
+    built:'A modular C++ command-line and visualization utility for reading raw numerical datasets, computing descriptive statistics (variance, standard deviation, distribution), and generating visual chart outputs from first principles.',
+    learned:'Modular pipeline design in modern C++, memory-efficient data stream processing, and custom layout algorithms for data presentation.',
     status:'COMPLETED', visual:'chart', image:'assets/project-screens/statix-dashboard.png',
-    meta:['FILE I/O','DATA STRUCTURES','ALGORITHMS']
+    meta:['DATA PARSING PIPELINE','STATISTICAL CALCULATIONS','CUSTOM CHART RENDERER','FILE I/O']
   },
   {
-    id:'birthday', tag:'CREATIVE EXPERIMENT', name:'Finger Tracer — Happy Birthday', size:'small',
-    desc:'An interactive computer-vision finger-tracing experience that turns movement into a playful birthday card.',
-    stack:['C++','OpenCV','Hand Tracking','Creative Coding'],
+    id:'birthday', tag:'CREATIVE EXPERIMENT', name:'Finger Tracer — CV Interaction', size:'small',
+    desc:'An interactive computer-vision system utilizing OpenCV hand-tracking pipelines to map finger trajectories to particle emitters and real-time canvas drawing.',
+    stack:['C++','OpenCV','Hand Tracking','Particle System'],
     github:'https://github.com/UsmanJ-Graphics/happybirthday',
-    built:'An interactive Finger Tracer built with hand tracking, drawing, particles, and a birthday-card experience — a playful break from systems and rendering work.',
-    learned:'How input, computer vision, drawing, and small interaction details can turn a technical prototype into a personal creative experience.',
+    built:'An interactive vision prototype built with OpenCV hand-tracking and custom particle emitters, translating real-time finger movements into animated vector strokes and visual particle bursts.',
+    learned:'Integrating real-time camera video streams with frame-by-frame trajectory smoothing and visual particle effect generation.',
     status:'COMPLETED', visual:'birthday',
-    meta:['HAND TRACKING','OPENCV','PARTICLES']
+    meta:['OPENCV TRACKING','TRAJECTORY INTERPOLATION','PARTICLE EMITTER']
   }
 ];
 
 const SKILLS = {
   'LANGUAGES': [
-    {n:'C', d:'Systems-level fundamentals — memory, pointers, manual control.'},
-    {n:'C++', d:'Primary language for graphics and application projects.'},
-    {n:'x86 Assembly', d:'Used for direct hardware / VGA programming.'},
-    {n:'GLSL', d:'Shader language for the OpenGL rendering pipeline.'}
+    {n:'C++', d:'Primary systems and graphics language — OOP, memory management, templates.'},
+    {n:'C', d:'Systems-level fundamentals — pointers, manual memory allocation, data layout.'},
+    {n:'x86 Assembly', d:'8086 real-mode programming, register manipulation, hardware I/O.'},
+    {n:'GLSL', d:'Programmable shader stages for OpenGL real-time rendering pipelines.'}
   ],
-  'GRAPHICS': [
-    {n:'OpenGL 3.3', d:'Core-profile rendering, state machine, draw calls.'},
-    {n:'GLSL', d:'Vertex / fragment shaders.'},
-    {n:'ImGui', d:'Debug and tooling UI inside graphics apps.'},
-    {n:'Render Pipeline', d:'Vertex → rasterize → fragment → framebuffer.'},
-    {n:'Shaders', d:'Programmable stages of the GPU pipeline.'},
-    {n:'Buffers', d:'VAO / VBO / EBO — how vertex data reaches the GPU.'},
-    {n:'Textures', d:'Sampling, filtering, and mapping onto geometry.'},
-    {n:'GPU Concepts', d:'State, pipelines, and how work is scheduled on-GPU.'}
+  'GRAPHICS & RENDERING': [
+    {n:'OpenGL 3.3', d:'Core-profile rendering, state management, VAO/VBO/EBO buffer layout.'},
+    {n:'GLSL Shaders', d:'Custom vertex, fragment, and lighting shader programs.'},
+    {n:'Render Pipeline', d:'Vertex assembly → rasterization → fragment processing → framebuffer.'},
+    {n:'ImGui', d:'Immediate-mode debug interfaces and tool UI for C++ graphics apps.'},
+    {n:'Textures & Buffers', d:'Texture sampling, depth buffers, framebuffers, vertex attributes.'},
+    {n:'GPU Concepts', d:'GPU state pipeline, shader execution model, draw call optimization.'}
   ],
   'FOUNDATIONS': [
-    {n:'Data Structures & Algorithms', d:'Core coursework and applied practice.'},
-    {n:'Linear Algebra', d:'Vectors, matrices, transforms — the math under 3D graphics.'},
-    {n:'Multivariable Calculus', d:'Foundations relevant to lighting and shading math.'},
-    {n:'Computer Architecture', d:'How the hardware underneath actually executes code.'}
+    {n:'Data Structures & Algorithms', d:'Core algorithmic problem-solving and cache-friendly data layouts.'},
+    {n:'Linear Algebra', d:'Vector calculus, transformation matrices (TRS), camera projections.'},
+    {n:'Computer Architecture', d:'Memory hierarchies, CPU/GPU execution models, assembly instructions.'},
+    {n:'Calculus', d:'Multivariable calculus for lighting math and trajectory calculation.'}
   ],
-  'TOOLS': [
-    {n:'Git', d:'Version control across all projects.'},
-    {n:'Visual Studio', d:'Primary C++ development environment.'},
-    {n:'Code::Blocks', d:'Lightweight IDE, used in early coursework.'},
-    {n:'MinGW', d:'GCC toolchain on Windows.'}
+  'TOOLS & ENVIRONMENT': [
+    {n:'CMake', d:'Build configuration and cross-platform project structuring.'},
+    {n:'Git & GitHub', d:'Version control, branch management, and repository workflow.'},
+    {n:'Visual Studio', d:'Primary C++ development and debugging environment.'},
+    {n:'Linux & MinGW', d:'Unix shell commands, MinGW GCC compilation toolchains.'}
   ]
 };
 
@@ -912,9 +910,18 @@ window.addEventListener('scroll', ()=>{
 
 const burger = document.getElementById('burger');
 const mobileMenu = document.getElementById('mobile-menu');
-burger.addEventListener('click', ()=> mobileMenu.classList.add('open'));
-document.getElementById('mobile-close').addEventListener('click', ()=> mobileMenu.classList.remove('open'));
-mobileMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> mobileMenu.classList.remove('open')));
+burger.addEventListener('click', ()=>{
+  const isOpen = mobileMenu.classList.toggle('open');
+  burger.setAttribute('aria-expanded', String(isOpen));
+});
+document.getElementById('mobile-close').addEventListener('click', ()=>{
+  mobileMenu.classList.remove('open');
+  burger.setAttribute('aria-expanded', 'false');
+});
+mobileMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=>{
+  mobileMenu.classList.remove('open');
+  burger.setAttribute('aria-expanded', 'false');
+}));
 
 // active section indicator
 const navLinks = document.querySelectorAll('.nav-link');
@@ -929,7 +936,7 @@ const spy = new IntersectionObserver((entries)=>{
 sections.forEach(s=> s && spy.observe(s));
 
 /* ===================================================================
-   THEME TOGGLE  (in-memory only — no storage APIs used)
+   THEME TOGGLE
 =================================================================== */
 const themeToggle = document.getElementById('theme-toggle');
 themeToggle.addEventListener('click', ()=>{
@@ -962,16 +969,28 @@ document.querySelectorAll('.reveal').forEach(el=> revealObs.observe(el));
     items.forEach(item=>{
       const row = document.createElement('div');
       row.className = 'skill-item';
+      row.setAttribute('tabindex', '0');
+      row.setAttribute('role', 'button');
+      row.setAttribute('aria-expanded', 'false');
       row.textContent = item.n;
       const detail = document.createElement('div');
       detail.className = 'skill-detail';
       detail.innerHTML = `<div class="t">${item.n.toUpperCase()}</div>${item.d}`;
-      row.addEventListener('click', ()=>{
+      const toggle = ()=>{
         const isOpen = detail.classList.contains('show');
         col.querySelectorAll('.skill-detail').forEach(d=>d.classList.remove('show'));
-        col.querySelectorAll('.skill-item').forEach(s=>s.classList.remove('active'));
-        if(!isOpen){ detail.classList.add('show'); row.classList.add('active'); }
-      });
+        col.querySelectorAll('.skill-item').forEach(s=>{
+          s.classList.remove('active');
+          s.setAttribute('aria-expanded', 'false');
+        });
+        if(!isOpen){
+          detail.classList.add('show');
+          row.classList.add('active');
+          row.setAttribute('aria-expanded', 'true');
+        }
+      };
+      row.addEventListener('click', toggle);
+      row.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
       col.appendChild(row);
       col.appendChild(detail);
     });
@@ -1106,6 +1125,9 @@ function projectVisual(kind, image, name){
     const card = document.createElement('div');
     card.className = 'proj-card ' + (p.size==='large' ? 'large' : p.size==='small' ? 'small' : '');
     card.setAttribute('data-cursor','OPEN');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'article');
+    card.setAttribute('aria-label', p.name + ' project details');
     card.innerHTML = `
       <div class="proj-visual">${projectVisual(p.visual, p.image, p.name)}</div>
       <div class="proj-body">
@@ -1115,18 +1137,28 @@ function projectVisual(kind, image, name){
         <div class="proj-stack">${p.stack.map(s=>`<span>${s}</span>`).join('')}</div>
         ${p.meta ? `<div class="proj-meta">${p.meta.map(s=>`<span>${s}</span>`).join('')}</div>` : ''}
         <div class="proj-links">
-          <button type="button" class="proj-view" data-cursor="OPEN">VIEW PROJECT →</button>
-          <a href="${p.github}" target="_blank" rel="noopener noreferrer" data-cursor="OPEN">VIEW SOURCE →</a>
+          <button type="button" class="proj-view" data-cursor="OPEN">VIEW DETAILS →</button>
+          <a href="${p.github}" target="_blank" rel="noopener noreferrer" data-cursor="OPEN">VIEW SOURCE ↗</a>
         </div>
       </div>`;
-    card.querySelector('.proj-visual').addEventListener('click', ()=> openModal(p, i));
-    card.querySelector('.proj-name').addEventListener('click', ()=> openModal(p, i));
-    card.querySelector('.proj-view').addEventListener('click', (e)=>{ e.stopPropagation(); openModal(p, i); });
+    const handleOpen = ()=> openModal(p, i);
+    card.querySelector('.proj-visual').addEventListener('click', handleOpen);
+    card.querySelector('.proj-name').addEventListener('click', handleOpen);
+    card.querySelector('.proj-view').addEventListener('click', (e)=>{ e.stopPropagation(); handleOpen(); });
+    card.addEventListener('keydown', (e)=>{
+      if((e.key === 'Enter' || e.key === ' ') && e.target === card){
+        e.preventDefault();
+        handleOpen();
+      }
+    });
     wrap.appendChild(card);
   });
 })();
 
+let lastFocusedElement = null;
+
 function openModal(p, i){
+  lastFocusedElement = document.activeElement;
   document.getElementById('modal-title').textContent = p.name;
   document.getElementById('modal-index').textContent = String(i+1).padStart(2,'0');
   document.getElementById('modal-status').textContent = p.status;
@@ -1142,13 +1174,24 @@ function openModal(p, i){
   }
   document.getElementById('modal-learned').textContent = p.learned;
   document.getElementById('modal-source').href = p.github;
-  document.getElementById('project-modal').classList.add('open');
+  const modal = document.getElementById('project-modal');
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.getElementById('modal-close').focus();
 }
-document.getElementById('modal-close').addEventListener('click', ()=> document.getElementById('project-modal').classList.remove('open'));
+
+function closeModal(){
+  const modal = document.getElementById('project-modal');
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  if(lastFocusedElement) lastFocusedElement.focus();
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
 document.getElementById('project-modal').addEventListener('click', (e)=>{
-  if(e.target.id === 'project-modal') e.currentTarget.classList.remove('open');
+  if(e.target.id === 'project-modal') closeModal();
 });
-document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') document.getElementById('project-modal').classList.remove('open'); });
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
 
 /* ===================================================================
    PIPELINE + RAY TRACE DIAGRAMS
@@ -1459,21 +1502,21 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') document.getEle
   // inherits the bright studio lighting.
   function applyHeroTheme(){
     const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    sphereMat.color.setHex(dark ? 0x252c4f : 0x8295df);
-    sphereMat.roughness = dark ? 0.32 : 0.23;
-    wireMat.color.setHex(dark ? 0x7de3d6 : 0x6376d6);
-    pMat.color.setHex(dark ? 0x7de3d6 : 0x7485d9);
-    key.color.setHex(dark ? 0x9ff5ea : 0xa7b8ff);
-    key.intensity = dark ? 2.2 : 3.1;
-    rim.color.setHex(dark ? 0x5a7ba8 : 0xb9e8f2);
-    rim.intensity = dark ? 1.15 : 2.1;
-    ambient.color.setHex(dark ? 0x223038 : 0xffffff);
-    ambient.intensity = dark ? 0.85 : 1.85;
+    sphereMat.color.setHex(dark ? 0x252c4f : 0x3a4866);
+    sphereMat.roughness = dark ? 0.32 : 0.35;
+    wireMat.color.setHex(dark ? 0x7de3d6 : 0x0e8f83);
+    pMat.color.setHex(dark ? 0x7de3d6 : 0x0e8f83);
+    key.color.setHex(dark ? 0x9ff5ea : 0x0e8f83);
+    key.intensity = dark ? 2.2 : 2.8;
+    rim.color.setHex(dark ? 0x5a7ba8 : 0x8a9abb);
+    rim.intensity = dark ? 1.15 : 1.8;
+    ambient.color.setHex(dark ? 0x223038 : 0xd5d8e0);
+    ambient.intensity = dark ? 0.85 : 1.4;
     const gridMaterials = Array.isArray(grid.material) ? grid.material : [grid.material];
-    gridMaterials.forEach(m => m.color.setHex(dark ? 0x28333c : 0xd5dcef));
+    gridMaterials.forEach(m => m.color.setHex(dark ? 0x28333c : 0xb8bcc8));
   }
   applyHeroTheme();
-  document.getElementById('theme-toggle').addEventListener('click', ()=> requestAnimationFrame(applyHeroTheme));
+  window.addEventListener('theme-changed', applyHeroTheme);
 
   let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
   window.addEventListener('mousemove', e=>{
