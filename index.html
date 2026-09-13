@@ -461,7 +461,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     linear-gradient(180deg, rgba(0,0,0,.12), transparent 22%, transparent 72%, rgba(0,0,0,.32)),
     radial-gradient(ellipse at center, transparent 38%, rgba(0,0,0,.48) 100%);
 }
-.cert-gallery-canvas-wrap{ position:absolute; inset:0 32% 0 0; z-index:1; overflow:hidden; border-right:1px solid var(--border-strong); background:radial-gradient(circle at 50% 48%, rgba(15,55,75,.18), transparent 58%); }
+.cert-gallery-canvas-wrap{ position:absolute; inset:0 32% 0 0; z-index:4; overflow:hidden; border-right:1px solid var(--border-strong); background:radial-gradient(circle at 50% 48%, rgba(15,55,75,.18), transparent 58%); }
 .cert-gallery-canvas-wrap canvas{ display:block; width:100%; height:100%; }
 .cert-gallery-hud{
   position:absolute; left:22px; right:34%; top:18px; z-index:5;
@@ -575,7 +575,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 .cert-dom-floor{width:1700px;height:900px;transform:translate(-50%,40%) rotateX(72deg) translateZ(-520px);background-image:linear-gradient(rgba(125,227,214,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(125,227,214,.12) 1px,transparent 1px);background-size:55px 55px;box-shadow:0 -20px 90px rgba(0,220,255,.06) inset;}
 .cert-dom-ceiling{width:1700px;height:900px;transform:translate(-50%,-140%) rotateX(-72deg) translateZ(-520px);background-image:linear-gradient(rgba(125,227,214,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(125,227,214,.06) 1px,transparent 1px);background-size:55px 55px;}
 .cert-dom-wall{width:1500px;height:900px;transform:translate(-50%,-50%) translateZ(-620px);background-image:linear-gradient(rgba(125,227,214,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(125,227,214,.07) 1px,transparent 1px);background-size:55px 55px;}
-.cert-dom-card{position:absolute;left:50%;top:50%;width:245px;aspect-ratio:4/2.82;transform-style:preserve-3d;transition:filter .2s,opacity .3s;will-change:transform;cursor:pointer;}
+.cert-dom-card{position:absolute;left:50%;top:50%;width:245px;z-index:20;appearance:none;border:0;padding:0;margin:0;background:transparent;aspect-ratio:4/2.82;transform-style:preserve-3d;transition:filter .2s,opacity .3s;will-change:transform;cursor:pointer;}
 .cert-dom-card::before{content:'';position:absolute;inset:-9px;transform:translateZ(-7px);border:1px solid rgba(125,227,214,.62);background:rgba(3,12,18,.88);box-shadow:0 0 26px rgba(0,220,255,.08),inset 0 0 20px rgba(0,220,255,.04);}
 .cert-dom-card::after{content:'';position:absolute;inset:-4px;transform:translateZ(3px);border:1px solid rgba(125,227,214,.55);pointer-events:none;}
 .cert-dom-card img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;background:#f7f7f4;backface-visibility:hidden;image-rendering:auto;box-shadow:0 12px 30px rgba(0,0,0,.42);}
@@ -2340,6 +2340,110 @@ function initCertificateGallery(){
   render();
 }
 
+</script>
+
+<script>
+/* CERTIFICATION ARCHIVE V7: independent controller.
+   This runs independently of the main portfolio script so certificate inspection
+   still works if another portfolio component throws a runtime error. */
+(function(){
+  function boot(){
+    const wrap=document.getElementById('cert-gallery-canvas-wrap');
+    const shell=document.getElementById('cert-gallery-shell');
+    const panel=document.getElementById('cert-detail-panel');
+    if(!wrap || !panel || wrap.dataset.v7Ready==='1') return;
+    wrap.dataset.v7Ready='1';
+
+    const certs=[
+      ['assets/project-screens/certfi.jpeg','Python for Data Science','IBM Skills Network','March 15, 2024','IBM-PDS-2024-0315','Professional Certificate'],
+      ['assets/project-screens/certfi3.jpeg','Cloud Computing Fundamentals','Google Cloud','June 08, 2024','GCP-CCF-2024-0608','Course Certificate'],
+      ['assets/project-screens/certfi4.jpeg','Unreal Engine Foundations','Udemy','August 21, 2024','UDE-UE5-2024-0821','Course Certificate'],
+      ['assets/project-screens/certfi5.jpeg','OpenGL Graphics Programming','Graphics Learning Lab','October 12, 2024','GFX-OGL-2024-1012','Technical Certificate'],
+      ['assets/project-screens/certfi6.jpeg','Machine Learning Foundations','IBM Skills Network','December 03, 2024','IBM-MLF-2024-1203','Professional Certificate'],
+      ['assets/project-screens/certfi7.jpeg','C++ Programming Essentials','Programming Academy','January 18, 2025','CPP-ESS-2025-0118','Technical Certificate'],
+      ['assets/project-screens/certfi8.jpeg','Real-Time Rendering Concepts','Graphics Learning Lab','March 27, 2025','GFX-RTR-2025-0327','Technical Certificate'],
+      ['assets/project-screens/certi2.jpeg','Data Structures & Algorithms','Computer Science Academy','May 11, 2025','DSA-CS-2025-0511','Course Certificate']
+    ].map((x,i)=>({image:x[0],title:x[1],issuer:x[2],date:x[3],credential:x[4],type:x[5],index:i+1}));
+
+    const existing=wrap.querySelector('.cert-dom-stage');
+    if(existing) existing.remove();
+    const stage=document.createElement('div'); stage.className='cert-dom-stage';
+    stage.style.zIndex='1';
+    const room=document.createElement('div'); room.className='cert-dom-room'; stage.appendChild(room);
+    for(const cls of ['cert-dom-floor','cert-dom-ceiling','cert-dom-wall']){
+      const el=document.createElement('div'); el.className=cls; room.appendChild(el);
+    }
+
+    const positions=[
+      [-320,-135,-40,-10],[-20,-135,20,0],[280,-135,-40,10],
+      [-320,20,-75,-12],[-20,20,-5,0],[280,20,-75,12],
+      [-170,170,-115,-8],[170,170,-115,8]
+    ];
+    const items=[];
+    certs.forEach((cert,i)=>{
+      const card=document.createElement('button');
+      card.type='button'; card.className='cert-dom-card'; card.tabIndex=0;
+      card.setAttribute('aria-label','Inspect '+cert.title);
+      const [x,y,z,yaw]=positions[i];
+      card.innerHTML='<img src="'+cert.image+'" alt="'+cert.title.replace(/"/g,'&quot;')+'"><span class="cert-dom-label">'+String(i+1).padStart(2,'0')+' · CERTIFICATION</span>';
+      card.dataset.x=x; card.dataset.y=y; card.dataset.z=z; card.dataset.yaw=yaw;
+      room.appendChild(card);
+      const img=card.querySelector('img');
+      img.addEventListener('error',()=>{img.style.opacity='.15'; card.title='Image not found: '+cert.image;});
+      const item={card,cert,x,y,z,yaw}; items.push(item);
+      card.addEventListener('pointerdown',e=>{e.stopPropagation();});
+      card.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();inspect(item);});
+      card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inspect(item);}});
+      card.addEventListener('mouseenter',()=>{if(!focused) card.classList.add('is-hover');});
+      card.addEventListener('mouseleave',()=>card.classList.remove('is-hover'));
+    });
+    wrap.appendChild(stage);
+
+    let focused=null, dragging=false, lastX=0,lastY=0, ry=0,rx=0,trY=0,trX=0;
+    stage.addEventListener('pointerdown',e=>{
+      if(e.target.closest('.cert-dom-card')) return;
+      if(focused) return;
+      dragging=true; lastX=e.clientX; lastY=e.clientY; stage.classList.add('dragging');
+      try{stage.setPointerCapture(e.pointerId);}catch(_){ }
+    });
+    stage.addEventListener('pointermove',e=>{
+      if(dragging){trY+=(e.clientX-lastX)*.16;trX-=(e.clientY-lastY)*.10;trY=Math.max(-18,Math.min(18,trY));trX=Math.max(-12,Math.min(12,trX));lastX=e.clientX;lastY=e.clientY;}
+      else if(!focused){const r=stage.getBoundingClientRect();trY=((e.clientX-r.left)/r.width-.5)*10;trX=-((e.clientY-r.top)/r.height-.5)*6;}
+    });
+    const stop=e=>{dragging=false;stage.classList.remove('dragging');try{stage.releasePointerCapture(e.pointerId);}catch(_){}};
+    stage.addEventListener('pointerup',stop); stage.addEventListener('pointercancel',stop);
+
+    function inspect(item){
+      focused=item;
+      document.getElementById('cert-detail-title').textContent=item.cert.title;
+      document.getElementById('cert-detail-issuer').textContent=item.cert.issuer;
+      document.getElementById('cert-detail-date').textContent=item.cert.date;
+      document.getElementById('cert-detail-credential').textContent=item.cert.credential;
+      document.getElementById('cert-detail-type').textContent=item.cert.type;
+      document.getElementById('cert-detail-description').textContent='Portfolio demo metadata: completed training related to '+item.cert.title+'. Replace this text with the official certificate description and verification information.';
+      const img=document.getElementById('cert-detail-image'); img.src=item.cert.image; img.alt=item.cert.title; img.style.display='block';
+      const verify=document.getElementById('cert-verify-btn'); if(verify) verify.hidden=true;
+      panel.classList.add('open'); shell && shell.classList.add('has-detail');
+      document.getElementById('cert-gallery-hint')?.classList.add('cert-hint-hidden');
+    }
+    function close(){focused=null;panel.classList.remove('open');shell && shell.classList.remove('has-detail');document.getElementById('cert-gallery-hint')?.classList.remove('cert-hint-hidden');}
+    document.getElementById('cert-back-btn')?.addEventListener('click',e=>{e.preventDefault();close();});
+
+    function render(){
+      requestAnimationFrame(render);
+      if(!focused){ry+=(trY-ry)*.06;rx+=(trX-rx)*.06;room.style.transform='rotateX('+(-rx)+'deg) rotateY('+ry+'deg)';}
+      items.forEach((it,i)=>{
+        const f=it===focused;
+        const x=f?0:it.x, y=f?0:it.y, z=f?220:it.z, yaw=f?0:it.yaw;
+        it.card.style.transform='translate3d(calc(-50% + '+x+'px),calc(-50% + '+y+'px),'+z+'px) rotateY('+yaw+'deg) scale('+(f?1.16:1)+')';
+        it.card.style.opacity=focused&&!f?.18:1;
+        it.card.style.zIndex=f?200:20-i;
+      });
+    }
+    render();
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
+})();
 </script>
 </body>
 </html>
