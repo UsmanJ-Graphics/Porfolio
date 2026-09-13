@@ -2264,14 +2264,45 @@ function initCertificateGallery(){
       const item={card,cert,x,y:rowY[row],z,yaw,index:idx}; cards.push(item);
       card.addEventListener('mouseenter',()=>{if(!focused){hovered=item;card.classList.add('is-hover');}});
       card.addEventListener('mouseleave',()=>{card.classList.remove('is-hover');if(hovered===item)hovered=null;});
-      card.addEventListener('click',()=>{if(!focused) openCertificate(item);});
+      // Keep card clicks separate from the room's drag gesture. The previous
+      // stage-level pointer capture could swallow the click before it reached
+      // the certificate button, making the image impossible to inspect.
+      card.addEventListener('pointerdown',e=>{
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        card.focus({preventScroll:true});
+      }, true);
+      card.addEventListener('pointerup',e=>{
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+      }, true);
+      card.addEventListener('click',e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        openCertificate(item);
+      }, true);
+      card.addEventListener('keydown',e=>{
+        if((e.key==='Enter'||e.key===' ') && !focused){
+          e.preventDefault();
+          openCertificate(item);
+        }
+      });
       card.querySelector('img').addEventListener('error',()=>{card.querySelector('img').style.display='none'; card.style.background='linear-gradient(135deg,#10212b,#071016)';});
     });
   });
   wrap.appendChild(stage);
 
   let rx=0,ry=0,targetRx=0,targetRy=0,dragging=false,lastX=0,lastY=0,hovered=null,focused=null;
-  stage.addEventListener('pointerdown',e=>{if(focused)return;dragging=true;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');stage.setPointerCapture?.(e.pointerId);});
+  stage.addEventListener('pointerdown',e=>{
+    // Never start the room drag when the pointer begins on a certificate.
+    // This keeps certificate inspection reliable on Chromium/Edge/local file URLs.
+    if(e.target.closest && e.target.closest('.cert-dom-card')) return;
+    if(focused)return;
+    dragging=true; lastX=e.clientX; lastY=e.clientY;
+    stage.classList.add('dragging');
+    try{stage.setPointerCapture?.(e.pointerId);}catch(_){}
+  });
   stage.addEventListener('pointermove',e=>{
     if(dragging){targetRy+= (e.clientX-lastX)*0.18;targetRx-= (e.clientY-lastY)*0.10;targetRx=Math.max(-16,Math.min(16,targetRx));lastX=e.clientX;lastY=e.clientY;}
     else {const r=stage.getBoundingClientRect();targetRy=((e.clientX-r.left)/r.width-.5)*12;targetRx=-((e.clientY-r.top)/r.height-.5)*7;}
