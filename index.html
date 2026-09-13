@@ -438,6 +438,152 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 @media (prefers-reduced-motion: reduce){
   .reveal{ opacity:1; transform:none; transition:none; }
 }
+
+/* ================================================================
+   CERTIFICATION ARCHIVE — immersive 3D exhibition
+   ================================================================ */
+.cert-archive-meta{
+  display:flex; align-items:center; gap:10px; margin-top:28px;
+  font-family:'IBM Plex Mono',monospace; font-size:10px;
+  letter-spacing:.11em; color:var(--text-dim);
+}
+.cert-archive-meta span:first-child{ color:var(--accent); }
+.cert-gallery-shell{
+  position:relative; width:100%; height:700px; margin-top:30px;
+  overflow:hidden; border:1px solid var(--border-strong);
+  border-radius:var(--radius-md); background:#02060a;
+  box-shadow:0 30px 90px rgba(0,0,0,.55), inset 0 0 80px rgba(0,240,255,.035);
+  isolation:isolate;
+}
+.cert-gallery-shell::before{
+  content:''; position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.12), transparent 22%, transparent 72%, rgba(0,0,0,.32)),
+    radial-gradient(ellipse at center, transparent 38%, rgba(0,0,0,.48) 100%);
+}
+.cert-gallery-canvas-wrap{ position:absolute; inset:0 32% 0 0; z-index:1; overflow:hidden; border-right:1px solid var(--border-strong); background:radial-gradient(circle at 50% 48%, rgba(15,55,75,.18), transparent 58%); }
+.cert-gallery-canvas-wrap canvas{ display:block; width:100%; height:100%; }
+.cert-gallery-hud{
+  position:absolute; left:22px; right:34%; top:18px; z-index:5;
+  display:flex; justify-content:space-between; align-items:flex-start;
+  pointer-events:none; font-family:'IBM Plex Mono',monospace;
+  font-size:9px; letter-spacing:.12em; color:rgba(176,181,192,.78);
+}
+.cert-gallery-hud .hud-left{ display:flex; flex-direction:column; gap:5px; }
+.cert-gallery-hud .hud-title{ color:var(--accent); font-size:10px; }
+.cert-gallery-hud .hud-right{ text-align:right; line-height:1.8; }
+.cert-gallery-hud b{ color:var(--text-muted); font-weight:500; }
+.cert-gallery-hint{
+  position:absolute; left:50%; bottom:18px; transform:translateX(-50%);
+  z-index:6; padding:8px 13px; border:1px solid var(--border);
+  border-radius:999px; background:rgba(4,7,13,.62); backdrop-filter:blur(10px);
+  color:var(--text-dim); font-size:9px; letter-spacing:.12em; white-space:nowrap;
+  pointer-events:none; transition:opacity .35s var(--ease), transform .35s var(--ease);
+}
+.cert-gallery-hint::before{ content:'●'; color:var(--accent); margin-right:8px; font-size:7px; }
+.cert-gallery-hint.cert-hint-hidden{ opacity:0; transform:translateX(-50%) translateY(8px); }
+.cert-detail-panel{
+  position:absolute; top:0; right:0; bottom:0; width:32%; z-index:10; display:flex; justify-content:flex-end;
+  background:linear-gradient(135deg, rgba(7,15,25,.96), rgba(2,7,13,.985));
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity .45s var(--ease), visibility .45s;
+}
+.cert-detail-panel.open{ opacity:1; visibility:visible; pointer-events:auto; }
+.cert-detail-inner{
+  width:100%; height:100%; padding:28px 26px 22px;
+  display:flex; flex-direction:column; justify-content:center;
+  background:linear-gradient(135deg, rgba(10,16,27,.72), rgba(4,7,13,.92));
+  border-left:1px solid var(--border-strong); backdrop-filter:blur(18px) saturate(130%);
+  box-shadow:-30px 0 70px rgba(0,0,0,.4);
+  transform:translateX(30px); transition:transform .55s var(--ease);
+}
+.cert-detail-panel.open .cert-detail-inner{ transform:none; }
+.cert-detail-eyebrow{ color:var(--accent); font-size:10px; letter-spacing:.16em; margin-bottom:16px; }
+.cert-detail-image-wrap{
+  width:100%; max-height:270px; display:flex; align-items:center; justify-content:center;
+  padding:10px; margin-bottom:20px; border:1px solid var(--border);
+  background:rgba(0,0,0,.24); border-radius:6px; box-shadow:0 0 35px var(--accent-glow);
+}
+.cert-detail-image-wrap img{ display:block; width:100%; max-width:100%; max-height:250px; height:auto; object-fit:contain; image-rendering:auto; }
+.cert-detail-description{ margin:0 0 20px; color:var(--text-muted); font-size:12px; line-height:1.7; }
+.cert-detail-type{ margin-top:10px; }
+.cert-gallery-shell.has-detail .cert-gallery-hint{ opacity:.7; }
+.cert-gallery-shell.has-detail .cert-gallery-canvas-wrap{ box-shadow:inset -30px 0 70px rgba(0,0,0,.28); }
+.cert-detail-title{ margin:0 0 7px; font-size:24px; line-height:1.15; font-weight:600; }
+.cert-detail-issuer{ margin:0 0 20px; color:var(--text-muted); font-size:13px; line-height:1.55; }
+.cert-detail-meta{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:24px; }
+.cert-detail-meta > div{ padding:11px 12px; border:1px solid var(--border); background:rgba(125,227,214,.035); }
+.cert-detail-meta span{ display:block; color:var(--text-dim); font:9px 'IBM Plex Mono',monospace; letter-spacing:.1em; margin-bottom:5px; }
+.cert-detail-meta b{ color:var(--text-muted); font:11px 'IBM Plex Mono',monospace; font-weight:500; word-break:break-word; }
+.cert-back-btn,.cert-verify-btn{ align-self:flex-start; margin-top:0; }
+.cert-verify-btn{ margin-top:9px; }
+.cert-fallback-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:30px; }
+.cert-fallback-card{ border:1px solid var(--border); background:var(--panel); padding:10px; color:var(--text); text-align:left; }
+.cert-fallback-card:hover{ border-color:var(--accent-dim); transform:translateY(-2px); }
+.cert-fallback-frame{ display:block; aspect-ratio:4/3; overflow:hidden; background:#070b11; border:1px solid var(--border); }
+.cert-fallback-frame img{ width:100%; height:100%; object-fit:contain; display:block; }
+.cert-fallback-name{ display:block; margin-top:9px; font:10px 'IBM Plex Mono',monospace; color:var(--text-muted); }
+.cert-fallback-placeholder{ display:flex; width:100%; height:100%; align-items:center; justify-content:center; text-align:center; color:var(--accent); font-size:10px; line-height:1.8; }
+
+/* VR-window presentation details */
+.cert-gallery-shell{ min-height:700px; }
+.cert-gallery-canvas-wrap::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(90deg,rgba(0,0,0,.08),transparent 18%,transparent 78%,rgba(0,0,0,.22));
+}
+.cert-detail-panel.open .cert-detail-image-wrap{ animation:certImageIn .5s var(--ease) both; }
+@keyframes certImageIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.cert-vr-badge{ position:absolute; left:22px; bottom:58px; z-index:5; pointer-events:none; font:9px 'IBM Plex Mono',monospace; letter-spacing:.12em; color:var(--accent); opacity:.78; }
+.cert-vr-badge span{ display:inline-block; padding:7px 10px; border:1px solid var(--border); background:rgba(2,7,13,.48); backdrop-filter:blur(8px); }
+.cert-detail-panel .cert-detail-meta{ grid-template-columns:repeat(3,1fr); }
+.cert-detail-panel .cert-detail-meta > div{ min-width:0; }
+.cert-detail-panel .cert-detail-description{ max-height:92px; overflow:auto; }
+@media (max-width:1100px){ .cert-detail-panel .cert-detail-meta{grid-template-columns:1fr 1fr;} }
+@media (max-width:1100px){
+  .cert-gallery-shell{ height:650px; }
+  .cert-gallery-canvas-wrap{ inset:0 38% 0 0; }
+  .cert-gallery-hud{ right:40%; }
+  .cert-detail-panel{ width:38%; }
+  .cert-detail-inner{ padding:28px 22px; }
+  .cert-detail-image-wrap{ max-height:220px; }
+  .cert-detail-image-wrap img{ max-height:200px; }
+}
+@media (max-width:859px), (pointer:coarse){
+  .cert-gallery-shell{ height:auto; min-height:0; overflow:visible; background:transparent; border:none; box-shadow:none; }
+  .cert-gallery-shell::before{ display:none; }
+  .cert-gallery-canvas-wrap,.cert-gallery-hint,.cert-gallery-hud{ display:none !important; }
+  .cert-fallback-grid{ display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .cert-detail-panel{ position:fixed; inset:0; width:auto; padding:16px; background:rgba(2,6,10,.86); }
+  .cert-detail-inner{ width:100%; max-width:560px; height:auto; max-height:92vh; overflow:auto; border:1px solid var(--border-strong); border-radius:var(--radius-md); padding:24px; margin:auto; box-shadow:0 30px 90px rgba(0,0,0,.65); }
+}
+@media (max-width:520px){
+  .cert-fallback-grid{ grid-template-columns:1fr; }
+  .cert-detail-meta{ grid-template-columns:1fr; }
+}
+@media (prefers-reduced-motion:reduce){
+  .cert-detail-panel,.cert-detail-inner,.cert-gallery-hint{ transition:none !important; }
+}
+
+
+/* ================================================================
+   CERTIFICATION VR DOM LAYER — sharp image rendering fallback
+   ================================================================ */
+.cert-dom-stage{position:absolute;inset:0;overflow:hidden;perspective:1200px;perspective-origin:50% 48%;background:radial-gradient(circle at 50% 46%,rgba(18,75,96,.18),transparent 48%),linear-gradient(180deg,#02070c,#02050a 72%,#010306);cursor:grab;touch-action:none;}
+.cert-dom-stage.dragging{cursor:grabbing;}
+.cert-dom-room{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform;}
+.cert-dom-floor,.cert-dom-ceiling,.cert-dom-wall{position:absolute;left:50%;top:50%;transform-style:preserve-3d;pointer-events:none;border:1px solid rgba(125,227,214,.13);}
+.cert-dom-floor{width:1700px;height:900px;transform:translate(-50%,40%) rotateX(72deg) translateZ(-520px);background-image:linear-gradient(rgba(125,227,214,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(125,227,214,.12) 1px,transparent 1px);background-size:55px 55px;box-shadow:0 -20px 90px rgba(0,220,255,.06) inset;}
+.cert-dom-ceiling{width:1700px;height:900px;transform:translate(-50%,-140%) rotateX(-72deg) translateZ(-520px);background-image:linear-gradient(rgba(125,227,214,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(125,227,214,.06) 1px,transparent 1px);background-size:55px 55px;}
+.cert-dom-wall{width:1500px;height:900px;transform:translate(-50%,-50%) translateZ(-620px);background-image:linear-gradient(rgba(125,227,214,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(125,227,214,.07) 1px,transparent 1px);background-size:55px 55px;}
+.cert-dom-card{position:absolute;left:50%;top:50%;width:245px;aspect-ratio:4/2.82;transform-style:preserve-3d;transition:filter .2s,opacity .3s;will-change:transform;cursor:pointer;}
+.cert-dom-card::before{content:'';position:absolute;inset:-9px;transform:translateZ(-7px);border:1px solid rgba(125,227,214,.62);background:rgba(3,12,18,.88);box-shadow:0 0 26px rgba(0,220,255,.08),inset 0 0 20px rgba(0,220,255,.04);}
+.cert-dom-card::after{content:'';position:absolute;inset:-4px;transform:translateZ(3px);border:1px solid rgba(125,227,214,.55);pointer-events:none;}
+.cert-dom-card img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;background:#f7f7f4;backface-visibility:hidden;image-rendering:auto;box-shadow:0 12px 30px rgba(0,0,0,.42);}
+.cert-dom-label{position:absolute;left:50%;top:calc(100% + 20px);transform:translateX(-50%) translateZ(3px);font:9px 'IBM Plex Mono',monospace;letter-spacing:.12em;color:rgba(125,227,214,.8);white-space:nowrap;text-shadow:0 0 12px rgba(0,220,255,.25);}
+.cert-dom-card.is-hover{filter:brightness(1.12) drop-shadow(0 0 18px rgba(0,220,255,.22));}
+.cert-dom-card.is-focus{filter:brightness(1.05) drop-shadow(0 0 32px rgba(0,220,255,.3));}
+@media(max-width:859px){.cert-gallery-shell{height:auto;overflow:visible;background:transparent;border:0;box-shadow:none}.cert-gallery-canvas-wrap{position:relative;inset:auto;width:100%;height:auto;border:0;background:transparent}.cert-dom-stage{display:none}.cert-fallback-grid{display:grid !important;}}
+
 </style>
 <link rel="stylesheet" href="assets/ui-overrides.css">
 <link rel="stylesheet" href="assets/responsive-fixes.css">
@@ -477,7 +623,8 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <a href="#work" class="nav-link" data-nav="work"><span class="nav-num mono">02</span>PROJECTS</a>
     <a href="#toolchain" class="nav-link" data-nav="toolchain"><span class="nav-num mono">03</span>SKILLS</a>
     <a href="#about" class="nav-link" data-nav="about"><span class="nav-num mono">04</span>ABOUT</a>
-    <a href="#contact" class="nav-link" data-nav="contact"><span class="nav-num mono">05</span>CONTACT</a>
+    <a href="#certifications" class="nav-link" data-nav="certifications"><span class="nav-num mono">05</span>CERTIFICATIONS</a>
+    <a href="#contact" class="nav-link" data-nav="contact"><span class="nav-num mono">06</span>CONTACT</a>
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme mode" aria-pressed="true"><span class="theme-sun" aria-hidden="true">☼</span><span class="theme-moon" aria-hidden="true">☾</span><i></i></button>
   </div>
   <button class="nav-mobile-btn burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -492,7 +639,8 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <a href="#toolchain" class="mm-link"><span class="mm-num mono">03</span><span class="mm-label">Skills</span><span class="mm-arrow">→</span></a>
     <a href="#about" class="mm-link"><span class="mm-num mono">04</span><span class="mm-label">About</span><span class="mm-arrow">→</span></a>
     <a href="#lab" class="mm-link"><span class="mm-num mono">05</span><span class="mm-label">Lab</span><span class="mm-arrow">→</span></a>
-    <a href="#contact" class="mm-link"><span class="mm-num mono">06</span><span class="mm-label">Contact</span><span class="mm-arrow">→</span></a>
+    <a href="#certifications" class="mm-link"><span class="mm-num mono">06</span><span class="mm-label">Certifications</span><span class="mm-arrow">→</span></a>
+    <a href="#contact" class="mm-link"><span class="mm-num mono">07</span><span class="mm-label">Contact</span><span class="mm-arrow">→</span></a>
   </nav>
   <div class="mm-foot">
     <a href="mailto:usmanjgraphics@gmail.com" class="btn btn-pill-cyan mm-cta">EMAIL ME &nbsp;→</a>
@@ -697,9 +845,53 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     </div>
   </section>
 
+  <!-- CERTIFICATION ARCHIVE — interactive 3D gallery -->
+  <section class="section reveal" id="certifications" data-transition="archive">
+    <div class="eyebrow mono">05 / CERTIFICATION ARCHIVE</div>
+    <h2 class="section-heading">A room for the credentials behind the work.</h2>
+    <p class="section-sub">Step into the archive. Move your cursor to look around, then select a certificate to bring it forward.</p>
+    <div class="cert-archive-meta mono">
+      <span id="cert-count-label">08 ITEMS</span>
+      <span>·</span>
+      <span>INTERACTIVE EXHIBITION</span>
+    </div>
+
+    <div class="cert-gallery-shell" id="cert-gallery-shell">
+      <div class="cert-gallery-hud mono" aria-hidden="true">
+        <div class="hud-left"><span class="hud-title">CERTIFICATION ARCHIVE</span><span>REAL-TIME EXHIBITION / 3D</span></div>
+        <div class="hud-right"><span><b>MODE</b> FREE LOOK</span><br><span><b>INPUT</b> POINTER / CLICK</span></div>
+      </div>
+      <div class="cert-gallery-canvas-wrap" id="cert-gallery-canvas-wrap" aria-label="Interactive 3D certificate gallery. Click a certificate to inspect it." role="img"></div>
+      <div class="cert-gallery-hint mono" id="cert-gallery-hint">MOVE / DRAG TO EXPLORE · CLICK A FRAME TO INSPECT</div><div class="cert-vr-badge"><span>VR ARCHIVE · DRAG / MOVE / CLICK</span></div>
+
+      <!-- Detail panel — shown when a certificate is focused -->
+      <div class="cert-detail-panel" id="cert-detail-panel" aria-live="polite">
+        <div class="cert-detail-inner">
+          <div class="cert-detail-eyebrow mono">CERTIFICATION</div>
+          <div class="cert-detail-image-wrap">
+            <img id="cert-detail-image" alt="" />
+          </div>
+          <h3 class="cert-detail-title" id="cert-detail-title">—</h3>
+          <p class="cert-detail-issuer" id="cert-detail-issuer">—</p>
+          <div class="cert-detail-meta">
+            <div><span>ISSUED</span><b id="cert-detail-date">—</b></div>
+            <div><span>CREDENTIAL</span><b id="cert-detail-credential">—</b></div>
+            <div class="cert-detail-type"><span>TYPE</span><b id="cert-detail-type">—</b></div>
+          </div>
+          <p class="cert-detail-description" id="cert-detail-description">Portfolio demonstration metadata.</p>
+          <button type="button" class="btn btn-ghost cert-back-btn" id="cert-back-btn">← BACK TO ARCHIVE</button>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-ghost cert-verify-btn" id="cert-verify-btn" hidden>VERIFY CREDENTIAL ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile / no-WebGL fallback — plain accessible list, populated by JS -->
+    <div class="cert-fallback-grid" id="cert-fallback-grid" hidden></div>
+  </section>
+
   <!-- EDUCATION + ACHIEVEMENTS -->
   <section class="section reveal" id="education" data-transition="timeline">
-    <div class="eyebrow mono">05 / EDUCATION</div>
+    <div class="eyebrow mono">06 / EDUCATION</div>
     <h2 class="section-heading">Academic background.</h2>
     <div class="two-col">
       <div class="card edu-card">
@@ -732,7 +924,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 
   <!-- ROADMAP -->
   <section class="section reveal" id="roadmap" data-transition="path">
-    <div class="eyebrow mono">06 / ROADMAP</div>
+    <div class="eyebrow mono">07 / ROADMAP</div>
     <h2 class="section-heading">Building toward graphics engineering.</h2>
     <div class="roadmap-layout">
       <div class="roadmap-track" id="roadmap-track"></div>
@@ -752,7 +944,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 
   <!-- AVAILABILITY -->
   <section class="section reveal" id="availability" data-transition="pulse">
-    <div class="eyebrow mono">07 / AVAILABILITY</div>
+    <div class="eyebrow mono">08 / AVAILABILITY</div>
     <h2 class="section-heading">Looking for the next system to build.</h2>
     <p class="section-sub">I'm currently looking for a full-time remote internship where I can learn from experienced engineers and contribute to real-world graphics, rendering, performance, or tools development.</p>
     <div class="avail-card">
@@ -772,7 +964,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 
   <!-- CONTACT -->
   <section class="section reveal" id="contact" data-transition="rise">
-    <div class="eyebrow mono">08 / CONTACT</div>
+    <div class="eyebrow mono">09 / CONTACT</div>
     <h2 class="section-heading">Let's build something.</h2>
     <p class="contact-status mono">AVAILABLE FOR GRAPHICS / RENDERING OPPORTUNITIES</p>
     <p class="section-sub">Interested in graphics programming, rendering, C++, visualization, or just building something difficult?</p>
@@ -1031,7 +1223,7 @@ mobileMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=>{
 
 // active section indicator
 const navLinks = document.querySelectorAll('.nav-link');
-const sections = ['work','toolchain','about','lab','education','contact'].map(id=>document.getElementById(id));
+const sections = ['work','toolchain','about','lab','certifications','education','contact'].map(id=>document.getElementById(id));
 const spy = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -1723,7 +1915,7 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
       }
     });
 
-    const sections = ['hero', 'work', 'toolchain', 'about', 'education', 'roadmap', 'availability', 'contact'];
+    const sections = ['hero', 'work', 'toolchain', 'about', 'certifications', 'education', 'roadmap', 'availability', 'contact'];
     sections.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
@@ -1915,6 +2107,208 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
   }
   if(!reduceMotion) tick(); else { resize(); renderer.render(scene,camera); }
 })();
+
+/* ===================================================================
+   CERTIFICATION ARCHIVE — immersive 3D certificate exhibition
+   =================================================================== */
+const CERTIFICATES = [
+  { image:'assets/project-screens/certfi.jpeg',  title:'Python for Data Science', issuer:'IBM Skills Network', date:'March 15, 2024', credential:'IBM-PDS-2024-0315', type:'Professional Certificate', description:'Completed a practical introduction to Python, data analysis workflows, notebooks, and foundational data-science tooling. Portfolio demo metadata.', verifyUrl:'' },
+  { image:'assets/project-screens/certfi3.jpeg', title:'Cloud Computing Fundamentals', issuer:'Google Cloud', date:'June 08, 2024', credential:'GCP-CCF-2024-0608', type:'Course Certificate', description:'Covered core cloud concepts, compute, storage, networking, and modern application deployment patterns. Portfolio demo metadata.', verifyUrl:'' },
+  { image:'assets/project-screens/certfi4.jpeg', title:'Unreal Engine Foundations', issuer:'Udemy', date:'August 21, 2024', credential:'UDE-UE5-2024-0821', type:'Course Certificate', description:'Explored real-time 3D workflows, scene construction, materials, lighting, and interactive content pipelines. Portfolio demo metadata.', verifyUrl:'' },
+  { image:'assets/project-screens/certfi5.jpeg', title:'OpenGL Graphics Programming', issuer:'Graphics Learning Lab', date:'October 12, 2024', credential:'GFX-OGL-2024-1012', type:'Technical Certificate', description:'Focused on OpenGL rendering pipelines, buffers, shaders, transformations, and practical GPU programming concepts. Portfolio demo metadata.', verifyUrl:'' },
+  { image:'assets/project-screens/certfi6.jpeg', title:'Machine Learning Foundations', issuer:'IBM Skills Network', date:'December 03, 2024', credential:'IBM-MLF-2024-1203', type:'Professional Certificate', description:'Built foundational understanding of supervised learning, model evaluation, feature preparation, and applied ML workflows. Portfolio demo metadata.', verifyUrl:'' },
+  { image:'assets/project-screens/certfi7.jpeg', title:'C++ Programming Essentials', issuer:'Programming Academy', date:'January 18, 2025', credential:'CPP-ESS-2025-0118', type:'Technical Certificate', description:'Covered modern C++ syntax, object-oriented programming, memory concepts, STL usage, and reusable software design. Portfolio demo metadata.', verifyUrl:'' },
+  { image:'assets/project-screens/certfi8.jpeg', title:'Real-Time Rendering Concepts', issuer:'Graphics Learning Lab', date:'March 27, 2025', credential:'GFX-RTR-2025-0327', type:'Technical Certificate', description:'Studied real-time rendering architecture, lighting, materials, optimization, frame timing, and GPU-oriented techniques. Portfolio demo metadata.', verifyUrl:'' },
+  { image:'assets/project-screens/certi2.jpeg',  title:'Data Structures & Algorithms', issuer:'Computer Science Academy', date:'May 11, 2025', credential:'DSA-CS-2025-0511', type:'Course Certificate', description:'Strengthened algorithmic problem solving through arrays, trees, graphs, complexity analysis, and common optimization strategies. Portfolio demo metadata.', verifyUrl:'' }
+];
+
+function showCertDetail(cert){
+  const panel = document.getElementById('cert-detail-panel');
+  document.getElementById('cert-gallery-shell')?.classList.add('has-detail');
+  document.getElementById('cert-detail-title').textContent = cert.title || 'Certificate';
+  document.getElementById('cert-detail-issuer').textContent = cert.issuer || 'Certification archive';
+  document.getElementById('cert-detail-date').textContent = cert.date || '—';
+  document.getElementById('cert-detail-credential').textContent = cert.credential || '—';
+  document.getElementById('cert-detail-type').textContent = cert.type || 'Demo credential';
+  document.getElementById('cert-detail-description').textContent = cert.description || 'Portfolio demonstration metadata.';
+  const img = document.getElementById('cert-detail-image');
+  img.src = cert.image || '';
+  img.alt = cert.title || 'Certificate';
+  img.style.display = cert.image ? 'block' : 'none';
+  const verifyBtn = document.getElementById('cert-verify-btn');
+  if(cert.verifyUrl){ verifyBtn.href=cert.verifyUrl; verifyBtn.hidden=false; }
+  else verifyBtn.hidden=true;
+  panel.classList.add('open');
+}
+function hideCertDetail(){
+  const panel=document.getElementById('cert-detail-panel');
+  panel?.classList.remove('open');
+  document.getElementById('cert-gallery-shell')?.classList.remove('has-detail');
+}
+
+(function certificateGalleryBootstrap(){
+  const shell = document.getElementById('cert-gallery-shell');
+  if(!shell) return;
+  const countLabel = document.getElementById('cert-count-label');
+  if(countLabel) countLabel.textContent = String(CERTIFICATES.length).padStart(2,'0') + ' ITEMS';
+  const coarse = matchMedia('(pointer:coarse)').matches;
+  const narrow = window.innerWidth < 860;
+  if(coarse || narrow) renderFallbackGrid();
+  else initCertificateGallery();
+})();
+
+function renderFallbackGrid(){
+  const wrap=document.getElementById('cert-gallery-canvas-wrap');
+  const hint=document.getElementById('cert-gallery-hint');
+  const grid=document.getElementById('cert-fallback-grid');
+  if(wrap) wrap.style.display='none';
+  if(hint) hint.style.display='none';
+  if(!grid) return;
+  grid.hidden=false;
+  grid.innerHTML=CERTIFICATES.map((cert,i)=>`
+    <button type="button" class="cert-fallback-card" data-index="${i}">
+      <span class="cert-fallback-frame"><img src="${cert.image}" alt="${cert.title}"></span>
+      <span class="cert-fallback-name">${String(i+1).padStart(2,'0')} · ${cert.title}</span>
+    </button>`).join('');
+  grid.querySelectorAll('.cert-fallback-card').forEach(btn=>{
+    btn.addEventListener('click',()=>showCertDetail(CERTIFICATES[Number(btn.dataset.index)]));
+  });
+}
+
+function makeTextTexture(text, accent){
+  const canvas=document.createElement('canvas'); canvas.width=900; canvas.height=80;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.font='600 26px IBM Plex Mono, monospace';
+  ctx.fillStyle=accent; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText(text.toUpperCase(),canvas.width/2,canvas.height/2);
+  const tex=new THREE.CanvasTexture(canvas);
+  tex.minFilter=THREE.LinearFilter; tex.magFilter=THREE.LinearFilter;
+  if('colorSpace' in tex) tex.colorSpace=THREE.SRGBColorSpace;
+  return tex;
+}
+
+
+let __certMaxAnisotropy = 1;
+function rendererCapabilitiesAnisotropy(){ return __certMaxAnisotropy; }
+
+function makeCertificateCard(cert,index,accentHex){
+  const group=new THREE.Group();
+  const w=2.25, h=1.58;
+  const backingMat=new THREE.MeshBasicMaterial({color:0x061018,transparent:true,opacity:.94,side:THREE.DoubleSide});
+  const backing=new THREE.Mesh(new THREE.PlaneGeometry(w+.18,h+.18),backingMat);
+  backing.position.z=-.035; group.add(backing);
+
+  const frameMat=new THREE.MeshBasicMaterial({color:accentHex,transparent:true,opacity:.72,side:THREE.DoubleSide});
+  const frame=new THREE.Mesh(new THREE.PlaneGeometry(w+.09,h+.09),frameMat);
+  frame.position.z=-.015; group.add(frame);
+
+  const imageMat=new THREE.MeshBasicMaterial({transparent:true,side:THREE.DoubleSide,opacity:1});
+  const image=new THREE.Mesh(new THREE.PlaneGeometry(w,h),imageMat); group.add(image);
+  const loader=new THREE.TextureLoader();
+  loader.load(cert.image,(tex)=>{
+    if('colorSpace' in tex) tex.colorSpace=THREE.SRGBColorSpace;
+    tex.anisotropy = rendererCapabilitiesAnisotropy();
+    tex.minFilter = THREE.LinearMipmapLinearFilter;
+    tex.magFilter = THREE.LinearFilter;
+    tex.generateMipmaps = true;
+    tex.needsUpdate = true;
+    imageMat.map=tex; imageMat.color.set(0xffffff); imageMat.needsUpdate=true;
+  }, undefined, ()=>{
+    imageMat.color.set(0x1a252c);
+    imageMat.needsUpdate=true;
+  });
+
+  const edgeMat=new THREE.LineBasicMaterial({color:accentHex,transparent:true,opacity:.38});
+  const edge=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(w+.09,h+.09)),edgeMat);
+  edge.position.z=.012; group.add(edge);
+
+  const labelMat=new THREE.MeshBasicMaterial({map:makeTextTexture(`${String(index+1).padStart(2,'0')} · CERTIFICATION`,accentHex),transparent:true,depthWrite:false,side:THREE.DoubleSide,opacity:.72});
+  const label=new THREE.Mesh(new THREE.PlaneGeometry(2.5,.22),labelMat);
+  label.position.set(0,-h/2-.20,.01); group.add(label);
+
+  const hit=new THREE.Mesh(new THREE.PlaneGeometry(w+.42,h+.42),new THREE.MeshBasicMaterial({visible:false,side:THREE.DoubleSide}));
+  hit.position.z=.04; group.add(hit);
+  return {cert,index,group,hit,imageMat,frameMat,edgeMat,labelMat,seed:Math.random()*Math.PI*2,base:new THREE.Vector3(),baseRot:new THREE.Euler()};
+}
+
+function initCertificateGallery(){
+  const wrap=document.getElementById('cert-gallery-canvas-wrap');
+  const hint=document.getElementById('cert-gallery-hint');
+  if(!wrap) return;
+  wrap.innerHTML='';
+
+  const stage=document.createElement('div'); stage.className='cert-dom-stage';
+  const room=document.createElement('div'); room.className='cert-dom-room'; stage.appendChild(room);
+  const floor=document.createElement('div'); floor.className='cert-dom-floor'; room.appendChild(floor);
+  const ceiling=document.createElement('div'); ceiling.className='cert-dom-ceiling'; room.appendChild(ceiling);
+  const wall=document.createElement('div'); wall.className='cert-dom-wall'; room.appendChild(wall);
+
+  const cards=[];
+  const rows=[[0,1,2],[3,4,5],[6,7]];
+  const rowY=[-145,0,145];
+  rows.forEach((indices,row)=>{
+    const count=indices.length;
+    const spacing=count===3?300:315;
+    indices.forEach((idx,j)=>{
+      const cert=CERTIFICATES[idx];
+      const card=document.createElement('button');
+      card.type='button'; card.className='cert-dom-card';
+      card.setAttribute('aria-label','Inspect '+cert.title);
+      const x=(j-(count-1)/2)*spacing;
+      const z=-80-Math.abs(x)*.10-row*12;
+      const yaw=(j-(count-1)/2)*-7;
+      card.dataset.x=x; card.dataset.y=rowY[row]; card.dataset.z=z; card.dataset.yaw=yaw;
+      card.innerHTML='<img src="'+cert.image+'" alt="'+cert.title.replace(/"/g,'&quot;')+'"><span class="cert-dom-label">'+String(idx+1).padStart(2,'0')+' · CERTIFICATION</span>';
+      room.appendChild(card);
+      const item={card,cert,x,y:rowY[row],z,yaw,index:idx}; cards.push(item);
+      card.addEventListener('mouseenter',()=>{if(!focused){hovered=item;card.classList.add('is-hover');}});
+      card.addEventListener('mouseleave',()=>{card.classList.remove('is-hover');if(hovered===item)hovered=null;});
+      card.addEventListener('click',()=>{if(!focused) openCertificate(item);});
+      card.querySelector('img').addEventListener('error',()=>{card.querySelector('img').style.display='none'; card.style.background='linear-gradient(135deg,#10212b,#071016)';});
+    });
+  });
+  wrap.appendChild(stage);
+
+  let rx=0,ry=0,targetRx=0,targetRy=0,dragging=false,lastX=0,lastY=0,hovered=null,focused=null;
+  stage.addEventListener('pointerdown',e=>{if(focused)return;dragging=true;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');stage.setPointerCapture?.(e.pointerId);});
+  stage.addEventListener('pointermove',e=>{
+    if(dragging){targetRy+= (e.clientX-lastX)*0.18;targetRx-= (e.clientY-lastY)*0.10;targetRx=Math.max(-16,Math.min(16,targetRx));lastX=e.clientX;lastY=e.clientY;}
+    else {const r=stage.getBoundingClientRect();targetRy=((e.clientX-r.left)/r.width-.5)*12;targetRx=-((e.clientY-r.top)/r.height-.5)*7;}
+  });
+  const stopDrag=e=>{dragging=false;stage.classList.remove('dragging');try{stage.releasePointerCapture?.(e.pointerId)}catch(_){};};
+  stage.addEventListener('pointerup',stopDrag);stage.addEventListener('pointercancel',stopDrag);stage.addEventListener('pointerleave',()=>{if(!dragging){targetRy*=.35;targetRx*=.35;}});
+
+  function openCertificate(item){
+    focused=item; hovered=null; hint?.classList.add('cert-hint-hidden'); showCertDetail(item.cert);
+  }
+  function closeCertificate(){focused=null;hint?.classList.remove('cert-hint-hidden');hideCertDetail();cards.forEach(c=>c.card.classList.remove('is-focus'));}
+  window.__certGalleryClose=closeCertificate;
+  document.getElementById('cert-back-btn')?.addEventListener('click',closeCertificate);
+
+  let raf=0;
+  function render(){
+    raf=requestAnimationFrame(render);
+    if(!focused){ry+=(targetRy-ry)*.055;rx+=(targetRx-rx)*.055;}
+    room.style.transform='rotateX('+(-rx)+'deg) rotateY('+ry+'deg)';
+    const cw=wrap.clientWidth,ch=wrap.clientHeight;
+    cards.forEach(item=>{
+      const focus=item===focused;
+      const x=focus?0:item.x;
+      const y=focus?0:item.y;
+      const z=focus?240:item.z;
+      const yaw=focus?0:item.yaw;
+      const scale=focus?1.18:1;
+      const opacity=(focused&&!focus) ? .16 : 1;
+      item.card.style.transform='translate3d(calc(-50% + '+x+'px),calc(-50% + '+y+'px),'+z+'px) rotateY('+yaw+'deg) scale('+scale+')';
+      item.card.style.opacity=opacity;
+      item.card.style.zIndex=focus?100:10-item.index;
+      if(focus)item.card.classList.add('is-focus');else item.card.classList.remove('is-focus');
+    });
+  }
+  render();
+}
+
 </script>
 </body>
 </html>

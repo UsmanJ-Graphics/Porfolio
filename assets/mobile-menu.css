@@ -51,6 +51,7 @@ html[data-theme="light"] #mobile-menu {
 #mobile-menu.open .mm-link:nth-child(4) { transition-delay: 0.26s; }
 #mobile-menu.open .mm-link:nth-child(5) { transition-delay: 0.32s; }
 #mobile-menu.open .mm-link:nth-child(6) { transition-delay: 0.38s; }
+#mobile-menu.open .mm-link:nth-child(7) { transition-delay: 0.44s; }
 
 .mm-num {
   font-size: 11px;

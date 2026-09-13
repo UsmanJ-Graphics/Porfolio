@@ -146,3 +146,21 @@
     opacity: 1 !important;
   }
 }
+
+/* ---------- CERTIFICATION ARCHIVE — the gallery settles in like a
+   render finishing, with the meta line ticking in just before it ---------- */
+.section[data-transition="archive"] .cert-archive-meta {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+}
+.section[data-transition="archive"] .cert-gallery-shell {
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.7s var(--ease) 0.1s, transform 0.7s var(--ease) 0.1s;
+}
+.section[data-transition="archive"].in .cert-archive-meta,
+.section[data-transition="archive"].in .cert-gallery-shell {
+  opacity: 1;
+  transform: none;
+}
