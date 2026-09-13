@@ -566,23 +566,65 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 
 
 /* ================================================================
-   CERTIFICATION VR DOM LAYER — sharp image rendering fallback
+   CERTIFICATION ARCHIVE — WebGL canvas states, a11y rail, lightbox
    ================================================================ */
-.cert-dom-stage{position:absolute;inset:0;overflow:hidden;perspective:1200px;perspective-origin:50% 48%;background:radial-gradient(circle at 50% 46%,rgba(18,75,96,.18),transparent 48%),linear-gradient(180deg,#02070c,#02050a 72%,#010306);cursor:grab;touch-action:none;}
-.cert-dom-stage.dragging{cursor:grabbing;}
-.cert-dom-room{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform;}
-.cert-dom-floor,.cert-dom-ceiling,.cert-dom-wall{position:absolute;left:50%;top:50%;transform-style:preserve-3d;pointer-events:none;border:1px solid rgba(125,227,214,.13);}
-.cert-dom-floor{width:1700px;height:900px;transform:translate(-50%,40%) rotateX(72deg) translateZ(-520px);background-image:linear-gradient(rgba(125,227,214,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(125,227,214,.12) 1px,transparent 1px);background-size:55px 55px;box-shadow:0 -20px 90px rgba(0,220,255,.06) inset;}
-.cert-dom-ceiling{width:1700px;height:900px;transform:translate(-50%,-140%) rotateX(-72deg) translateZ(-520px);background-image:linear-gradient(rgba(125,227,214,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(125,227,214,.06) 1px,transparent 1px);background-size:55px 55px;}
-.cert-dom-wall{width:1500px;height:900px;transform:translate(-50%,-50%) translateZ(-620px);background-image:linear-gradient(rgba(125,227,214,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(125,227,214,.07) 1px,transparent 1px);background-size:55px 55px;}
-.cert-dom-card{position:absolute;left:50%;top:50%;width:245px;z-index:20;appearance:none;border:0;padding:0;margin:0;background:transparent;aspect-ratio:4/2.82;transform-style:preserve-3d;transition:filter .2s,opacity .3s;will-change:transform;cursor:pointer;}
-.cert-dom-card::before{content:'';position:absolute;inset:-9px;transform:translateZ(-7px);border:1px solid rgba(125,227,214,.62);background:rgba(3,12,18,.88);box-shadow:0 0 26px rgba(0,220,255,.08),inset 0 0 20px rgba(0,220,255,.04);}
-.cert-dom-card::after{content:'';position:absolute;inset:-4px;transform:translateZ(3px);border:1px solid rgba(125,227,214,.55);pointer-events:none;}
-.cert-dom-card img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;background:#f7f7f4;backface-visibility:hidden;image-rendering:auto;box-shadow:0 12px 30px rgba(0,0,0,.42);}
-.cert-dom-label{position:absolute;left:50%;top:calc(100% + 20px);transform:translateX(-50%) translateZ(3px);font:9px 'IBM Plex Mono',monospace;letter-spacing:.12em;color:rgba(125,227,214,.8);white-space:nowrap;text-shadow:0 0 12px rgba(0,220,255,.25);}
-.cert-dom-card.is-hover{filter:brightness(1.12) drop-shadow(0 0 18px rgba(0,220,255,.22));}
-.cert-dom-card.is-focus{filter:brightness(1.05) drop-shadow(0 0 32px rgba(0,220,255,.3));}
-@media(max-width:859px){.cert-gallery-shell{height:auto;overflow:visible;background:transparent;border:0;box-shadow:none}.cert-gallery-canvas-wrap{position:relative;inset:auto;width:100%;height:auto;border:0;background:transparent}.cert-dom-stage{display:none}.cert-fallback-grid{display:grid !important;}}
+.cert-gallery-canvas-wrap canvas{ cursor:grab; }
+.cert-gallery-canvas-wrap canvas.dragging{ cursor:grabbing; }
+
+/* keyboard-focusable index of certificates — visually a slim numbered
+   rail along the top of the canvas so it doubles as a quick picker,
+   but its real job is giving every certificate a labeled, tabbable
+   control independent of 3D raycasting. */
+.cert-a11y-rail{
+  position:absolute; left:16px; top:56px; right:16px; z-index:6;
+  display:flex; flex-wrap:wrap; gap:6px; pointer-events:none;
+}
+.cert-a11y-btn{
+  pointer-events:auto;
+  width:26px; height:26px; display:flex; align-items:center; justify-content:center;
+  font-size:9px; letter-spacing:.04em; color:var(--text-dim);
+  background:rgba(4,7,13,.55); border:1px solid var(--border); border-radius:4px;
+  backdrop-filter:blur(6px); transition:color .2s,border-color .2s,background .2s;
+}
+.cert-a11y-btn:hover{ color:var(--accent); border-color:var(--accent-dim); }
+.cert-a11y-btn:focus-visible{
+  outline:2.5px solid var(--accent); outline-offset:2px;
+  color:var(--accent); border-color:var(--accent);
+}
+
+.cert-detail-actions{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:9px; }
+.cert-detail-actions .btn{ margin-top:0; }
+
+/* full-resolution lightbox */
+.cert-lightbox{
+  position:fixed; inset:0; z-index:400; display:flex; align-items:center; justify-content:center;
+  background:rgba(2,4,8,.92); backdrop-filter:blur(6px);
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity .3s var(--ease), visibility .3s;
+  padding:40px;
+}
+.cert-lightbox.open{ opacity:1; visibility:visible; pointer-events:auto; }
+.cert-lightbox img{
+  max-width:min(1100px,92vw); max-height:88vh; width:auto; height:auto;
+  object-fit:contain; box-shadow:0 30px 90px rgba(0,0,0,.6);
+  border:1px solid var(--border-strong); border-radius:4px;
+  transform:scale(.97); transition:transform .3s var(--ease);
+}
+.cert-lightbox.open img{ transform:none; }
+.cert-lightbox-close{
+  position:absolute; top:22px; right:26px; z-index:2;
+  width:38px; height:38px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(4,7,13,.7); border:1px solid var(--border-strong);
+  color:var(--text); font-size:16px;
+}
+.cert-lightbox-close:hover{ color:var(--accent); border-color:var(--accent-dim); }
+@media (max-width:859px){
+  .cert-a11y-rail{ display:none; } /* fallback grid already keyboard-accessible on small/coarse screens */
+}
+@media (prefers-reduced-motion:reduce){
+  .cert-lightbox, .cert-lightbox img{ transition:none !important; }
+}
 
 </style>
 <link rel="stylesheet" href="assets/ui-overrides.css">
@@ -864,6 +906,10 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
       <div class="cert-gallery-canvas-wrap" id="cert-gallery-canvas-wrap" aria-label="Interactive 3D certificate gallery. Click a certificate to inspect it." role="img"></div>
       <div class="cert-gallery-hint mono" id="cert-gallery-hint">MOVE / DRAG TO EXPLORE · CLICK A FRAME TO INSPECT</div><div class="cert-vr-badge"><span>VR ARCHIVE · DRAG / MOVE / CLICK</span></div>
 
+      <!-- Keyboard-accessible index — every certificate gets a real, focusable,
+           labeled control (Enter/Space selects) independent of 3D raycasting. -->
+      <div class="cert-a11y-rail mono" id="cert-a11y-rail" aria-label="Certificate index"></div>
+
       <!-- Detail panel — shown when a certificate is focused -->
       <div class="cert-detail-panel" id="cert-detail-panel" aria-live="polite">
         <div class="cert-detail-inner">
@@ -879,7 +925,10 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
             <div class="cert-detail-type"><span>TYPE</span><b id="cert-detail-type">—</b></div>
           </div>
           <p class="cert-detail-description" id="cert-detail-description">Portfolio demonstration metadata.</p>
-          <button type="button" class="btn btn-ghost cert-back-btn" id="cert-back-btn">← BACK TO ARCHIVE</button>
+          <div class="cert-detail-actions">
+            <button type="button" class="btn btn-ghost cert-back-btn" id="cert-back-btn">← BACK TO ARCHIVE</button>
+            <button type="button" class="btn btn-ghost cert-openfull-btn" id="cert-openfull-btn">OPEN FULL VIEW ↗</button>
+          </div>
           <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-ghost cert-verify-btn" id="cert-verify-btn" hidden>VERIFY CREDENTIAL ↗</a>
         </div>
       </div>
@@ -887,6 +936,12 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 
     <!-- Mobile / no-WebGL fallback — plain accessible list, populated by JS -->
     <div class="cert-fallback-grid" id="cert-fallback-grid" hidden></div>
+
+    <!-- Full-resolution image lightbox -->
+    <div class="cert-lightbox" id="cert-lightbox" role="dialog" aria-modal="true" aria-label="Full-resolution certificate image">
+      <button type="button" class="cert-lightbox-close" id="cert-lightbox-close" aria-label="Close full-resolution view">✕</button>
+      <img id="cert-lightbox-img" alt="" />
+    </div>
   </section>
 
   <!-- EDUCATION + ACHIEVEMENTS -->
@@ -2109,7 +2164,13 @@ document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }
 })();
 
 /* ===================================================================
-   CERTIFICATION ARCHIVE — immersive 3D certificate exhibition
+   CERTIFICATION ARCHIVE — real-time Three.js VR-style exhibition
+   Single, authoritative implementation. Replaces every earlier
+   duplicate/experimental version of this section.
+   Sections: DATA -> FALLBACK GRID -> SCENE INIT -> CERTIFICATE
+   CREATION -> CAMERA/LOOK CONTROLS -> INTERACTION (click/drag/wheel/
+   keyboard) -> SELECTION + INSPECTION -> LIGHTBOX -> RESPONSIVE ->
+   RENDER LOOP / VISIBILITY PAUSE.
    =================================================================== */
 const CERTIFICATES = [
   { image:'assets/project-screens/certfi.jpeg',  title:'Python for Data Science', issuer:'IBM Skills Network', date:'March 15, 2024', credential:'IBM-PDS-2024-0315', type:'Professional Certificate', description:'Completed a practical introduction to Python, data analysis workflows, notebooks, and foundational data-science tooling. Portfolio demo metadata.', verifyUrl:'' },
@@ -2121,6 +2182,9 @@ const CERTIFICATES = [
   { image:'assets/project-screens/certfi8.jpeg', title:'Real-Time Rendering Concepts', issuer:'Graphics Learning Lab', date:'March 27, 2025', credential:'GFX-RTR-2025-0327', type:'Technical Certificate', description:'Studied real-time rendering architecture, lighting, materials, optimization, frame timing, and GPU-oriented techniques. Portfolio demo metadata.', verifyUrl:'' },
   { image:'assets/project-screens/certi2.jpeg',  title:'Data Structures & Algorithms', issuer:'Computer Science Academy', date:'May 11, 2025', credential:'DSA-CS-2025-0511', type:'Course Certificate', description:'Strengthened algorithmic problem solving through arrays, trees, graphs, complexity analysis, and common optimization strategies. Portfolio demo metadata.', verifyUrl:'' }
 ];
+
+/* Demo/placeholder metadata only — clearly labeled above and in the UI.
+   Swap in real issuer/date/credential data whenever it is available. */
 
 function showCertDetail(cert){
   const panel = document.getElementById('cert-detail-panel');
@@ -2138,6 +2202,8 @@ function showCertDetail(cert){
   const verifyBtn = document.getElementById('cert-verify-btn');
   if(cert.verifyUrl){ verifyBtn.href=cert.verifyUrl; verifyBtn.hidden=false; }
   else verifyBtn.hidden=true;
+  const openFullBtn = document.getElementById('cert-openfull-btn');
+  if(openFullBtn) openFullBtn.dataset.image = cert.image || '';
   panel.classList.add('open');
 }
 function hideCertDetail(){
@@ -2146,28 +2212,84 @@ function hideCertDetail(){
   document.getElementById('cert-gallery-shell')?.classList.remove('has-detail');
 }
 
+/* ---------------------------------------------------------------
+   LIGHTBOX — full-resolution image inspection, ESC / outside-click
+   / close-button all dismiss it. Independent of the 3D archive.
+   --------------------------------------------------------------- */
+(function initLightbox(){
+  const overlay = document.getElementById('cert-lightbox');
+  const img = document.getElementById('cert-lightbox-img');
+  const openBtn = document.getElementById('cert-openfull-btn');
+  const closeBtn = document.getElementById('cert-lightbox-close');
+  if(!overlay || !img || !openBtn) return;
+  function open(){
+    const src = openBtn.dataset.image;
+    if(!src) return;
+    img.src = src;
+    overlay.classList.add('open');
+    closeBtn?.focus({preventScroll:true});
+  }
+  function close(){
+    overlay.classList.remove('open');
+    openBtn.focus({preventScroll:true});
+  }
+  openBtn.addEventListener('click', open);
+  closeBtn?.addEventListener('click', close);
+  overlay.addEventListener('click', (e)=>{ if(e.target === overlay) close(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && overlay.classList.contains('open')) close(); });
+})();
+
 (function certificateGalleryBootstrap(){
   const shell = document.getElementById('cert-gallery-shell');
   if(!shell) return;
   const countLabel = document.getElementById('cert-count-label');
   if(countLabel) countLabel.textContent = String(CERTIFICATES.length).padStart(2,'0') + ' ITEMS';
+
+  function supportsWebGL(){
+    try{
+      const c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && (c.getContext('webgl') || c.getContext('experimental-webgl')));
+    }catch(e){ return false; }
+  }
+
   const coarse = matchMedia('(pointer:coarse)').matches;
   const narrow = window.innerWidth < 860;
-  if(coarse || narrow) renderFallbackGrid();
-  else initCertificateGallery();
+  const phoneClass = coarse && narrow;
+
+  if(phoneClass || !window.THREE || !supportsWebGL()){
+    renderFallbackGrid();
+  } else {
+    try{ initCertificateArchive(); }
+    catch(err){ console.error('Certification archive failed to start, falling back to grid.', err); renderFallbackGrid(); }
+  }
+
+  document.getElementById('cert-back-btn')?.addEventListener('click', ()=>{
+    hideCertDetail();
+    if(window.__certArchiveClose) window.__certArchiveClose();
+  });
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && document.getElementById('cert-detail-panel')?.classList.contains('open')){
+      hideCertDetail();
+      if(window.__certArchiveClose) window.__certArchiveClose();
+    }
+  });
 })();
 
 function renderFallbackGrid(){
   const wrap=document.getElementById('cert-gallery-canvas-wrap');
   const hint=document.getElementById('cert-gallery-hint');
+  const hud=document.querySelector('.cert-gallery-hud');
+  const badge=document.querySelector('.cert-vr-badge');
   const grid=document.getElementById('cert-fallback-grid');
   if(wrap) wrap.style.display='none';
   if(hint) hint.style.display='none';
+  if(hud) hud.style.display='none';
+  if(badge) badge.style.display='none';
   if(!grid) return;
   grid.hidden=false;
   grid.innerHTML=CERTIFICATES.map((cert,i)=>`
-    <button type="button" class="cert-fallback-card" data-index="${i}">
-      <span class="cert-fallback-frame"><img src="${cert.image}" alt="${cert.title}"></span>
+    <button type="button" class="cert-fallback-card" data-index="${i}" aria-label="Inspect certificate: ${cert.title}">
+      <span class="cert-fallback-frame"><img src="${cert.image}" alt="${cert.title}" loading="lazy"></span>
       <span class="cert-fallback-name">${String(i+1).padStart(2,'0')} · ${cert.title}</span>
     </button>`).join('');
   grid.querySelectorAll('.cert-fallback-card').forEach(btn=>{
@@ -2175,275 +2297,349 @@ function renderFallbackGrid(){
   });
 }
 
-function makeTextTexture(text, accent){
-  const canvas=document.createElement('canvas'); canvas.width=900; canvas.height=80;
-  const ctx=canvas.getContext('2d');
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.font='600 26px IBM Plex Mono, monospace';
-  ctx.fillStyle=accent; ctx.textAlign='center'; ctx.textBaseline='middle';
-  ctx.fillText(text.toUpperCase(),canvas.width/2,canvas.height/2);
-  const tex=new THREE.CanvasTexture(canvas);
-  tex.minFilter=THREE.LinearFilter; tex.magFilter=THREE.LinearFilter;
-  if('colorSpace' in tex) tex.colorSpace=THREE.SRGBColorSpace;
-  return tex;
-}
+/* ===================================================================
+   THREE.JS ARCHIVE
+   =================================================================== */
+function initCertificateArchive(){
+  const wrap = document.getElementById('cert-gallery-canvas-wrap');
+  const hint = document.getElementById('cert-gallery-hint');
+  const shell = document.getElementById('cert-gallery-shell');
+  const a11yRail = document.getElementById('cert-a11y-rail');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  wrap.style.display = '';
 
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const tablet = window.innerWidth < 1100;
 
-let __certMaxAnisotropy = 1;
-function rendererCapabilitiesAnisotropy(){ return __certMaxAnisotropy; }
+  /* ---------- SCENE INIT ---------- */
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x02060a, 0.052);
 
-function makeCertificateCard(cert,index,accentHex){
-  const group=new THREE.Group();
-  const w=2.25, h=1.58;
-  const backingMat=new THREE.MeshBasicMaterial({color:0x061018,transparent:true,opacity:.94,side:THREE.DoubleSide});
-  const backing=new THREE.Mesh(new THREE.PlaneGeometry(w+.18,h+.18),backingMat);
-  backing.position.z=-.035; group.add(backing);
+  const camera = new THREE.PerspectiveCamera(52, Math.max(wrap.clientWidth,1)/Math.max(wrap.clientHeight,1), 0.1, 60);
+  const HOME_POS = new THREE.Vector3(0, 0.1, 6.4);
+  camera.position.copy(HOME_POS);
+  camera.lookAt(0, 0, -4);
 
-  const frameMat=new THREE.MeshBasicMaterial({color:accentHex,transparent:true,opacity:.72,side:THREE.DoubleSide});
-  const frame=new THREE.Mesh(new THREE.PlaneGeometry(w+.09,h+.09),frameMat);
-  frame.position.z=-.015; group.add(frame);
+  const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true, powerPreference:'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  renderer.setSize(wrap.clientWidth, wrap.clientHeight);
+  renderer.setClearColor(0x000000, 0);
+  renderer.domElement.setAttribute('aria-hidden', 'true');
+  renderer.domElement.style.touchAction = 'none';
+  wrap.appendChild(renderer.domElement);
 
-  const imageMat=new THREE.MeshBasicMaterial({transparent:true,side:THREE.DoubleSide,opacity:1});
-  const image=new THREE.Mesh(new THREE.PlaneGeometry(w,h),imageMat); group.add(image);
-  const loader=new THREE.TextureLoader();
-  loader.load(cert.image,(tex)=>{
-    if('colorSpace' in tex) tex.colorSpace=THREE.SRGBColorSpace;
-    tex.anisotropy = rendererCapabilitiesAnisotropy();
-    tex.minFilter = THREE.LinearMipmapLinearFilter;
-    tex.magFilter = THREE.LinearFilter;
-    tex.generateMipmaps = true;
-    tex.needsUpdate = true;
-    imageMat.map=tex; imageMat.color.set(0xffffff); imageMat.needsUpdate=true;
-  }, undefined, ()=>{
-    imageMat.color.set(0x1a252c);
-    imageMat.needsUpdate=true;
+  scene.add(new THREE.AmbientLight(0x6fd8ff, 0.55));
+  const keyLight = new THREE.PointLight(0x33e0ff, 1.4, 22, 2);
+  keyLight.position.set(0, 2.2, 3.5); scene.add(keyLight);
+  const rimLight = new THREE.PointLight(0x1de9c9, 0.9, 26, 2);
+  rimLight.position.set(-5, 1.2, -6); scene.add(rimLight);
+  const rimLight2 = new THREE.PointLight(0x2a6bff, 0.6, 26, 2);
+  rimLight2.position.set(5, 0.6, -10); scene.add(rimLight2);
+
+  /* perspective grid floor / ceiling / back wall */
+  const GRID_SIZE = 44, GRID_DIV = 36, gridA = 0x2fd9cf, gridB = 0x0a2228;
+  const floorGrid = new THREE.GridHelper(GRID_SIZE, GRID_DIV, gridA, gridB);
+  floorGrid.position.y = -2.6; floorGrid.material.transparent = true; floorGrid.material.opacity = 0.55;
+  scene.add(floorGrid);
+  const ceilGrid = new THREE.GridHelper(GRID_SIZE, GRID_DIV, gridA, gridB);
+  ceilGrid.position.y = 4.2; ceilGrid.material.transparent = true; ceilGrid.material.opacity = 0.28;
+  scene.add(ceilGrid);
+  const wallGrid = new THREE.GridHelper(GRID_SIZE, GRID_DIV, gridA, gridB);
+  wallGrid.rotation.x = Math.PI / 2; wallGrid.position.z = -15;
+  wallGrid.material.transparent = true; wallGrid.material.opacity = 0.32;
+  scene.add(wallGrid);
+
+  /* atmospheric glow: soft sprite behind the room center */
+  const glowCanvas = document.createElement('canvas'); glowCanvas.width = glowCanvas.height = 256;
+  const gctx = glowCanvas.getContext('2d');
+  const grad = gctx.createRadialGradient(128,128,0,128,128,128);
+  grad.addColorStop(0, 'rgba(70,230,220,0.55)'); grad.addColorStop(1, 'rgba(70,230,220,0)');
+  gctx.fillStyle = grad; gctx.fillRect(0,0,256,256);
+  const glowTex = new THREE.CanvasTexture(glowCanvas);
+  const glowMat = new THREE.SpriteMaterial({ map:glowTex, transparent:true, depthWrite:false, opacity:0.5 });
+  const glowSprite = new THREE.Sprite(glowMat); glowSprite.scale.set(14,14,1); glowSprite.position.set(0,0.4,-8);
+  scene.add(glowSprite);
+
+  /* subtle drifting particles */
+  const PARTICLE_COUNT = reduceMotion ? 0 : (tablet ? 90 : 180);
+  let particles = null, particleVelocities = null;
+  if(PARTICLE_COUNT > 0){
+    const pGeo = new THREE.BufferGeometry();
+    const positions = new Float32Array(PARTICLE_COUNT * 3);
+    particleVelocities = new Float32Array(PARTICLE_COUNT);
+    for(let i=0;i<PARTICLE_COUNT;i++){
+      positions[i*3]   = (Math.random()-0.5) * 26;
+      positions[i*3+1] = Math.random() * 6 - 2.4;
+      positions[i*3+2] = (Math.random()-0.5) * 28 - 4;
+      particleVelocities[i] = 0.04 + Math.random()*0.08;
+    }
+    pGeo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+    const pMat = new THREE.PointsMaterial({ color:0x7de3d6, size:0.028, transparent:true, opacity:0.55, sizeAttenuation:true });
+    particles = new THREE.Points(pGeo, pMat);
+    scene.add(particles);
+  }
+
+  /* ---------- CERTIFICATE CREATION ---------- */
+  const loader = new THREE.TextureLoader();
+  const maxAniso = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 1;
+  const group = new THREE.Group(); scene.add(group);
+
+  // x, y, z, yawDeg — spread across near/mid/far depth, left/center/right, two rows
+  const LAYOUT = [
+    [-2.5,  1.0, -2.2,  14], [ 0.0,  1.15, -5.2,   0], [ 2.5,  1.0, -2.2, -14],
+    [-3.3, -0.35, -6.6,  11], [ 0.0, -0.25, -3.4,   0], [ 3.3, -0.35, -6.6, -11],
+    [-1.7, -1.75, -9.0,   7], [ 1.7, -1.75, -9.0,  -7]
+  ];
+  const ACCENT = 0x7de3d6;
+
+  const items = [];
+  CERTIFICATES.forEach((cert, i) => {
+    const [x,y,z,yawDeg] = LAYOUT[i % LAYOUT.length];
+    const yaw = THREE.MathUtils.degToRad(yawDeg);
+
+    const holder = new THREE.Group();
+    holder.position.set(x,y,z);
+    holder.rotation.y = yaw;
+
+    const backingMat = new THREE.MeshBasicMaterial({ color:0x04141c, transparent:true, opacity:0.92, side:THREE.DoubleSide });
+    const backing = new THREE.Mesh(new THREE.PlaneGeometry(1.9,1.9), backingMat);
+    backing.position.z = -0.03; holder.add(backing);
+
+    const edgeMat = new THREE.LineBasicMaterial({ color:ACCENT, transparent:true, opacity:0.65 });
+    let edge = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(1.95,1.95)), edgeMat);
+    edge.position.z = -0.02; holder.add(edge);
+
+    const imgMat = new THREE.MeshBasicMaterial({ color:0x0e2027, side:THREE.DoubleSide });
+    let imgMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.7,1.7), imgMat);
+    holder.add(imgMesh);
+
+    // generous, always-present hit target — independent of image aspect
+    // so every certificate stays reliably clickable at any depth.
+    const hitMesh = new THREE.Mesh(new THREE.PlaneGeometry(2.35,2.35), new THREE.MeshBasicMaterial({ visible:false }));
+    hitMesh.position.z = 0.06; holder.add(hitMesh);
+
+    group.add(holder);
+
+    const item = {
+      index:i, cert, holder, hitMesh, backing, edge, edgeMat, imgMat,
+      basePos:new THREE.Vector3(x,y,z), baseYaw:yaw,
+      seed: Math.random()*Math.PI*2, hovered:false
+    };
+    items.push(item);
+
+    loader.load(cert.image, (tex)=>{
+      if('colorSpace' in tex) tex.colorSpace = THREE.SRGBColorSpace; else if('encoding' in tex) tex.encoding = THREE.sRGBEncoding;
+      tex.minFilter = THREE.LinearMipmapLinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+      tex.anisotropy = maxAniso;
+      tex.generateMipmaps = true;
+      tex.needsUpdate = true;
+      const src = tex.image;
+      const aspect = (src && src.width && src.height) ? src.width / src.height : 1;
+      let w = 1.7, h = 1.7;
+      if(aspect >= 1) h = 1.7 / aspect; else w = 1.7 * aspect;
+      imgMesh.geometry.dispose();
+      imgMesh.geometry = new THREE.PlaneGeometry(w,h);
+      imgMat.map = tex; imgMat.color.set(0xffffff); imgMat.needsUpdate = true;
+      backing.geometry.dispose(); backing.geometry = new THREE.PlaneGeometry(w+0.22, h+0.22);
+      edge.geometry.dispose(); edge.geometry = new THREE.EdgesGeometry(new THREE.PlaneGeometry(w+0.26, h+0.26));
+    }, undefined, ()=>{
+      imgMat.color.set(0x3a1414); imgMat.needsUpdate = true;
+    });
   });
 
-  const edgeMat=new THREE.LineBasicMaterial({color:accentHex,transparent:true,opacity:.38});
-  const edge=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(w+.09,h+.09)),edgeMat);
-  edge.position.z=.012; group.add(edge);
+  /* ---------- ACCESSIBILITY RAIL (keyboard focus + labels) ---------- */
+  if(a11yRail){
+    a11yRail.innerHTML = CERTIFICATES.map((cert,i)=>
+      `<button type="button" class="cert-a11y-btn" data-index="${i}" aria-label="Inspect certificate ${i+1}: ${cert.title}">${String(i+1).padStart(2,'0')}</button>`
+    ).join('');
+    a11yRail.querySelectorAll('.cert-a11y-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=> selectItem(items[Number(btn.dataset.index)]));
+      btn.addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); selectItem(items[Number(btn.dataset.index)]); }
+      });
+    });
+  }
 
-  const labelMat=new THREE.MeshBasicMaterial({map:makeTextTexture(`${String(index+1).padStart(2,'0')} · CERTIFICATION`,accentHex),transparent:true,depthWrite:false,side:THREE.DoubleSide,opacity:.72});
-  const label=new THREE.Mesh(new THREE.PlaneGeometry(2.5,.22),labelMat);
-  label.position.set(0,-h/2-.20,.01); group.add(label);
+  /* ---------- CAMERA / LOOK CONTROLS ---------- */
+  const rig = { yaw:0, pitch:0, targetYaw:0, targetPitch:0, dolly:0, targetDolly:0 };
+  let dragging = false, dragMoved = 0, lastX = 0, lastY = 0, downX = 0, downY = 0;
+  const CLICK_THRESHOLD = 6;
 
-  const hit=new THREE.Mesh(new THREE.PlaneGeometry(w+.42,h+.42),new THREE.MeshBasicMaterial({visible:false,side:THREE.DoubleSide}));
-  hit.position.z=.04; group.add(hit);
-  return {cert,index,group,hit,imageMat,frameMat,edgeMat,labelMat,seed:Math.random()*Math.PI*2,base:new THREE.Vector3(),baseRot:new THREE.Euler()};
-}
+  function onPointerDown(e){
+    if(state !== 'idle') return;
+    dragging = true; dragMoved = 0;
+    lastX = downX = e.clientX; lastY = downY = e.clientY;
+    renderer.domElement.classList.add('dragging');
+    try{ renderer.domElement.setPointerCapture(e.pointerId); }catch(_){}
+  }
+  function onPointerMove(e){
+    if(dragging){
+      const dx = e.clientX - lastX, dy = e.clientY - lastY;
+      dragMoved += Math.abs(dx) + Math.abs(dy);
+      rig.targetYaw   += dx * 0.0028;
+      rig.targetPitch += dy * 0.0018;
+      rig.targetPitch = Math.max(-0.32, Math.min(0.32, rig.targetPitch));
+      lastX = e.clientX; lastY = e.clientY;
+    } else if(state === 'idle') {
+      const r = renderer.domElement.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width - 0.5;
+      const ny = (e.clientY - r.top) / r.height - 0.5;
+      rig.targetYaw   = nx * 0.5;
+      rig.targetPitch = ny * 0.28;
+    }
+  }
+  function onPointerUp(e){
+    if(!dragging) return;
+    dragging = false;
+    renderer.domElement.classList.remove('dragging');
+    try{ renderer.domElement.releasePointerCapture(e.pointerId); }catch(_){}
+    const totalMove = Math.abs(e.clientX - downX) + Math.abs(e.clientY - downY);
+    if(totalMove < CLICK_THRESHOLD && state === 'idle'){
+      tryPick(e.clientX, e.clientY);
+    }
+  }
+  function onWheel(e){
+    if(state !== 'idle') return;
+    e.preventDefault();
+    rig.targetDolly += e.deltaY * 0.0022;
+    rig.targetDolly = Math.max(-1.6, Math.min(3.4, rig.targetDolly));
+  }
+  renderer.domElement.addEventListener('pointerdown', onPointerDown);
+  renderer.domElement.addEventListener('pointermove', onPointerMove);
+  renderer.domElement.addEventListener('pointerup', onPointerUp);
+  renderer.domElement.addEventListener('pointercancel', onPointerUp);
+  renderer.domElement.addEventListener('wheel', onWheel, { passive:false });
 
-function initCertificateGallery(){
-  const wrap=document.getElementById('cert-gallery-canvas-wrap');
-  const hint=document.getElementById('cert-gallery-hint');
-  if(!wrap) return;
-  wrap.innerHTML='';
+  const raycaster = new THREE.Raycaster();
+  const ndc = new THREE.Vector2();
+  function tryPick(clientX, clientY){
+    const r = renderer.domElement.getBoundingClientRect();
+    ndc.x = ((clientX - r.left) / r.width) * 2 - 1;
+    ndc.y = -((clientY - r.top) / r.height) * 2 + 1;
+    raycaster.setFromCamera(ndc, camera);
+    const hits = raycaster.intersectObjects(items.map(it => it.hitMesh), false);
+    if(hits.length){
+      const hit = items.find(it => it.hitMesh === hits[0].object);
+      if(hit) selectItem(hit);
+    }
+  }
 
-  const stage=document.createElement('div'); stage.className='cert-dom-stage';
-  const room=document.createElement('div'); room.className='cert-dom-room'; stage.appendChild(room);
-  const floor=document.createElement('div'); floor.className='cert-dom-floor'; room.appendChild(floor);
-  const ceiling=document.createElement('div'); ceiling.className='cert-dom-ceiling'; room.appendChild(ceiling);
-  const wall=document.createElement('div'); wall.className='cert-dom-wall'; room.appendChild(wall);
+  /* ---------- SELECTION / INSPECTION MODE ---------- */
+  let state = 'idle'; // 'idle' | 'inspecting'
+  let focusedItem = null;
+  const savedCam = { pos:new THREE.Vector3(), quat:new THREE.Quaternion() };
+  const flightTarget = { pos:new THREE.Vector3(), lookAt:new THREE.Vector3() };
+  const tmpQuat = new THREE.Quaternion();
+  const tmpMat = new THREE.Matrix4();
 
-  const cards=[];
-  const rows=[[0,1,2],[3,4,5],[6,7]];
-  const rowY=[-145,0,145];
-  rows.forEach((indices,row)=>{
-    const count=indices.length;
-    const spacing=count===3?300:315;
-    indices.forEach((idx,j)=>{
-      const cert=CERTIFICATES[idx];
-      const card=document.createElement('button');
-      card.type='button'; card.className='cert-dom-card';
-      card.setAttribute('aria-label','Inspect '+cert.title);
-      const x=(j-(count-1)/2)*spacing;
-      const z=-80-Math.abs(x)*.10-row*12;
-      const yaw=(j-(count-1)/2)*-7;
-      card.dataset.x=x; card.dataset.y=rowY[row]; card.dataset.z=z; card.dataset.yaw=yaw;
-      card.innerHTML='<img src="'+cert.image+'" alt="'+cert.title.replace(/"/g,'&quot;')+'"><span class="cert-dom-label">'+String(idx+1).padStart(2,'0')+' · CERTIFICATION</span>';
-      room.appendChild(card);
-      const item={card,cert,x,y:rowY[row],z,yaw,index:idx}; cards.push(item);
-      card.addEventListener('mouseenter',()=>{if(!focused){hovered=item;card.classList.add('is-hover');}});
-      card.addEventListener('mouseleave',()=>{card.classList.remove('is-hover');if(hovered===item)hovered=null;});
-      // Keep card clicks separate from the room's drag gesture. The previous
-      // stage-level pointer capture could swallow the click before it reached
-      // the certificate button, making the image impossible to inspect.
-      card.addEventListener('pointerdown',e=>{
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        card.focus({preventScroll:true});
-      }, true);
-      card.addEventListener('pointerup',e=>{
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-      }, true);
-      card.addEventListener('click',e=>{
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        openCertificate(item);
-      }, true);
-      card.addEventListener('keydown',e=>{
-        if((e.key==='Enter'||e.key===' ') && !focused){
-          e.preventDefault();
-          openCertificate(item);
+  function selectItem(item){
+    if(state === 'inspecting' && focusedItem === item) return;
+    focusedItem = item;
+    state = 'inspecting';
+    hint?.classList.add('cert-hint-hidden');
+    if(!savedCam.locked){
+      savedCam.pos.copy(camera.position);
+      savedCam.quat.copy(camera.quaternion);
+      savedCam.locked = true;
+    }
+    // approach the certificate face-on, from in front of it
+    const forward = new THREE.Vector3(0,0,1).applyEuler(new THREE.Euler(0, item.baseYaw, 0));
+    flightTarget.pos.copy(item.basePos).addScaledVector(forward, 1.9);
+    flightTarget.lookAt.copy(item.basePos);
+    showCertDetail(item.cert);
+  }
+  function closeInspection(){
+    state = 'idle';
+    focusedItem = null;
+    hint?.classList.remove('cert-hint-hidden');
+  }
+  window.__certArchiveClose = closeInspection;
+
+  /* ---------- RESPONSIVE ---------- */
+  const ro = new ResizeObserver(() => {
+    const w = Math.max(wrap.clientWidth,1), h = Math.max(wrap.clientHeight,1);
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+  ro.observe(wrap);
+
+  /* pause rendering when the section is off-screen */
+  let visible = true;
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en => { visible = en.isIntersecting; });
+    if(visible && !raf) loop();
+  }, { threshold: 0.05 });
+  io.observe(shell || wrap);
+
+  /* ---------- RENDER LOOP ---------- */
+  const clock = new THREE.Clock();
+  let raf = 0;
+  function loop(){
+    if(!visible){ raf = 0; return; }
+    raf = requestAnimationFrame(loop);
+    const t = clock.getElapsedTime();
+    const lerpSpeed = reduceMotion ? 1 : 0.07;
+
+    if(state === 'idle'){
+      rig.yaw   += (rig.targetYaw   - rig.yaw)   * lerpSpeed;
+      rig.pitch += (rig.targetPitch - rig.pitch) * lerpSpeed;
+      rig.dolly += (rig.targetDolly - rig.dolly) * lerpSpeed;
+      const camPos = HOME_POS.clone(); camPos.z -= rig.dolly;
+      camera.position.copy(camPos);
+      tmpMat.makeRotationY(rig.yaw);
+      const lookDir = new THREE.Vector3(0,0,-1).applyMatrix4(tmpMat);
+      const lookTarget = camera.position.clone().add(lookDir.multiplyScalar(4));
+      lookTarget.y += rig.pitch * -3;
+      camera.lookAt(lookTarget);
+      savedCam.locked = false;
+    } else {
+      camera.position.lerp(flightTarget.pos, 0.06);
+      tmpQuat.copy(camera.quaternion);
+      camera.lookAt(flightTarget.lookAt);
+      const desired = camera.quaternion.clone();
+      camera.quaternion.copy(tmpQuat).slerp(desired, 0.08);
+    }
+
+    items.forEach(item => {
+      const focused = item === focusedItem;
+      const floatY = reduceMotion ? 0 : Math.sin(t*0.6 + item.seed) * 0.05;
+      const dimTarget = (state === 'inspecting' && !focused) ? 0.14 : 1;
+      item.holder.position.set(item.basePos.x, item.basePos.y + floatY, item.basePos.z);
+      item.holder.rotation.y = item.baseYaw + (reduceMotion ? 0 : Math.sin(t*0.4 + item.seed)*0.02);
+      const targetScale = focused ? 1.22 : 1;
+      item.holder.scale.lerp(new THREE.Vector3(targetScale,targetScale,targetScale), 0.09);
+      item.imgMat.opacity !== undefined && (item.imgMat.opacity = 1);
+      item.edgeMat.opacity += ((focused ? 1 : 0.65) - item.edgeMat.opacity) * 0.1;
+      [item.backing.material, item.edgeMat].forEach(m=>{
+        if(m.opacity !== undefined){
+          const base = m === item.edgeMat ? (focused?1:0.65) : 0.92;
+          const dimmed = (state==='inspecting' && !focused) ? dimTarget : base;
+          m.opacity += (dimmed - m.opacity) * 0.1;
         }
       });
-      card.querySelector('img').addEventListener('error',()=>{card.querySelector('img').style.display='none'; card.style.background='linear-gradient(135deg,#10212b,#071016)';});
+      item.imgMat.transparent = true;
+      if(item.imgMat) {
+        const dimmedImg = (state==='inspecting' && !focused) ? dimTarget : 1;
+        item.imgMat.opacity += (dimmedImg - (item.imgMat.opacity ?? 1)) * 0.1;
+      }
     });
-  });
-  wrap.appendChild(stage);
 
-  let rx=0,ry=0,targetRx=0,targetRy=0,dragging=false,lastX=0,lastY=0,hovered=null,focused=null;
-  stage.addEventListener('pointerdown',e=>{
-    // Never start the room drag when the pointer begins on a certificate.
-    // This keeps certificate inspection reliable on Chromium/Edge/local file URLs.
-    if(e.target.closest && e.target.closest('.cert-dom-card')) return;
-    if(focused)return;
-    dragging=true; lastX=e.clientX; lastY=e.clientY;
-    stage.classList.add('dragging');
-    try{stage.setPointerCapture?.(e.pointerId);}catch(_){}
-  });
-  stage.addEventListener('pointermove',e=>{
-    if(dragging){targetRy+= (e.clientX-lastX)*0.18;targetRx-= (e.clientY-lastY)*0.10;targetRx=Math.max(-16,Math.min(16,targetRx));lastX=e.clientX;lastY=e.clientY;}
-    else {const r=stage.getBoundingClientRect();targetRy=((e.clientX-r.left)/r.width-.5)*12;targetRx=-((e.clientY-r.top)/r.height-.5)*7;}
-  });
-  const stopDrag=e=>{dragging=false;stage.classList.remove('dragging');try{stage.releasePointerCapture?.(e.pointerId)}catch(_){};};
-  stage.addEventListener('pointerup',stopDrag);stage.addEventListener('pointercancel',stopDrag);stage.addEventListener('pointerleave',()=>{if(!dragging){targetRy*=.35;targetRx*=.35;}});
+    if(particles && !reduceMotion){
+      const pos = particles.geometry.attributes.position;
+      for(let i=0;i<PARTICLE_COUNT;i++){
+        let py = pos.getY(i) + particleVelocities[i]*0.01;
+        if(py > 4) py = -2.4;
+        pos.setY(i, py);
+      }
+      pos.needsUpdate = true;
+    }
 
-  function openCertificate(item){
-    focused=item; hovered=null; hint?.classList.add('cert-hint-hidden'); showCertDetail(item.cert);
+    renderer.render(scene, camera);
   }
-  function closeCertificate(){focused=null;hint?.classList.remove('cert-hint-hidden');hideCertDetail();cards.forEach(c=>c.card.classList.remove('is-focus'));}
-  window.__certGalleryClose=closeCertificate;
-  document.getElementById('cert-back-btn')?.addEventListener('click',closeCertificate);
-
-  let raf=0;
-  function render(){
-    raf=requestAnimationFrame(render);
-    if(!focused){ry+=(targetRy-ry)*.055;rx+=(targetRx-rx)*.055;}
-    room.style.transform='rotateX('+(-rx)+'deg) rotateY('+ry+'deg)';
-    const cw=wrap.clientWidth,ch=wrap.clientHeight;
-    cards.forEach(item=>{
-      const focus=item===focused;
-      const x=focus?0:item.x;
-      const y=focus?0:item.y;
-      const z=focus?240:item.z;
-      const yaw=focus?0:item.yaw;
-      const scale=focus?1.18:1;
-      const opacity=(focused&&!focus) ? .16 : 1;
-      item.card.style.transform='translate3d(calc(-50% + '+x+'px),calc(-50% + '+y+'px),'+z+'px) rotateY('+yaw+'deg) scale('+scale+')';
-      item.card.style.opacity=opacity;
-      item.card.style.zIndex=focus?100:10-item.index;
-      if(focus)item.card.classList.add('is-focus');else item.card.classList.remove('is-focus');
-    });
-  }
-  render();
+  loop();
 }
-
-</script>
-
-<script>
-/* CERTIFICATION ARCHIVE V7: independent controller.
-   This runs independently of the main portfolio script so certificate inspection
-   still works if another portfolio component throws a runtime error. */
-(function(){
-  function boot(){
-    const wrap=document.getElementById('cert-gallery-canvas-wrap');
-    const shell=document.getElementById('cert-gallery-shell');
-    const panel=document.getElementById('cert-detail-panel');
-    if(!wrap || !panel || wrap.dataset.v7Ready==='1') return;
-    wrap.dataset.v7Ready='1';
-
-    const certs=[
-      ['assets/project-screens/certfi.jpeg','Python for Data Science','IBM Skills Network','March 15, 2024','IBM-PDS-2024-0315','Professional Certificate'],
-      ['assets/project-screens/certfi3.jpeg','Cloud Computing Fundamentals','Google Cloud','June 08, 2024','GCP-CCF-2024-0608','Course Certificate'],
-      ['assets/project-screens/certfi4.jpeg','Unreal Engine Foundations','Udemy','August 21, 2024','UDE-UE5-2024-0821','Course Certificate'],
-      ['assets/project-screens/certfi5.jpeg','OpenGL Graphics Programming','Graphics Learning Lab','October 12, 2024','GFX-OGL-2024-1012','Technical Certificate'],
-      ['assets/project-screens/certfi6.jpeg','Machine Learning Foundations','IBM Skills Network','December 03, 2024','IBM-MLF-2024-1203','Professional Certificate'],
-      ['assets/project-screens/certfi7.jpeg','C++ Programming Essentials','Programming Academy','January 18, 2025','CPP-ESS-2025-0118','Technical Certificate'],
-      ['assets/project-screens/certfi8.jpeg','Real-Time Rendering Concepts','Graphics Learning Lab','March 27, 2025','GFX-RTR-2025-0327','Technical Certificate'],
-      ['assets/project-screens/certi2.jpeg','Data Structures & Algorithms','Computer Science Academy','May 11, 2025','DSA-CS-2025-0511','Course Certificate']
-    ].map((x,i)=>({image:x[0],title:x[1],issuer:x[2],date:x[3],credential:x[4],type:x[5],index:i+1}));
-
-    const existing=wrap.querySelector('.cert-dom-stage');
-    if(existing) existing.remove();
-    const stage=document.createElement('div'); stage.className='cert-dom-stage';
-    stage.style.zIndex='1';
-    const room=document.createElement('div'); room.className='cert-dom-room'; stage.appendChild(room);
-    for(const cls of ['cert-dom-floor','cert-dom-ceiling','cert-dom-wall']){
-      const el=document.createElement('div'); el.className=cls; room.appendChild(el);
-    }
-
-    const positions=[
-      [-320,-135,-40,-10],[-20,-135,20,0],[280,-135,-40,10],
-      [-320,20,-75,-12],[-20,20,-5,0],[280,20,-75,12],
-      [-170,170,-115,-8],[170,170,-115,8]
-    ];
-    const items=[];
-    certs.forEach((cert,i)=>{
-      const card=document.createElement('button');
-      card.type='button'; card.className='cert-dom-card'; card.tabIndex=0;
-      card.setAttribute('aria-label','Inspect '+cert.title);
-      const [x,y,z,yaw]=positions[i];
-      card.innerHTML='<img src="'+cert.image+'" alt="'+cert.title.replace(/"/g,'&quot;')+'"><span class="cert-dom-label">'+String(i+1).padStart(2,'0')+' · CERTIFICATION</span>';
-      card.dataset.x=x; card.dataset.y=y; card.dataset.z=z; card.dataset.yaw=yaw;
-      room.appendChild(card);
-      const img=card.querySelector('img');
-      img.addEventListener('error',()=>{img.style.opacity='.15'; card.title='Image not found: '+cert.image;});
-      const item={card,cert,x,y,z,yaw}; items.push(item);
-      card.addEventListener('pointerdown',e=>{e.stopPropagation();});
-      card.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();inspect(item);});
-      card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inspect(item);}});
-      card.addEventListener('mouseenter',()=>{if(!focused) card.classList.add('is-hover');});
-      card.addEventListener('mouseleave',()=>card.classList.remove('is-hover'));
-    });
-    wrap.appendChild(stage);
-
-    let focused=null, dragging=false, lastX=0,lastY=0, ry=0,rx=0,trY=0,trX=0;
-    stage.addEventListener('pointerdown',e=>{
-      if(e.target.closest('.cert-dom-card')) return;
-      if(focused) return;
-      dragging=true; lastX=e.clientX; lastY=e.clientY; stage.classList.add('dragging');
-      try{stage.setPointerCapture(e.pointerId);}catch(_){ }
-    });
-    stage.addEventListener('pointermove',e=>{
-      if(dragging){trY+=(e.clientX-lastX)*.16;trX-=(e.clientY-lastY)*.10;trY=Math.max(-18,Math.min(18,trY));trX=Math.max(-12,Math.min(12,trX));lastX=e.clientX;lastY=e.clientY;}
-      else if(!focused){const r=stage.getBoundingClientRect();trY=((e.clientX-r.left)/r.width-.5)*10;trX=-((e.clientY-r.top)/r.height-.5)*6;}
-    });
-    const stop=e=>{dragging=false;stage.classList.remove('dragging');try{stage.releasePointerCapture(e.pointerId);}catch(_){}};
-    stage.addEventListener('pointerup',stop); stage.addEventListener('pointercancel',stop);
-
-    function inspect(item){
-      focused=item;
-      document.getElementById('cert-detail-title').textContent=item.cert.title;
-      document.getElementById('cert-detail-issuer').textContent=item.cert.issuer;
-      document.getElementById('cert-detail-date').textContent=item.cert.date;
-      document.getElementById('cert-detail-credential').textContent=item.cert.credential;
-      document.getElementById('cert-detail-type').textContent=item.cert.type;
-      document.getElementById('cert-detail-description').textContent='Portfolio demo metadata: completed training related to '+item.cert.title+'. Replace this text with the official certificate description and verification information.';
-      const img=document.getElementById('cert-detail-image'); img.src=item.cert.image; img.alt=item.cert.title; img.style.display='block';
-      const verify=document.getElementById('cert-verify-btn'); if(verify) verify.hidden=true;
-      panel.classList.add('open'); shell && shell.classList.add('has-detail');
-      document.getElementById('cert-gallery-hint')?.classList.add('cert-hint-hidden');
-    }
-    function close(){focused=null;panel.classList.remove('open');shell && shell.classList.remove('has-detail');document.getElementById('cert-gallery-hint')?.classList.remove('cert-hint-hidden');}
-    document.getElementById('cert-back-btn')?.addEventListener('click',e=>{e.preventDefault();close();});
-
-    function render(){
-      requestAnimationFrame(render);
-      if(!focused){ry+=(trY-ry)*.06;rx+=(trX-rx)*.06;room.style.transform='rotateX('+(-rx)+'deg) rotateY('+ry+'deg)';}
-      items.forEach((it,i)=>{
-        const f=it===focused;
-        const x=f?0:it.x, y=f?0:it.y, z=f?220:it.z, yaw=f?0:it.yaw;
-        it.card.style.transform='translate3d(calc(-50% + '+x+'px),calc(-50% + '+y+'px),'+z+'px) rotateY('+yaw+'deg) scale('+(f?1.16:1)+')';
-        it.card.style.opacity=focused&&!f?.18:1;
-        it.card.style.zIndex=f?200:20-i;
-      });
-    }
-    render();
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
-})();
 </script>
 </body>
 </html>
