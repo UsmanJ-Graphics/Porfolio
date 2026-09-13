@@ -476,6 +476,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <a href="#work" class="nav-link" data-nav="work">Projects</a>
     <a href="#toolchain" class="nav-link" data-nav="toolchain">Skills</a>
     <a href="#about" class="nav-link" data-nav="about">About</a>
+    <a href="#lab" class="nav-link" data-nav="lab">Lab</a>
     <a href="#contact" class="nav-link" data-nav="contact">Contact</a>
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme mode" aria-pressed="true"><span class="theme-sun" aria-hidden="true">☼</span><span class="theme-moon" aria-hidden="true">☾</span><i></i></button>
   </div>
@@ -490,7 +491,8 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <a href="#work" class="mm-link"><span class="mm-num mono">02</span><span class="mm-label">Projects</span><span class="mm-arrow">→</span></a>
     <a href="#toolchain" class="mm-link"><span class="mm-num mono">03</span><span class="mm-label">Skills</span><span class="mm-arrow">→</span></a>
     <a href="#about" class="mm-link"><span class="mm-num mono">04</span><span class="mm-label">About</span><span class="mm-arrow">→</span></a>
-    <a href="#contact" class="mm-link"><span class="mm-num mono">05</span><span class="mm-label">Contact</span><span class="mm-arrow">→</span></a>
+    <a href="#lab" class="mm-link"><span class="mm-num mono">05</span><span class="mm-label">Lab</span><span class="mm-arrow">→</span></a>
+    <a href="#contact" class="mm-link"><span class="mm-num mono">06</span><span class="mm-label">Contact</span><span class="mm-arrow">→</span></a>
   </nav>
   <div class="mm-foot">
     <a href="mailto:usmanjgraphics@gmail.com" class="btn btn-pill-cyan mm-cta">EMAIL ME &nbsp;→</a>
@@ -517,6 +519,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <button class="orbital-node" data-target="work" aria-label="Go to Projects section"><span class="num">02</span><span class="label">Projects</span><span class="dot"></span></button>
     <button class="orbital-node" data-target="toolchain" aria-label="Go to Skills section"><span class="num">03</span><span class="label">Skills</span><span class="dot"></span></button>
     <button class="orbital-node" data-target="about" aria-label="Go to About section"><span class="num">04</span><span class="label">About</span><span class="dot"></span></button>
+    <button class="orbital-node" data-target="lab" aria-label="Go to Lab section"><span class="num">05</span><span class="label">Lab</span><span class="dot"></span></button>
   </div>
   <div class="orbital-scroll-prompt" aria-hidden="true">
     <span class="mouse-icon"><i></i></span>
@@ -591,7 +594,9 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <div class="eyebrow mono">01 / SELECTED WORK</div>
     <h2 class="section-heading">Things I've built.</h2>
     <p class="section-sub">A working set of projects across real-time graphics, low-level systems, and applied C++.</p>
-    <div class="projects-wrap" id="projects-wrap"></div>
+    <div id="project-featured"></div>
+    <div class="more-work-head"><span class="mono more-work-label">MORE GRAPHICS WORK</span></div>
+    <div class="projects-grid" id="projects-grid"></div>
   </section>
 
   <!-- SKILLS -->
@@ -1199,14 +1204,52 @@ function projectVisual(kind, image, name){
    BUILD PROJECTS
 =================================================================== */
 (function buildProjects(){
-  const wrap = document.getElementById('projects-wrap');
-  PROJECTS.forEach((p, i)=>{
-    const card = document.createElement('div');
-    card.className = 'proj-card ' + (p.size==='large' ? 'large' : p.size==='small' ? 'small' : '');
+  const featuredWrap = document.getElementById('project-featured');
+  const gridWrap = document.getElementById('projects-grid');
+
+  function wireCard(card, p, i){
     card.setAttribute('data-cursor','OPEN');
     card.setAttribute('tabindex', '0');
     card.setAttribute('role', 'article');
     card.setAttribute('aria-label', p.name + ' project details');
+    const handleOpen = ()=> openModal(p, i);
+    card.querySelector('.proj-visual').addEventListener('click', handleOpen);
+    card.querySelector('.proj-name').addEventListener('click', handleOpen);
+    card.querySelector('.proj-view').addEventListener('click', (e)=>{ e.stopPropagation(); handleOpen(); });
+    card.addEventListener('keydown', (e)=>{
+      if((e.key === 'Enter' || e.key === ' ') && e.target === card){
+        e.preventDefault();
+        handleOpen();
+      }
+    });
+  }
+
+  // Featured project — the flagship gets the largest, most prominent treatment
+  const featured = PROJECTS[0];
+  const fCard = document.createElement('div');
+  fCard.className = 'proj-card proj-featured';
+  fCard.innerHTML = `
+    <div class="proj-visual">${projectVisual(featured.visual, featured.image, featured.name)}</div>
+    <div class="proj-body proj-featured-body">
+      <div class="proj-featured-eyebrow mono">FEATURED PROJECT</div>
+      <div class="proj-tag mono">${featured.tag}</div>
+      <h3 class="proj-name proj-featured-name">${featured.name}</h3>
+      <p class="proj-desc">${featured.desc}</p>
+      <div class="proj-stack">${featured.stack.map(s=>`<span>${s}</span>`).join('')}</div>
+      ${featured.meta ? `<div class="proj-implemented"><div class="proj-implemented-label mono">IMPLEMENTED</div><ul>${featured.meta.map(m=>`<li>${m}</li>`).join('')}</ul></div>` : ''}
+      <div class="proj-links">
+        <button type="button" class="proj-view" data-cursor="OPEN">TECHNICAL DETAILS →</button>
+        <a href="${featured.github}" target="_blank" rel="noopener noreferrer" data-cursor="OPEN">VIEW SOURCE ↗</a>
+      </div>
+    </div>`;
+  wireCard(fCard, featured, 0);
+  featuredWrap.appendChild(fCard);
+
+  // Everything else — a browsable grid, ordered by technical weight
+  PROJECTS.slice(1).forEach((p, idx)=>{
+    const i = idx + 1;
+    const card = document.createElement('div');
+    card.className = 'proj-card proj-grid-card';
     card.innerHTML = `
       <div class="proj-visual">${projectVisual(p.visual, p.image, p.name)}</div>
       <div class="proj-body">
@@ -1220,17 +1263,8 @@ function projectVisual(kind, image, name){
           <a href="${p.github}" target="_blank" rel="noopener noreferrer" data-cursor="OPEN">VIEW SOURCE ↗</a>
         </div>
       </div>`;
-    const handleOpen = ()=> openModal(p, i);
-    card.querySelector('.proj-visual').addEventListener('click', handleOpen);
-    card.querySelector('.proj-name').addEventListener('click', handleOpen);
-    card.querySelector('.proj-view').addEventListener('click', (e)=>{ e.stopPropagation(); handleOpen(); });
-    card.addEventListener('keydown', (e)=>{
-      if((e.key === 'Enter' || e.key === ' ') && e.target === card){
-        e.preventDefault();
-        handleOpen();
-      }
-    });
-    wrap.appendChild(card);
+    wireCard(card, p, i);
+    gridWrap.appendChild(card);
   });
 })();
 
