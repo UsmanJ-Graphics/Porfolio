@@ -632,6 +632,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 <link rel="stylesheet" href="assets/hero-featured.css">
 <link rel="stylesheet" href="assets/mobile-menu.css">
 <link rel="stylesheet" href="assets/scroll-transitions.css">
+<link rel="stylesheet" href="assets/tech-sphere.css">
 </head>
 <body>
 
@@ -810,6 +811,13 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <h2 class="section-heading">The tools I build with.</h2>
     <p class="section-sub">Currently working with these tools and technologies while expanding into GPU programming and rendering systems.</p>
     <div class="skills-cols" id="skills-cols"></div>
+
+    <div class="tech-sphere-wrap" id="tech-sphere-wrap" role="img" aria-label="Interactive rotating sphere of technology badges: C++, OpenGL, GLSL, Assembly, and more">
+      <span class="tech-sphere-badge-label">TECH SPHERE</span>
+      <canvas id="tech-sphere-canvas"></canvas>
+      <div class="tech-sphere-tag">tech_sphere --interactive</div>
+      <div class="tech-sphere-hint">drag to rotate</div>
+    </div>
   </section>
 
   <div class="tech-marquee tech-marquee-alt" aria-hidden="true">
@@ -2641,5 +2649,6 @@ function initCertificateArchive(){
   loop();
 }
 </script>
+<script defer src="assets/tech-sphere.js"></script>
 </body>
 </html>
