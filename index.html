@@ -181,7 +181,8 @@ nav.scrolled{
 }
 .nav-brand{ font-weight:600; font-size:14px; letter-spacing:0.06em; }
 .nav-links{ display:flex; align-items:center; gap:34px; }
-.nav-link{ font-size:13px; color:var(--text-muted); position:relative; padding:4px 0; transition:color .25s; }
+.nav-link{ font-size:12px; color:var(--text-muted); position:relative; padding:4px 0; transition:color .25s; text-transform:uppercase; letter-spacing:.05em; font-family:'IBM Plex Mono',monospace; display:inline-flex; align-items:center; gap:6px; }
+.nav-num{ color:var(--accent); opacity:.75; font-size:10px; }
 .nav-link:hover, .nav-link.active{ color:var(--text); }
 .nav-link.active::after{ content:''; position:absolute; left:0; right:0; bottom:-6px; height:1px; background:var(--accent); }
 .theme-toggle{
@@ -472,12 +473,11 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <span class="brand-name">Muhammad Usman Javed</span>
   </a>
   <div class="nav-links" id="nav-links">
-    <a href="#hero" class="nav-link" data-nav="hero">Home</a>
-    <a href="#work" class="nav-link" data-nav="work">Projects</a>
-    <a href="#toolchain" class="nav-link" data-nav="toolchain">Skills</a>
-    <a href="#about" class="nav-link" data-nav="about">About</a>
-    <a href="#lab" class="nav-link" data-nav="lab">Lab</a>
-    <a href="#contact" class="nav-link" data-nav="contact">Contact</a>
+    <a href="#hero" class="nav-link" data-nav="hero"><span class="nav-num mono">01</span>HOME</a>
+    <a href="#work" class="nav-link" data-nav="work"><span class="nav-num mono">02</span>PROJECTS</a>
+    <a href="#toolchain" class="nav-link" data-nav="toolchain"><span class="nav-num mono">03</span>SKILLS</a>
+    <a href="#about" class="nav-link" data-nav="about"><span class="nav-num mono">04</span>ABOUT</a>
+    <a href="#contact" class="nav-link" data-nav="contact"><span class="nav-num mono">05</span>CONTACT</a>
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme mode" aria-pressed="true"><span class="theme-sun" aria-hidden="true">☼</span><span class="theme-moon" aria-hidden="true">☾</span><i></i></button>
   </div>
   <button class="nav-mobile-btn burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -594,10 +594,25 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <div class="eyebrow mono">01 / SELECTED WORK</div>
     <h2 class="section-heading">Things I've built.</h2>
     <p class="section-sub">A working set of projects across real-time graphics, low-level systems, and applied C++.</p>
+    <div class="proj-filter mono" id="proj-filter" role="group" aria-label="Filter projects by category">
+      <button type="button" class="pf-btn active" data-filter="ALL">ALL</button>
+      <button type="button" class="pf-btn" data-filter="GRAPHICS">GRAPHICS</button>
+      <button type="button" class="pf-btn" data-filter="RENDERING">RENDERING</button>
+      <button type="button" class="pf-btn" data-filter="C++">C++</button>
+      <button type="button" class="pf-btn" data-filter="SYSTEMS">SYSTEMS</button>
+      <button type="button" class="pf-btn" data-filter="TOOLS">TOOLS</button>
+    </div>
     <div id="project-featured"></div>
     <div class="more-work-head"><span class="mono more-work-label">MORE GRAPHICS WORK</span></div>
     <div class="projects-grid" id="projects-grid"></div>
   </section>
+
+  <div class="tech-marquee" aria-hidden="true">
+    <div class="tech-marquee-track">
+      <span>C++ · OPENGL · GLSL · SHADERS · GPU · RENDERING · </span>
+      <span>C++ · OPENGL · GLSL · SHADERS · GPU · RENDERING · </span>
+    </div>
+  </div>
 
   <!-- SKILLS -->
   <section class="section reveal" id="toolchain" data-transition="columns">
@@ -606,6 +621,13 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
     <p class="section-sub">Currently working with these tools and technologies while expanding into GPU programming and rendering systems.</p>
     <div class="skills-cols" id="skills-cols"></div>
   </section>
+
+  <div class="tech-marquee tech-marquee-alt" aria-hidden="true">
+    <div class="tech-marquee-track">
+      <span>C++ / OPENGL / GLSL / RENDERING / SHADERS / GPU / SYSTEMS / </span>
+      <span>C++ / OPENGL / GLSL / RENDERING / SHADERS / GPU / SYSTEMS / </span>
+    </div>
+  </div>
 
   <!-- ABOUT -->
   <section class="section reveal" id="about" data-transition="split">
@@ -833,7 +855,7 @@ footer{ border-top:1px solid var(--border); padding:50px 0 40px; }
 =================================================================== */
 const PROJECTS = [
   {
-    id:'twincity3d', tag:'PROJECT 01 · FLAGSHIP', name:'TwinCity3D', size:'large',
+    id:'twincity3d', tag:'PROJECT 01 · FLAGSHIP', name:'TwinCity3D', size:'large', cats:['GRAPHICS','RENDERING','C++'],
     desc:'Real-time 3D digital-twin environment built from scratch in C++ and OpenGL with custom camera projection math, spatial grid layouts, and atmospheric lighting shaders.',
     stack:['C++','OpenGL 3.3','GLSL','Real-Time Rendering'],
     github:'https://github.com/UsmanJ-Graphics/TwinCity3D',
@@ -843,7 +865,7 @@ const PROJECTS = [
     meta:['CAMERA MATRIX MATH','SPATIAL GRID MANAGEMENT','OPENGL LIGHTING MODELS','3D GEOMETRY PIPELINE']
   },
   {
-    id:'automata', tag:'PROJECT 02', name:'Theory of Automata Solver + NLU', size:'reg',
+    id:'automata', tag:'PROJECT 02', name:'Theory of Automata Solver + NLU', size:'reg', cats:['C++','SYSTEMS','TOOLS'],
     desc:'A C++ application parsing natural-language automata descriptions into formal state machine logic, rendered live as an interactive node graph with OpenGL and ImGui.',
     stack:['C++','OpenGL','ImGui','NLU','Graph Algorithms'],
     github:'https://github.com/UsmanJ-Graphics/theory-of-automata',
@@ -853,7 +875,7 @@ const PROJECTS = [
     meta:['STATE MACHINE PARSING','TRANSITION MATRIX','LIVE GRAPH ANIMATION','IMGUI TOOLING']
   },
   {
-    id:'flappybird', tag:'PROJECT 03 · LOW LEVEL', name:'Flappy Bird — 8086 Assembly', size:'reg',
+    id:'flappybird', tag:'PROJECT 03 · LOW LEVEL', name:'Flappy Bird — 8086 Assembly', size:'reg', cats:['GRAPHICS','RENDERING','SYSTEMS'],
     desc:'A real-mode DOS game written directly in 8086 Assembly, driving VGA Mode 13h video memory at address 0xA0000 with BIOS interrupts and manual AABB collision.',
     stack:['x86 Assembly','VGA Mode 13h','0xA0000 Framebuffer','BIOS Interrupts'],
     github:'https://github.com/UsmanJ-Graphics/Flappy-bird-game',
@@ -863,7 +885,7 @@ const PROJECTS = [
     meta:['8086 REAL MODE','DIRECT FRAMEBUFFER (0xA0000)','BIOS INT 16H/10H','AABB COLLISION']
   },
   {
-    id:'stattool', tag:'PROJECT 04', name:'Statistical Data Tool', size:'reg',
+    id:'stattool', tag:'PROJECT 04', name:'Statistical Data Tool', size:'reg', cats:['C++','SYSTEMS','TOOLS'],
     desc:'A high-performance C++ data processing utility that parses datasets, computes statistical distributions, and generates custom data charts without external plotting libraries.',
     stack:['C++','File I/O','Data Structures','Data Visualization'],
     github:'https://github.com/UsmanJ-Graphics/Statistical-tool',
@@ -873,7 +895,7 @@ const PROJECTS = [
     meta:['DATA PARSING PIPELINE','STATISTICAL CALCULATIONS','CUSTOM CHART RENDERER','FILE I/O']
   },
   {
-    id:'birthday', tag:'CREATIVE EXPERIMENT', name:'Finger Tracer — CV Interaction', size:'small',
+    id:'birthday', tag:'CREATIVE EXPERIMENT', name:'Finger Tracer — CV Interaction', size:'small', cats:['TOOLS','SYSTEMS'],
     desc:'An interactive computer-vision system utilizing OpenCV hand-tracking pipelines to map finger trajectories to particle emitters and real-time canvas drawing.',
     stack:['C++','OpenCV','Hand Tracking','Particle System'],
     github:'https://github.com/UsmanJ-Graphics/happybirthday',
@@ -1231,6 +1253,7 @@ function projectVisual(kind, image, name){
   fCard.innerHTML = `
     <div class="proj-visual">${projectVisual(featured.visual, featured.image, featured.name)}</div>
     <div class="proj-body proj-featured-body">
+      <span class="proj-index mono">01 —</span>
       <div class="proj-featured-eyebrow mono">FEATURED PROJECT</div>
       <div class="proj-tag mono">${featured.tag}</div>
       <h3 class="proj-name proj-featured-name">${featured.name}</h3>
@@ -1242,6 +1265,7 @@ function projectVisual(kind, image, name){
         <a href="${featured.github}" target="_blank" rel="noopener noreferrer" data-cursor="OPEN">VIEW SOURCE ↗</a>
       </div>
     </div>`;
+  fCard.dataset.cats = featured.cats.join(',');
   wireCard(fCard, featured, 0);
   featuredWrap.appendChild(fCard);
 
@@ -1250,9 +1274,11 @@ function projectVisual(kind, image, name){
     const i = idx + 1;
     const card = document.createElement('div');
     card.className = 'proj-card proj-grid-card';
+    card.dataset.cats = p.cats.join(',');
     card.innerHTML = `
       <div class="proj-visual">${projectVisual(p.visual, p.image, p.name)}</div>
       <div class="proj-body">
+        <span class="proj-index mono">${String(i+1).padStart(2,'0')} —</span>
         <div class="proj-tag mono">${p.tag}</div>
         <h3 class="proj-name">${p.name}</h3>
         <p class="proj-desc">${p.desc}</p>
@@ -1265,6 +1291,27 @@ function projectVisual(kind, image, name){
       </div>`;
     wireCard(card, p, i);
     gridWrap.appendChild(card);
+  });
+})();
+
+/* ===================================================================
+   PROJECT FILTER — ALL / GRAPHICS / RENDERING / C++ / SYSTEMS / TOOLS
+=================================================================== */
+(function projectFilter(){
+  const buttons = document.querySelectorAll('.pf-btn');
+  const cards = document.querySelectorAll('#work .proj-card');
+  if(!buttons.length) return;
+  buttons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      buttons.forEach(b=> b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card=>{
+        const cats = (card.dataset.cats || '').split(',');
+        const show = filter === 'ALL' || cats.includes(filter);
+        card.classList.toggle('pf-hidden', !show);
+      });
+    });
   });
 })();
 

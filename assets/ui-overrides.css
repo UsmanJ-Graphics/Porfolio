@@ -852,3 +852,45 @@ footer {
   .lab-grid { grid-template-columns: 1fr; }
   .modal-panel { padding: 24px; width: 95%; }
 }
+/* ============================================================
+   PROJECT FILTER BAR — ALL / GRAPHICS / RENDERING / C++ / SYSTEMS / TOOLS
+   ============================================================ */
+.proj-filter{ display:flex; flex-wrap:wrap; gap:10px; margin:32px 0 8px; }
+.pf-btn{
+  font-size:11px; letter-spacing:.06em; color:var(--text-muted);
+  background:transparent; border:1px solid var(--border); border-radius:999px;
+  padding:8px 16px; cursor:pointer; transition:all .25s var(--ease);
+}
+.pf-btn:hover{ color:var(--text); border-color:var(--border-strong); }
+.pf-btn.active{ color:var(--accent); border-color:var(--accent-dim); background:var(--accent-glow); }
+.proj-card.pf-hidden{ display:none !important; }
+
+/* ============================================================
+   TECHNICAL MARQUEE STRIPS
+   ============================================================ */
+.tech-marquee{
+  overflow:hidden; border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  padding:18px 0; margin:0 0 8px; white-space:nowrap;
+}
+.tech-marquee-alt{ margin:0 0 8px; }
+.tech-marquee-track{
+  display:inline-flex; animation:marquee-scroll 26s linear infinite;
+  font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.08em;
+  color:var(--text-dim);
+}
+@keyframes marquee-scroll{
+  from{ transform:translateX(0); }
+  to{ transform:translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce){
+  .tech-marquee-track{ animation:none; }
+}
+
+/* ============================================================
+   PROJECT NUMBER — large editorial index per project
+   ============================================================ */
+.proj-index{
+  font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent);
+  letter-spacing:.1em; margin-bottom:10px; display:block;
+}
+.proj-featured-body .proj-index{ font-size:15px; }
